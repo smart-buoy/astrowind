@@ -11,11 +11,16 @@ import BlogLatestPosts from '~/components/widgets/BlogLatestPosts.astro';
 import FAQs from '~/components/widgets/FAQs.astro';
 import Stats from '~/components/widgets/Stats.astro';
 import CallToAction from '~/components/widgets/CallToAction.astro';
+import {sanityClient} from 'sanity:client'
+
 
 const metadata = {
   title: 'AstroWind — Free template for creating websites with Astro + Tailwind CSS',
   ignoreTitleTemplate: true,
 };
+
+const members = await sanityClient.fetch(`*[_type == "teamMember"]`);
+
 ---
 
 <Layout metadata={metadata}>
@@ -51,6 +56,14 @@ const metadata = {
   </Hero>
 
   <!-- Note Widget ******************* -->
+
+{members && (
+  <ul>
+    {members.map((member) => (
+      <li>{member.name}</li>
+    ))}
+  </ul>
+)}
 
   <Note />
 
