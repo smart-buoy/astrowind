@@ -6,8 +6,15 @@ export default defineType({
     type: 'document',
     fields: [
         defineField({
-            name: 'title',
-            type: 'internationalizedArrayString',
+            name: 'name',
+            title: 'Name',
+            type: 'string',
+        }),
+        defineField({
+            name: 'description',
+            title: 'Description',
+            type: 'array',
+            of: [{type: 'block'}]
         }),
     ]
 })

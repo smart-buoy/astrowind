@@ -13,6 +13,8 @@ import Stats from '~/components/widgets/Stats.astro';
 import CallToAction from '~/components/widgets/CallToAction.astro';
 import { sanityClient } from 'sanity:client';
 import { getLangFromUrl } from '../i18n/utils';
+import { urlForImage } from '~/utils/sanity';
+import PortableText from '~/components/common/PortableText.astro';
 
 const metadata = {
   title: 'AstroWind — Free template for creating websites with Astro + Tailwind CSS',
@@ -22,12 +24,14 @@ const metadata = {
 const language = getLangFromUrl(Astro.url);
 const members = await sanityClient.fetch(`*[_type == "teamMember" && language == $language]`, { language });
 
-const features = await sanityClient.fetch(
-  `*[_type == "feature"]{
-  "title": title[_key == $language][0].value
-  }`,
-  { language }
-);
+// const features = await sanityClient.fetch(
+//   `*[_type == "feature"]{
+//   "title": title[_key == $language][0].value
+//   }`,
+//   { language }
+// );
+
+const features = await sanityClient.fetch(`*[_type == "feature"]`, { language });
 ---
 
 <Layout metadata={metadata}>
@@ -69,7 +73,9 @@ const features = await sanityClient.fetch(
     members && (
       <ul>
         {members.map((member) => (
-          <li>{member.name}</li>
+          <li>
+            {member.name} <img src={urlForImage(member.image).width(300).url()} />
+          </li>
         ))}
       </ul>
     )
@@ -77,13 +83,13 @@ const features = await sanityClient.fetch(
 
   FEATURES
   {
-    features && (
-      <ul>
-        {features.map((feature) => (
-          <li>{feature.title}</li>
-        ))}
-      </ul>
-    )
+    features &&
+      features.map((feature) => (
+        <div>
+          {feature.name}
+          <PortableText portableText={feature.description} />
+        </div>
+      ))
   }
 
   <Note />
