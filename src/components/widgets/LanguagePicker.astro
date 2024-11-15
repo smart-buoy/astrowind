@@ -1,0 +1,18 @@
+---
+import { defaultLang, languages } from '../../i18n/ui';
+import { getLangFromUrl, useTranslatedPath, getRouteWithoutLang } from '../../i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const translatePath = useTranslatedPath(lang);
+const routeWithoutLang = getRouteWithoutLang(Astro.url, lang);
+---
+
+<ul>
+  {
+    Object.entries(languages).map(([lang, label]) => (
+      <li>
+        <a href={!routeWithoutLang && defaultLang == lang ? '/' : translatePath(routeWithoutLang, lang)}>{label}</a>
+      </li>
+    ))
+  }
+</ul>

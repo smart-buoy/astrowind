@@ -9,6 +9,12 @@ export default defineType({
             name: 'name',
             title: 'Name',
             type: 'string'
-        })
+        }),
+        defineField({
+            name: 'language',
+            type: 'string',
+            readOnly: true,
+            hidden: false,
+          })
     ]
 })

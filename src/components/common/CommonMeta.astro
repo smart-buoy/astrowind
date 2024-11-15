@@ -1,8 +1,22 @@
 ---
 import { getAsset } from '~/utils/permalinks';
+import { languages, defaultLang } from '../../i18n/ui';
+import { getLangFromUrl, useTranslatedPath, getRouteWithoutLang } from '../../i18n/utils';
+
+const origin = Astro.site?.origin ?? '';
+const lang = getLangFromUrl(Astro.url);
+const translatePath = useTranslatedPath(lang);
+const routeWithoutLang = getRouteWithoutLang(Astro.url, lang);
 ---
 
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+{
+  Object.entries(languages).map(([lang]) => (
+    <link rel="alternate" hreflang={lang} href={`${origin}${translatePath(routeWithoutLang, lang)}`} />
+  ))
+}
+<link rel="alternate" hreflang="x-default" href={`${origin}${translatePath(routeWithoutLang, defaultLang)}`} />
 
 <link rel="sitemap" href={getAsset('/sitemap-index.xml')} />

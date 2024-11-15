@@ -4,10 +4,12 @@ import Logo from '~/components/Logo.astro';
 import ToggleTheme from '~/components/common/ToggleTheme.astro';
 import ToggleMenu from '~/components/common/ToggleMenu.astro';
 import Button from '~/components/ui/Button.astro';
+import LanguagePicker from '~/components/widgets/LanguagePicker.astro';
 
 import { getHomePermalink } from '~/utils/permalinks';
 import { trimSlash, getAsset } from '~/utils/permalinks';
 import type { CallToAction } from '~/types';
+import { getLangFromUrl, useTranslations, useTranslatedPath, getRouteWithoutLang } from '../../i18n/utils';
 
 interface Link {
   text?: string;
@@ -45,6 +47,12 @@ const {
 } = Astro.props;
 
 const currentPath = `/${trimSlash(new URL(Astro.url).pathname)}`;
+
+const lang = getLangFromUrl(Astro.url);
+const translatePath = useTranslatedPath(lang);
+const routeWithoutLang = getRouteWithoutLang(Astro.url, lang);
+
+const t = useTranslations(lang);
 ---
 
 <header
@@ -71,7 +79,7 @@ const currentPath = `/${trimSlash(new URL(Astro.url).pathname)}`;
     ]}
   >
     <div class:list={[{ 'mr-auto rtl:mr-0 rtl:ml-auto': position === 'right' }, 'flex justify-between']}>
-      <a class="flex items-center" href={getHomePermalink()}>
+      <a class="flex items-center" href={translatePath(getHomePermalink(), lang)}>
         <Logo />
       </a>
       <div class="flex items-center md:hidden">
@@ -94,7 +102,7 @@ const currentPath = `/${trimSlash(new URL(Astro.url).pathname)}`;
                     type="button"
                     class="hover:text-link dark:hover:text-white px-4 py-3 flex items-center whitespace-nowrap"
                   >
-                    {text}{' '}
+                    {t('nav.' + text)}{' '}
                     <Icon name="tabler:chevron-down" class="w-3.5 h-3.5 ml-0.5 rtl:ml-0 rtl:mr-0.5 hidden md:inline" />
                   </button>
                   <ul class="dropdown-menu md:backdrop-blur-md dark:md:bg-dark rounded md:absolute pl-4 md:pl-0 md:hidden font-medium md:bg-white/90 md:min-w-[200px] drop-shadow-xl">
@@ -105,7 +113,7 @@ const currentPath = `/${trimSlash(new URL(Astro.url).pathname)}`;
                             'first:rounded-t last:rounded-b md:hover:bg-gray-100 hover:text-link dark:hover:text-white dark:hover:bg-gray-700 py-2 px-5 block whitespace-no-wrap',
                             { 'aw-link-active': href2 === currentPath },
                           ]}
-                          href={href2}
+                          href={translatePath(href2, lang)}
                         >
                           {text2}
                         </a>
@@ -119,7 +127,7 @@ const currentPath = `/${trimSlash(new URL(Astro.url).pathname)}`;
                     'hover:text-link dark:hover:text-white px-4 py-3 flex items-center whitespace-nowrap',
                     { 'aw-link-active': href === currentPath },
                   ]}
-                  href={href}
+                  href={translatePath(href, lang)}
                 >
                   {text}
                 </a>
@@ -163,5 +171,6 @@ const currentPath = `/${trimSlash(new URL(Astro.url).pathname)}`;
         }
       </div>
     </div>
+    <LanguagePicker />
   </div>
 </header>
