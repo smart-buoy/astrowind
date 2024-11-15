@@ -26,6 +26,11 @@ const whenExternalScripts = (items: (() => AstroIntegration) | (() => AstroInteg
 
 export default defineConfig({
   output: 'static',
+  
+  i18n: {
+    defaultLocale: 'en',
+    locales: ['en', 'de']
+  },
 
   integrations: [tailwind({
     applyBaseStyles: false,
@@ -63,9 +68,9 @@ export default defineConfig({
     config: './src/config.yaml',
   }), sanity({
     projectId: 'lovseikl',
-      dataset: 'production',
-      studioBasePath: '/admin',
-      useCdn: false,
+    dataset: 'production',
+    studioBasePath: '/admin',
+    useCdn: false
   }), react()],
 
   image: {
