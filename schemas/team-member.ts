@@ -11,6 +11,19 @@ export default defineType({
             type: 'string'
         }),
         defineField({
+            name: 'position',
+            title: 'Position',
+            type: 'internationalizedArrayString',
+        }),
+        defineField({
+            name: 'image',
+            title: 'Image',
+            type: 'image',
+            options: {
+                accept: 'image/jpeg'
+            }
+        }),
+        defineField({
             name: 'language',
             type: 'string',
             readOnly: true,
