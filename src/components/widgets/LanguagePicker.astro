@@ -1,6 +1,7 @@
 ---
 import { defaultLang, languages } from '../../i18n/ui';
 import { getLangFromUrl, useTranslatedPath, getRouteWithoutLang } from '../../i18n/utils';
+import { Icon } from 'astro-icon/components';
 
 const lang = getLangFromUrl(Astro.url);
 const translatePath = useTranslatedPath(lang);
@@ -8,11 +9,29 @@ const routeWithoutLang = getRouteWithoutLang(Astro.url, lang);
 ---
 
 <ul>
-  {
-    Object.entries(languages).map(([lang, label]) => (
-      <li>
-        <a href={!routeWithoutLang && defaultLang == lang ? '/' : translatePath(routeWithoutLang, lang)}>{label}</a>
-      </li>
-    ))
-  }
+  <li class="dropdown">
+    <button type="button" class="hover:text-link dark:hover:text-white px-4 py-3 flex items-center whitespace-nowrap">
+      {lang.toUpperCase()}
+      <Icon name="tabler:chevron-down" class="w-3.5 h-3.5 ml-0.5 rtl:ml-0 rtl:mr-0.5 hidden md:inline" />
+    </button>
+    <ul
+      class="dropdown-menu md:backdrop-blur-md dark:md:bg-dark rounded md:absolute pl-4 md:pl-0 md:hidden font-medium md:bg-white/90 md:min-w-[200px] drop-shadow-xl"
+    >
+      {
+        Object.entries(languages).map(([lang, label]) => (
+          <li>
+            <a
+              class:list={[
+                'first:rounded-t last:rounded-b md:hover:bg-gray-100 hover:text-link dark:hover:text-white dark:hover:bg-gray-700 py-2 px-5 block whitespace-no-wrap',
+                { 'aw-link-active': lang === defaultLang },
+              ]}
+              href={!routeWithoutLang && defaultLang == lang ? '/' : translatePath(routeWithoutLang, lang)}
+            >
+              {label}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </li>
 </ul>
