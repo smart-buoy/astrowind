@@ -1,8 +1,8 @@
 import { defineField, defineType } from "sanity";
 
 export default defineType({
-    name: 'teamMember',
-    title: 'TeamMember',
+    name: 'testimonial',
+    title: 'Testimonial',
     type: 'document',
     fields: [
         defineField({
@@ -11,13 +11,13 @@ export default defineType({
             type: 'string'
         }),
         defineField({
-            name: 'position',
-            title: 'Position',
+            name: 'text',
+            title: 'Text',
             type: 'internationalizedArrayString',
         }),
         defineField({
-            name: 'description',
-            title: 'Description',
+            name: 'position',
+            title: 'Position',
             type: 'internationalizedArrayString',
         }),
         defineField({
@@ -29,38 +29,30 @@ export default defineType({
             }
         }),
         defineField({
+            name: 'area',
+            title: 'Area',
+            type: 'string',
+            initialValue: 'skipper',
+            options: {
+                list: [
+                    {title: 'Skipper', value: 'skipper'},
+                    {title: 'Operator', value: 'operator'},
+                ]
+            }
+        }),
+        defineField({
             title: 'Order',
             name: 'order',
             type: 'number'
-        }),
-        defineField({
-            name: 'socialX',
-            title: 'X-Link',
-            type: 'string'
-        }),
-        defineField({
-            name: 'socialFacebook',
-            title: 'Facebook-Link',
-            type: 'string'
-        }),
-        defineField({
-            name: 'socialInstagram',
-            title: 'Instagram-Link',
-            type: 'string'
-        }),
-        defineField({
-            name: 'socialLinkedIn',
-            title: 'LinkedIn-Link',
-            type: 'string'
-        }),
+          }),
     ],
     orderings: [
         {
             title: 'Order',
             name: 'orderAsc',
             by: [
-                { field: 'order', direction: 'asc' }
+              {field: 'order', direction: 'asc'}
             ]
-        }
+          } 
     ]
 })

@@ -1,43 +1,12 @@
 ---
-import { sanityClient } from 'sanity:client';
+import SkipperPage from '~/components/widgets/SkipperPage.astro';
 import Layout from '~/layouts/PageLayout.astro';
-import { getLangFromUrl } from '../../i18n/utils';
 
 const metadata = {
-  title: 'SmartBuoy',
-  ignoreTitleTemplate: true,
+  title: 'Skipper',
 };
-
-const language = getLangFromUrl(Astro.url);
-const members = await sanityClient.fetch(`*[_type == "teamMember" && language == $language]`, { language });
-const features = await sanityClient.fetch(
-  `*[_type == "feature"]{
-  "title": title[_key == $language][0].value
-  }`,
-  { language }
-);
 ---
 
 <Layout metadata={metadata}>
-  GERMAN
-  {
-    members && (
-      <ul>
-        {members.map((member) => (
-          <li>{member.name}</li>
-        ))}
-      </ul>
-    )
-  }
-
-  FEATURES
-  {
-    features && (
-      <ul>
-        {features.map((feature) => (
-          <li>{feature.title}</li>
-        ))}
-      </ul>
-    )
-  }
+  <SkipperPage />
 </Layout>

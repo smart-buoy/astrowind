@@ -1,33 +1,24 @@
 import { defineField, defineType } from "sanity";
 
 export default defineType({
-    name: 'feature',
-    title: 'Feature',
+    name: 'faq',
+    title: 'FAQ',
     type: 'document',
     fields: [
         defineField({
-            name: 'title',
-            title: 'Title',
-            type: 'string',
+            name: 'name',
+            title: 'Name',
+            type: 'string'
         }),
         defineField({
-            name: 'subtitle',
-            title: 'Sub-Title',
-            type: 'string',
+            name: 'question',
+            title: 'Question',
+            type: 'internationalizedArrayString',
         }),
         defineField({
-            name: 'description',
-            title: 'Description',
-            type: 'array',
-            of: [{type: 'block'}]
-        }),
-        defineField({
-            name: 'image',
-            title: 'Image',
-            type: 'image',
-            options: {
-                accept: 'image/jpeg'
-            }
+            name: 'answer',
+            title: 'Answer',
+            type: 'internationalizedArrayString',
         }),
         defineField({
             name: 'area',
@@ -46,12 +37,6 @@ export default defineType({
             name: 'order',
             type: 'number'
           }),
-        defineField({
-            name: 'language',
-            type: 'string',
-            readOnly: true,
-            hidden: false,
-          })
     ],
     orderings: [
         {
