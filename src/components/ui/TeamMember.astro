@@ -1,6 +1,7 @@
 ---
 import { urlForImage } from '~/utils/sanity';
 import Image from '~/components/common/Image.astro';
+import { Icon } from 'astro-icon/components';
 
 const { member } = Astro.props;
 ---
@@ -40,5 +41,62 @@ const { member } = Astro.props;
     </header>
 
     {member.description && <p class="flex-grow text-muted dark:text-slate-400 text-lg">{member.description}</p>}
+
+    <ul class="flex gap-2 mt-4">
+      {
+        member.socialFacebook && (
+          <li>
+            <a
+              class="text-muted dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5 inline-flex items-center"
+              aria-label="Facebook"
+              href={member.socialFacebook}
+            >
+              <Icon name="tabler:brand-facebook" class="w-5 h-5" />
+            </a>
+          </li>
+        )
+      }
+      {
+        member.socialInstagram && (
+          <li>
+            <a
+              class="text-muted dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5 inline-flex items-center"
+              aria-label="Instagram"
+              href={member.socialInstagram}
+            >
+              <Icon name="tabler:brand-instagram" class="w-5 h-5" />
+            </a>
+          </li>
+        )
+      }
+
+      {
+        member.socialLinkedIn && (
+          <li>
+            <a
+              class="text-muted dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5 inline-flex items-center"
+              aria-label="LinkedIn"
+              href={member.socialLinkedIn}
+            >
+              <Icon name="tabler:brand-linkedin" class="w-5 h-5" />
+            </a>
+          </li>
+        )
+      }
+
+      {
+        member.socialX && (
+          <li>
+            <a
+              class="text-muted dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5 inline-flex items-center"
+              aria-label="X"
+              href={member.socialX}
+            >
+              <Icon name="tabler:brand-x" class="w-5 h-5" />
+            </a>
+          </li>
+        )
+      }
+    </ul>
   </div>
 </div>

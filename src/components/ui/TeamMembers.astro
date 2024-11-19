@@ -10,6 +10,10 @@ const members = await sanityClient.fetch(
 name,  
 "position": position[_key == $language][0].value,
 "description": description[_key == $language][0].value,
+socialFacebook,
+socialX,
+socialLinkedIn,
+socialInstagram,
 image
 }`,
   { language }

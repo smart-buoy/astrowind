@@ -1,0 +1,15 @@
+---
+import { getLangFromUrl, useTranslations } from '~/i18n/utils';
+import TeamMembers from '~/components/ui/TeamMembers.astro';
+
+import HeroText from '~/components/widgets/HeroText.astro';
+
+const language = getLangFromUrl(Astro.url);
+const t = useTranslations(language);
+---
+
+<section class="px-6 sm:px-6 mx-auto max-w-4xl">
+  <HeroText tagline="Team" title={t('team.title')} subtitle={t('team.subtitle')} />
+
+  <TeamMembers />
+</section>

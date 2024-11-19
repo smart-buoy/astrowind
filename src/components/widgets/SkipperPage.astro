@@ -1,0 +1,189 @@
+---
+import Features from '~/components/widgets/Features.astro';
+import FAQs from '~/components/widgets/FAQs.astro';
+import Stats from '~/components/widgets/Stats.astro';
+import CallToAction from '~/components/widgets/CallToAction.astro';
+import { sanityClient } from 'sanity:client';
+import { getLangFromUrl, useTranslations } from '~/i18n/utils';
+import Testimonials from '~/components/widgets/Testimonials.astro';
+import Button from '~/components/ui/Button.astro';
+import Image from '~/components/common/Image.astro';
+import Hero2 from '~/components/widgets/Hero2.astro';
+import FeatureContent from '~/components/widgets/FeatureContent.astro';
+import { urlForImage } from '~/utils/sanity';
+
+const appStoreImg = '~/assets/images/app-store.png';
+const appStoreDownloadLink = '#';
+
+const googlePlayImg = '~/assets/images/google-play.png';
+const googlePlayDownloadLink = '#';
+
+const language = getLangFromUrl(Astro.url);
+const t = useTranslations(language);
+
+const features = await sanityClient.fetch(`*[_type == "feature" && language == $language && area == $area]`, {
+  language,
+  area: 'skipper',
+});
+
+const faqs = await sanityClient.fetch(
+  `*[_type == "faq" && area==$area]{
+"question": question[_key == $language][0].value,
+"answer": answer[_key == $language][0].value,
+}`,
+  { language, area: 'skipper' }
+);
+
+const testimonials = await sanityClient.fetch(
+  `*[_type == "testimonial" && area==$area]{
+  name,
+"text": text[_key == $language][0].value,
+"position": position[_key == $language][0].value,
+image
+}`,
+  { language, area: 'skipper' }
+);
+
+const highlights = await sanityClient.fetch(
+  `*[_type == "highlight" && area==$area]{
+  name,
+"title": title[_key == $language][0].value,
+"description": description[_key == $language][0].value
+}`,
+  { language, area: 'skipper' }
+);
+---
+
+<!-- Hero Widget ******************* -->
+<Hero2
+  tagline={t('skipper.hero.tagline')}
+  image={{
+    src: 'https://images.unsplash.com/photo-1535303311164-664fc9ec6532?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80',
+    alt: 'SmartBuoy App Image',
+  }}
+>
+  <Fragment slot="title">
+    <span class="text-primary dark:text-white highlight">{t('skipper.hero.title')}</span>: <br />
+    {t('skipper.hero.title-1')}
+    <span class="hidden xl:inline"> {t('skipper.hero.title-2')}</span>
+  </Fragment>
+
+  <Fragment slot="subtitle">
+    <span class="hidden sm:inline">
+      {t('skipper.hero.sub-title-1')}
+    </span>
+    {t('skipper.hero.sub-title-2')}
+  </Fragment>
+
+  <div slot="actions" class="flex max-w-sm gap-4">
+    <Button variant="link" href={appStoreDownloadLink}>
+      <Image src={appStoreImg} alt="App Store Image" width={200} />
+    </Button>
+
+    <Button variant="link" href={googlePlayDownloadLink}>
+      <Image src={googlePlayImg} alt="Google Play Image" width={200} />
+    </Button>
+  </div>
+</Hero2>
+
+<!-- Features Widget *************** -->
+
+{
+  highlights.length > 0 && (
+    <Features
+      id="features"
+      tagline={t('skipper.highlights.tagline')}
+      title={t('skipper.highlights.title')}
+      subtitle={t('skipper.highlights.sub-title')}
+      items={highlights.map((highlight) => ({
+        title: highlight.title,
+        description: highlight.description,
+        icon: 'tabler:brand-tailwind',
+      }))}
+    />
+  )
+}
+
+<!-- Content Widget **************** -->
+{
+  features.length > 0 &&
+    features.map((feature, index) => (
+      <FeatureContent
+        title={t('skipper.features.title')}
+        subtitle={t('skipper.features.sub-title')}
+        tagline={t('skipper.features.tagline')}
+        isAfterContent={index > 0}
+        isReversed={index % 2 == 0}
+        feature={feature}
+      >
+        <Fragment slot="content">
+          <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">{feature.title}</h3>
+          {feature.subtitle}
+        </Fragment>
+
+        <Fragment slot="bg">
+          <div class="absolute inset-0 bg-blue-50 dark:bg-transparent" />
+        </Fragment>
+      </FeatureContent>
+    ))
+}
+
+<!-- Stats Widget ****************** -->
+
+<Stats
+  title={t('skipper.statistics.title')}
+  stats={[
+    { amount: '20K', icon: 'tabler:download' },
+    { amount: '18.5K', icon: 'tabler:users' },
+    { amount: '4.7', icon: 'tabler:user-star' },
+  ]}
+/>
+
+<!-- Testimonials Widget *********** -->
+
+{
+  testimonials.length > 0 && (
+    <Testimonials
+      title={t('skipper.testimonials.title')}
+      testimonials={testimonials.map((testimonial) => ({
+        testimonial: testimonial.text,
+        name: testimonial.name,
+        job: testimonial.position,
+        image: {
+          src: urlForImage(testimonial.image).width(50).url(),
+          alt: `Image of ${testimonial.name}`,
+        },
+      }))}
+    />
+  )
+}
+
+<!-- FAQs Widget ******************* -->
+{
+  faqs.length > 0 && (
+    <FAQs
+      title={t('skipper.faq.title')}
+      subtitle={t('skipper.faq.sub-title')}
+      tagline={t('skipper.faq.tagline')}
+      classes={{ container: 'max-w-6xl' }}
+      items={faqs.map((faq) => ({
+        title: faq.question,
+        description: faq.answer,
+      }))}
+    />
+  )
+}
+
+<!-- CallToAction Widget *********** -->
+
+<CallToAction id="download" title={t('skipper.call-to-action.title')} subtitle={t('skipper.call-to-action.sub-title')}>
+  <div slot="actions" class="flex max-w-sm gap-4">
+    <Button variant="link" href={appStoreDownloadLink}>
+      <Image src={appStoreImg} alt="App Store Image" width={200} />
+    </Button>
+
+    <Button variant="link" href={googlePlayDownloadLink}>
+      <Image src={googlePlayImg} alt="Google Play Image" width={200} />
+    </Button>
+  </div>
+</CallToAction>

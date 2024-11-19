@@ -1,0 +1,155 @@
+---
+import Features from '~/components/widgets/Features.astro';
+import FAQs from '~/components/widgets/FAQs.astro';
+import { sanityClient } from 'sanity:client';
+import { getLangFromUrl, useTranslations } from '~/i18n/utils';
+import Testimonials from '~/components/widgets/Testimonials.astro';
+import Button from '~/components/ui/Button.astro';
+import Hero2 from '~/components/widgets/Hero2.astro';
+import FeatureContent from '~/components/widgets/FeatureContent.astro';
+import { urlForImage } from '~/utils/sanity';
+
+const appLink = '#'; //https://operator-web.dev.smartbuoy.eu
+const learnMoreLink = '#use-cases';
+
+const language = getLangFromUrl(Astro.url);
+const t = useTranslations(language);
+
+const features = await sanityClient.fetch(`*[_type == "feature" && language == $language && area == $area]`, {
+  language,
+  area: 'operator',
+});
+
+const faqs = await sanityClient.fetch(
+  `*[_type == "faq" && area==$area]{
+"question": question[_key == $language][0].value,
+"answer": answer[_key == $language][0].value,
+}`,
+  { language, area: 'operator' }
+);
+
+const testimonials = await sanityClient.fetch(
+  `*[_type == "testimonial" && area==$area]{
+  name,
+"text": text[_key == $language][0].value,
+"position": position[_key == $language][0].value,
+image
+}`,
+  { language, area: 'operator' }
+);
+
+const highlights = await sanityClient.fetch(
+  `*[_type == "highlight" && area==$area]{
+  name,
+"title": title[_key == $language][0].value,
+"description": description[_key == $language][0].value
+}`,
+  { language, area: 'operator' }
+);
+---
+
+<!-- Hero Widget ******************* -->
+<Hero2
+  tagline={t('operator.hero.tagline')}
+  image={{
+    src: 'https://images.unsplash.com/photo-1580481072645-022f9a6dbf27?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
+    alt: 'SmartBuoy App Image',
+  }}
+>
+  <Fragment slot="title">
+    <span class="text-primary dark:text-white highlight">{t('operator.hero.title')}</span>: <br />
+    {t('operator.hero.title-1')}
+    <span class="hidden xl:inline"> {t('operator.hero.title-2')}</span>
+  </Fragment>
+
+  <Fragment slot="subtitle">
+    <span class="hidden sm:inline">
+      {t('operator.hero.sub-title-1')}
+    </span>
+    {t('operator.hero.sub-title-2')}
+  </Fragment>
+
+  <div slot="actions" class="flex max-w-sm gap-4">
+    <Button variant="primary" href={appLink}>{t('operator.hero.get-started')}</Button>
+
+    <Button href={learnMoreLink}>{t('operator.hero.learn-more')}</Button>
+  </div>
+</Hero2>
+
+<!-- Features Widget *************** -->
+
+{
+  highlights.length > 0 && (
+    <Features
+      id="features"
+      tagline={t('operator.highlights.tagline')}
+      title={t('operator.highlights.title')}
+      subtitle={t('operator.highlights.sub-title')}
+      items={highlights.map((highlight) => ({
+        title: highlight.title,
+        description: highlight.description,
+        icon: 'tabler:brand-tailwind',
+      }))}
+    />
+  )
+}
+
+<!-- Content Widget **************** -->
+{
+  features.length > 0 &&
+    features.map((feature, index) => (
+      <FeatureContent
+        id="use-cases"
+        title={t('operator.use-cases.title')}
+        subtitle={t('operator.use-cases.sub-title')}
+        tagline={t('operator.use-cases.tagline')}
+        isAfterContent={index > 0}
+        isReversed={index % 2 == 0}
+        feature={feature}
+      >
+        <Fragment slot="content">
+          <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">{feature.title}</h3>
+          {feature.subtitle}
+        </Fragment>
+
+        <Fragment slot="bg">
+          <div class="absolute inset-0 bg-blue-50 dark:bg-transparent" />
+        </Fragment>
+      </FeatureContent>
+    ))
+}
+
+<!-- Testimonials Widget *********** -->
+
+{
+  testimonials.length > 0 && (
+    <Testimonials
+      title={t('operator.testimonials.title')}
+      testimonials={testimonials.map((testimonial) => ({
+        testimonial: testimonial.text,
+        name: testimonial.name,
+        job: testimonial.position,
+        image: {
+          src: urlForImage(testimonial.image).width(50).url(),
+          alt: `Image of ${testimonial.name}`,
+        },
+      }))}
+    />
+  )
+}
+
+<!-- FAQs Widget ******************* -->
+{
+  faqs.length > 0 && (
+    <FAQs
+      title={t('operator.faq.title')}
+      subtitle={t('operator.faq.sub-title')}
+      tagline={t('operator.faq.tagline')}
+      classes={{ container: 'max-w-6xl' }}
+      items={faqs.map((faq) => ({
+        title: faq.question,
+        description: faq.answer,
+      }))}
+    />
+  )
+}

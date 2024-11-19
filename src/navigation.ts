@@ -13,7 +13,7 @@ export const headerData = {
     {
       text: 'company',
       links: [
-        {text: 'about', href: getPermalink('/about')},
+        // {text: 'about', href: getPermalink('/about')},
         {text: 'team', href: getPermalink('/team')},
       ]
     }
@@ -33,7 +33,7 @@ export const footerData = {
     {
       title: 'company',
       links: [
-        { text: 'about', href: getPermalink('/about') },
+        // { text: 'about', href: getPermalink('/about') },
         { text: 'team', href: getPermalink('/team') },
         { text: 'sdg', href: getPermalink('/sdg') },
       ],
@@ -46,12 +46,12 @@ export const footerData = {
     },
   ],
   secondaryLinks: [
-    { text: 'imprint', href: getPermalink('/imprint') },
+    { text: 'legal-notice', href: getPermalink('/legal-notice') },
     { text: 'privacy', href: getPermalink('/privacy') },
   ],
   socialLinks: [
-    { ariaLabel: 'X', icon: 'tabler:brand-x', href: '#' },
-    { ariaLabel: 'Instagram', icon: 'tabler:brand-instagram', href: '#' },
+    // { ariaLabel: 'X', icon: 'tabler:brand-x', href: '#' },
+    { ariaLabel: 'Instagram', icon: 'tabler:brand-instagram', href: 'https://www.instagram.com/smartbuoy.docking' },
     { ariaLabel: 'LinkedIn', icon: 'tabler:brand-linkedin', href: 'https://www.linkedin.com/company/smartbuoy-gmbh/' },
     { ariaLabel: 'Facebook', icon: 'tabler:brand-facebook', href: 'https://www.facebook.com/profile.php?id=61553150710926' },
     // { ariaLabel: 'RSS', icon: 'tabler:rss', href: getAsset('/rss.xml') },
