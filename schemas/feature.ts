@@ -16,5 +16,37 @@ export default defineType({
             type: 'array',
             of: [{type: 'block'}]
         }),
+        defineField({
+            name: 'area',
+            title: 'Area',
+            type: 'string',
+            initialValue: 'skipper',
+            options: {
+                list: [
+                    {title: 'Skipper', value: 'skipper'},
+                    {title: 'Operator', value: 'operator'},
+                ]
+            }
+        }),
+        defineField({
+            title: 'Order',
+            name: 'order',
+            type: 'number'
+          }),
+        defineField({
+            name: 'language',
+            type: 'string',
+            readOnly: true,
+            hidden: false,
+          })
+    ],
+    orderings: [
+        {
+            title: 'Order',
+            name: 'orderAsc',
+            by: [
+              {field: 'order', direction: 'asc'}
+            ]
+          } 
     ]
 })

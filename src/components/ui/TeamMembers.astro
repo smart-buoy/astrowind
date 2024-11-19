@@ -1,0 +1,27 @@
+---
+import { sanityClient } from 'sanity:client';
+import { getLangFromUrl } from '../../i18n/utils';
+import TeamMember from '~/components/ui/TeamMember.astro';
+
+const language = getLangFromUrl(Astro.url);
+
+const members = await sanityClient.fetch(
+  `*[_type == "teamMember"]{
+name,  
+"position": position[_key == $language][0].value,
+"description": description[_key == $language][0].value,
+image
+}`,
+  { language }
+);
+---
+
+<ul>
+  {
+    members.map((member) => (
+      <li class="mb-12 md:mb-20">
+        <TeamMember member={member} />
+      </li>
+    ))
+  }
+</ul>

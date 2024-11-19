@@ -16,6 +16,11 @@ export default defineType({
             type: 'internationalizedArrayString',
         }),
         defineField({
+            name: 'description',
+            title: 'Description',
+            type: 'internationalizedArrayString',
+        }),
+        defineField({
             name: 'image',
             title: 'Image',
             type: 'image',
@@ -24,10 +29,18 @@ export default defineType({
             }
         }),
         defineField({
-            name: 'language',
-            type: 'string',
-            readOnly: true,
-            hidden: false,
-          })
+            title: 'Order',
+            name: 'order',
+            type: 'number'
+          }),
+    ],
+    orderings: [
+        {
+            title: 'Order',
+            name: 'orderAsc',
+            by: [
+              {field: 'order', direction: 'asc'}
+            ]
+          } 
     ]
 })

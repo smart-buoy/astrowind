@@ -9,7 +9,7 @@ import LanguagePicker from '~/components/widgets/LanguagePicker.astro';
 import { getHomePermalink } from '~/utils/permalinks';
 import { trimSlash, getAsset } from '~/utils/permalinks';
 import type { CallToAction } from '~/types';
-import { getLangFromUrl, useTranslations, useTranslatedPath, getRouteWithoutLang } from '../../i18n/utils';
+import { getLangFromUrl, useTranslations, useTranslatedPath } from '../../i18n/utils';
 
 interface Link {
   text?: string;
@@ -50,7 +50,6 @@ const currentPath = `/${trimSlash(new URL(Astro.url).pathname)}`;
 
 const lang = getLangFromUrl(Astro.url);
 const translatePath = useTranslatedPath(lang);
-const routeWithoutLang = getRouteWithoutLang(Astro.url, lang);
 
 const t = useTranslations(lang);
 ---
@@ -115,7 +114,7 @@ const t = useTranslations(lang);
                           ]}
                           href={translatePath(href2, lang)}
                         >
-                          {text2}
+                          {t('nav.' + text2)}
                         </a>
                       </li>
                     ))}
@@ -129,7 +128,7 @@ const t = useTranslations(lang);
                   ]}
                   href={translatePath(href, lang)}
                 >
-                  {text}
+                  {t('nav.' + text)}
                 </a>
               )}
             </li>
@@ -169,8 +168,8 @@ const t = useTranslations(lang);
             ''
           )
         }
+        <LanguagePicker />
       </div>
     </div>
-    <LanguagePicker />
   </div>
 </header>
