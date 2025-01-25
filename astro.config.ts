@@ -18,6 +18,8 @@ import { readingTimeRemarkPlugin, responsiveTablesRehypePlugin, lazyImagesRehype
 import sanity from '@sanity/astro';
 import react from '@astrojs/react';
 
+import netlify from '@astrojs/netlify';
+
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const hasExternalScripts = false;
@@ -89,4 +91,6 @@ export default defineConfig({
       },
     },
   },
+
+  adapter: netlify(),
 });
