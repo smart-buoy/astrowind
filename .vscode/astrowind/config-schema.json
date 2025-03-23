@@ -254,6 +254,15 @@
                 }
               },
               "required": ["id"]
+            },
+            "posthog": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": ["string", "null"]
+                }
+              },
+              "required": ["id"]
             }
           },
           "required": ["googleAnalytics"]

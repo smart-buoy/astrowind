@@ -66,7 +66,9 @@ apps:
 analytics:
   vendors:
     googleAnalytics:
-      id: "G-GR06ZLKEPN" # or "G-XXXXXXXXXX"
+      id: "G-GR06ZLKEPN"
+    posthog:
+      id: "phc_Kc9VaCC91LPczspV4qccUdDy9XFOY2TWV1TQn2Zy2Lc"
 
 ui:
   theme: 'system' # Values: "system" | "light" | "dark" | "light:only" | "dark:only"
