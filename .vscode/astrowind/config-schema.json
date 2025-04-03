@@ -263,6 +263,15 @@
                 }
               },
               "required": ["id"]
+            },
+            "leadfeeder": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": ["string", "null"]
+                }
+              },
+              "required": ["id"]
             }
           },
           "required": ["googleAnalytics"]

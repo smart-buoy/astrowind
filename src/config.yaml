@@ -69,6 +69,8 @@ analytics:
       id: "G-GR06ZLKEPN"
     posthog:
       id: "phc_Kc9VaCC91LPczspV4qccUdDy9XFOY2TWV1TQn2Zy2Lc"
+    leadfeeder:
+      id: "bElvO73gqqE7ZMqj"
 
 ui:
   theme: 'system' # Values: "system" | "light" | "dark" | "light:only" | "dark:only"

@@ -78,6 +78,9 @@ export interface AnalyticsConfig {
     posthog: {
       id?: string;
     };
+    leadfeeder: {
+      id?: string;
+    }
   };
 }
 
