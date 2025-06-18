@@ -58,12 +58,12 @@ export const ui = {
     "operator.hero.get-started": "Get Started",
     "operator.hero.learn-more": "Learn More",
 
-    "operator.highlights.title": "Our Highlights",
+    "operator.highlights.title": "Our Advantage",
     "operator.highlights.sub-title": "Our solution for operators is a comprehensive, user-friendly, and sustainable solution that enables operators to manage their buoys more efficiently and effectively.",
-    "operator.highlights.tagline": "Highlights",
+    "operator.highlights.tagline": "Advantages",
 
     "operator.use-cases.title": "Our Use Cases",
-    "operator.use-cases.sub-title": "Our solution for operators is a comprehensive, user-friendly, and sustainable solution that enables operators to manage their buoys more efficiently and effectively.",
+    "operator.use-cases.sub-title": "The SmartBuoy solution offers buoy field operators a variety of use cases that enable efficient management, proactive maintenance management and improved customer retention.",
     "operator.use-cases.tagline": "Use Cases",
 
     "operator.testimonials.title": "What Our Users Say",
@@ -97,7 +97,7 @@ export const ui = {
     "skipper.hero.sub-title-2": "Jetzt herunterladen und Ihren Aufenthalt genießen",
 
     "skipper.highlights.title": "Unsere Highlights",
-    "skipper.highlights.sub-title": "Unsere Lösung für Skipper ist eine innovative, nachhaltige und benutzerfreundliche Lösung, die es Skippern ermöglicht, ihre Boote effizienter zu betreiben und gleichzeitig die Umwelt zu schützen.",
+    "skipper.highlights.sub-title": "SmartBuoy offers operators a holistic, user-friendly and sustainable option that allows them to manage their buoys more efficiently and effectively.",
     "skipper.highlights.tagline": "Highlights",
 
     "skipper.features.title": "Unsere Lösung für Skipper",
@@ -122,17 +122,17 @@ export const ui = {
     "operator.hero.title-2": "leicht gemacht",
 
     "operator.hero.sub-title-1": "Verwalten Sie Ihre Bojen in Echtzeit.",
-    "operator.hero.sub-title-2": "Starten Sie jetzt und steigern Sie Ihren Umsatz",
+    "operator.hero.sub-title-2": "Setzen Sie auf innovative Lösungen und profitieren Sie von neuen Möglichkeiten!",
 
     "operator.hero.get-started": "Los Geht's",
     "operator.hero.learn-more": "Mehr Erfahren",
 
-    "operator.highlights.title": "Unsere Highlights",
-    "operator.highlights.sub-title": "Unsere Lösung für Betreiber ist eine umfassende, benutzerfreundliche und nachhaltige Lösung, die es Betreibern ermöglicht, ihre Bojen effizienter und effektiver zu verwalten.",
-    "operator.highlights.tagline": "Highlights",
+    "operator.highlights.title": "Unsere Vorteile",
+    "operator.highlights.sub-title": "SmartBuoy bietet Betreibern eine ganzheitliche, benutzerfreundliche und nachhaltige Option, die es ihnen ermöglicht, ihre Bojen effizienter und effektiver zu verwalten.",
+    "operator.highlights.tagline": "Vorteile",
 
     "operator.use-cases.title": "Unsere Anwendungsfälle",
-    "operator.use-cases.sub-title": "Unsere Lösung für Betreiber ist eine umfassende, benutzerfreundliche und nachhaltige Lösung, die es Betreibern ermöglicht, ihre Bojen effizienter und effektiver zu verwalten.",
+    "operator.use-cases.sub-title": "Die SmartBuoy-Lösung bietet Bojenfeldbetreibern vielfältige Anwendungsfälle, die eine effiziente Verwaltung, proaktives Wartungsmanagement und eine verbesserte Kundenbindung ermöglichen.",
     "operator.use-cases.tagline": "Anwendungsfälle",
 
     "operator.testimonials.title": "Was unsere Kunden sagen",

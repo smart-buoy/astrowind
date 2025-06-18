@@ -193,7 +193,14 @@ export default defineConfig({
     resolve: {
       alias: {
         '~': path.resolve(__dirname, './src'),
+        process: 'process/browser',
       },
+    },
+    optimizeDeps: {
+      include: ['process/browser'],
+    },
+    define: {
+      'process.env': {},
     },
   },
 
