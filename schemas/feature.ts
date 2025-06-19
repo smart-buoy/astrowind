@@ -61,5 +61,11 @@ export default defineType({
               {field: 'order', direction: 'asc'}
             ]
           } 
-    ]
+    ],
+    preview: {
+        select: {
+            title: 'title',
+            subtitle: 'area'
+        }
+    }
 })

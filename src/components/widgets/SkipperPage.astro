@@ -76,13 +76,18 @@ const highlights = await sanityClient.fetch(
   </Fragment>
 
   <div slot="actions" class="flex max-w-sm gap-4">
-    <Button variant="link" href={appStoreDownloadLink}>
+    { false && (
+          <Button variant="link" href={appStoreDownloadLink}>
       <Image src={appStoreImg} alt="App Store Image" width={200} />
     </Button>
 
     <Button variant="link" href={googlePlayDownloadLink}>
       <Image src={googlePlayImg} alt="Google Play Image" width={200} />
     </Button>
+    )
+      
+    }
+
   </div>
 </Hero2>
 
@@ -129,15 +134,18 @@ const highlights = await sanityClient.fetch(
 }
 
 <!-- Stats Widget ****************** -->
-
-<Stats
-  title={t('skipper.statistics.title')}
-  stats={[
-    { amount: '20K', icon: 'tabler:download' },
-    { amount: '18.5K', icon: 'tabler:users' },
-    { amount: '4.7', icon: 'tabler:user-star' },
-  ]}
-/>
+{
+  false && (
+    <Stats
+      title={t('skipper.statistics.title')}
+      stats={[
+        { amount: '20K', icon: 'tabler:download' },
+        { amount: '18.5K', icon: 'tabler:users' },
+        { amount: '4.7', icon: 'tabler:user-star' },
+      ]}
+    />
+  )
+}
 
 <!-- Testimonials Widget *********** -->
 
@@ -176,6 +184,7 @@ const highlights = await sanityClient.fetch(
 
 <!-- CallToAction Widget *********** -->
 
+{ false && (
 <CallToAction id="download" title={t('skipper.call-to-action.title')} subtitle={t('skipper.call-to-action.sub-title')}>
   <div slot="actions" class="flex max-w-sm gap-4">
     <Button variant="link" href={appStoreDownloadLink}>
@@ -187,3 +196,6 @@ const highlights = await sanityClient.fetch(
     </Button>
   </div>
 </CallToAction>
+)}
+
+

@@ -28,12 +28,12 @@ export const ui = {
     "skipper.hero.sub-title-1": "Book a buoy in seconds.",
     "skipper.hero.sub-title-2": "Download now and enjoy your stay",
 
-    "skipper.highlights.title": "Our Highlights",
-    "skipper.highlights.sub-title": "Our solution for skippers is an innovative, sustainable, and user-friendly solution that enables skippers to operate their boats more efficiently while protecting the environment.",
-    "skipper.highlights.tagline": "Highlights",
+    "skipper.highlights.title": "Our Advantages",
+    "skipper.highlights.sub-title": "SmartBuoy offers skippers an innovative, sustainable and user-friendly way to operate their boats more efficiently - while actively contributing to environmental protection.",
+    "skipper.highlights.tagline": "Advantages",
 
     "skipper.features.title": "Our Solution for Skippers",
-    "skipper.features.sub-title": "Our solution for skippers is an innovative, sustainable, and user-friendly solution that enables skippers to operate their boats more efficiently while protecting the environment.",
+    "skipper.features.sub-title": "SmartBuoy offers a variety of innovative features, including real-time information, flexible reservation adjustments and data analysis to optimize your boat trips.",
     "skipper.features.tagline": "Features",
 
     "skipper.statistics.title": "Statistics of our app",
@@ -58,8 +58,8 @@ export const ui = {
     "operator.hero.get-started": "Get Started",
     "operator.hero.learn-more": "Learn More",
 
-    "operator.highlights.title": "Our Advantage",
-    "operator.highlights.sub-title": "Our solution for operators is a comprehensive, user-friendly, and sustainable solution that enables operators to manage their buoys more efficiently and effectively.",
+    "operator.highlights.title": "Our Advantages",
+    "operator.highlights.sub-title": "SmartBuoy offers operators a holistic, user-friendly and sustainable option that allows them to manage their buoys more efficiently and effectively.",
     "operator.highlights.tagline": "Advantages",
 
     "operator.use-cases.title": "Our Use Cases",
@@ -94,14 +94,14 @@ export const ui = {
     "skipper.hero.title-2": "einfach gemacht",
 
     "skipper.hero.sub-title-1": "Buchen Sie eine Boje in Sekunden.",
-    "skipper.hero.sub-title-2": "Jetzt herunterladen und Ihren Aufenthalt genießen",
+    "skipper.hero.sub-title-2": "Jetzt herunterladen und Ihren Aufenthalt genießen!!",
 
-    "skipper.highlights.title": "Unsere Highlights",
-    "skipper.highlights.sub-title": "SmartBuoy offers operators a holistic, user-friendly and sustainable option that allows them to manage their buoys more efficiently and effectively.",
-    "skipper.highlights.tagline": "Highlights",
+    "skipper.highlights.title": "Unsere Vorteile",
+    "skipper.highlights.sub-title": "SmartBuoy bietet Skippern eine innovative, nachhaltige und benutzerfreundliche Möglichkeit, ihre Boote effizienter zu betreiben – und dabei aktiv zum Umweltschutz beizutragen.",
+    "skipper.highlights.tagline": "Vorteile",
 
     "skipper.features.title": "Unsere Lösung für Skipper",
-    "skipper.features.sub-title": "Unsere Lösung für Skipper ist eine innovative, nachhaltige und benutzerfreundliche Lösung, die es Skippern ermöglicht, ihre Boote effizienter zu betreiben und gleichzeitig die Umwelt zu schützen.",
+    "skipper.features.sub-title": "SmartBuoy bietet eine Vielzahl von innovativen Features, darunter Echtzeitinformationen, flexible Reservierungsanpassungen und Datenanalysen, um deine Bootsfahrten optimal zu gestalten.",
     "skipper.features.tagline": "Features",
 
     "skipper.statistics.title": "Statistiken unserer App",
@@ -138,7 +138,7 @@ export const ui = {
     "operator.testimonials.title": "Was unsere Kunden sagen",
 
     "operator.faq.title": "Häufig gestellte Fragen",
-    "operator.faq.sub-title": "Hier sind einige häufig gestellte Fragen zu unserer Lösung für Skipper.",
+    "operator.faq.sub-title": "Hier sind einige häufig gestellte Fragen zu unserer Lösung für Bojenbetreiber.",
     "operator.faq.tagline": "FAQ",
 
     "team.title": "Unser Team",

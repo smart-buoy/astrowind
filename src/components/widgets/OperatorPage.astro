@@ -69,10 +69,14 @@ const highlights = await sanityClient.fetch(
     {t('operator.hero.sub-title-2')}
   </Fragment>
 
+  
   <div slot="actions" class="flex max-w-sm gap-4">
-    <Button variant="primary" href={appLink}>{t('operator.hero.get-started')}</Button>
+    { false && (
+        <Button variant="primary" href={appLink}>{t('operator.hero.get-started')}</Button>
 
     <Button href={learnMoreLink}>{t('operator.hero.learn-more')}</Button>
+  )}
+
   </div>
 </Hero2>
 
