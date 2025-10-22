@@ -46,21 +46,8 @@ const metrics = [
   },
 ];
 
-const replacePlaceholders = (
-  text: string,
-  replacements: Record<string, number | string>
-) =>
-  Object.entries(replacements).reduce(
-    (acc, [key, value]) => acc.replace(`{${key}}`, String(value)),
-    text
-  );
-
 const footnote = statistics
-  ? replacePlaceholders(t('environment-impact.footnote'), {
-      bookings: statistics.numberOfBookings,
-      buoys: statistics.numberOfBuoys,
-      devices: statistics.numberOfDevices,
-    })
+  ? t('environment-impact.footnote')
   : t('environment-impact.unavailable');
 ---
 

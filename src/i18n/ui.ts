@@ -56,7 +56,7 @@ export const ui = {
     "environment-impact.metrics.seabed": "square meters of sea ground spared from anchoring.",
     "environment-impact.metrics.microplastic": "kg of micro plastic kept out of the ocean thanks to longer-lasting buoys.",
     "environment-impact.metrics.microplastic-unit": "kg",
-    "environment-impact.footnote": "{bookings} smart bookings, {buoys} resilient buoys and {devices} connected devices are already making waves for the ocean.",
+    "environment-impact.footnote": "SmartBuoy bookings, resilient buoys and connected devices are already making waves for the ocean.",
     "environment-impact.unavailable": "Live environmental statistics are temporarily unavailable. Check back soon to see how SmartBuoy keeps the oceans cleaner.",
 
     "operator.hero.tagline": "Operator Dashboard",
@@ -136,7 +136,7 @@ export const ui = {
     "environment-impact.metrics.seabed": "Quadratmeter Meeresboden, die vor Ankern geschützt werden.",
     "environment-impact.metrics.microplastic": "Kilogramm Mikroplastik, die dank langlebiger Bojen nicht ins Meer gelangen.",
     "environment-impact.metrics.microplastic-unit": "kg",
-    "environment-impact.footnote": "{bookings} clevere Buchungen, {buoys} robuste Bojen und {devices} vernetzte Geräte sorgen bereits für mehr Meeresschutz.",
+    "environment-impact.footnote": "Clevere Buchungen, robuste Bojen und vernetzte Geräte von SmartBuoy sorgen bereits für mehr Meeresschutz.",
     "environment-impact.unavailable": "Live-Umweltstatistiken sind derzeit nicht verfügbar. Schau bald wieder vorbei und sieh, wie SmartBuoy die Ozeane sauberer hält.",
 
 
