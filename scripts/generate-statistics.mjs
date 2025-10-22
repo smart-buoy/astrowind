@@ -1,9 +1,77 @@
 #!/usr/bin/env node
-import { mkdir, writeFile } from 'node:fs/promises';
+import { access, mkdir, readFile, writeFile } from 'node:fs/promises';
+import { constants as fsConstants } from 'node:fs';
 import path from 'node:path';
 
 const DEFAULT_API_URL = 'https://core-api.dev.smartbuoy.eu/statistics';
 const DEFAULT_API_KEY = '2d29a429-7337-4777-867e-ecdd6808025d';
+
+const ENV_FILE_ORDER = ['.env', '.env.local'];
+
+const getModeSpecificEnvFiles = (mode) =>
+  [`.env.${mode}`, `.env.${mode}.local`].filter(Boolean);
+
+const parseEnvFile = (contents) => {
+  const entries = {};
+
+  for (const line of contents.split(/\r?\n/)) {
+    if (!line || line.trim().startsWith('#')) {
+      continue;
+    }
+
+    const match = line.match(/^\s*(?:export\s+)?([\w.-]+)\s*=\s*(.*)?\s*$/);
+
+    if (!match) {
+      continue;
+    }
+
+    const key = match[1];
+    let value = match[2] ?? '';
+
+    if (value.startsWith('"') && value.endsWith('"')) {
+      value = value.slice(1, -1).replace(/\\n/g, '\n');
+    } else if (value.startsWith("'") && value.endsWith("'")) {
+      value = value.slice(1, -1);
+    } else {
+      value = value.replace(/\s+#.*$/, '').trim();
+    }
+
+    entries[key] = value;
+  }
+
+  return entries;
+};
+
+const loadEnvironmentFromFiles = async () => {
+  const cwd = process.cwd();
+  const mode = process.env.ASTRO_MODE ?? process.env.NODE_ENV ?? 'development';
+  const candidates = [...ENV_FILE_ORDER, ...getModeSpecificEnvFiles(mode)];
+  const initialKeys = new Set(Object.keys(process.env));
+  const aggregated = {};
+
+  for (const relative of candidates) {
+    const filePath = path.join(cwd, relative);
+
+    try {
+      await access(filePath, fsConstants.F_OK);
+    } catch {
+      continue;
+    }
+
+    try {
+      const raw = await readFile(filePath, 'utf8');
+      Object.assign(aggregated, parseEnvFile(raw));
+    } catch (error) {
+      console.warn('[statistics] Failed to read env file', relative, error?.message ?? error);
+    }
+  }
+
+  for (const [key, value] of Object.entries(aggregated)) {
+    if (!initialKeys.has(key)) {
+      process.env[key] = value;
+    }
+  }
+};
 
 const buildStatisticsUrl = (baseUrl, apiKey) => {
   try {
@@ -30,12 +98,15 @@ const fetchStatistics = async () => {
   const apiKey = process.env.STATISTICS_API_KEY ?? DEFAULT_API_KEY;
 
   const requestUrl = buildStatisticsUrl(apiUrl, apiKey);
+  const headers = { Accept: 'application/json' };
+
+  if (apiKey) {
+    headers['x-api-key'] = apiKey;
+  }
 
   try {
     const response = await fetch(requestUrl, {
-      headers: {
-        Accept: 'application/json',
-      },
+      headers,
       cache: 'no-store',
     });
 
@@ -71,6 +142,7 @@ const writeStatisticsModule = async (payload) => {
 };
 
 const main = async () => {
+  await loadEnvironmentFromFiles();
   const payload = await fetchStatistics();
   await writeStatisticsModule(payload);
 };

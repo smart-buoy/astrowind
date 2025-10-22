@@ -34,12 +34,15 @@ export const fetchStatistics = async (): Promise<SmartBuoyStatistics | null> => 
   const apiKey = import.meta.env.STATISTICS_API_KEY ?? DEFAULT_API_KEY;
 
   const requestUrl = buildStatisticsUrl(apiUrl, apiKey);
+  const headers: Record<string, string> = { Accept: 'application/json' };
+
+  if (apiKey) {
+    headers['x-api-key'] = apiKey;
+  }
 
   try {
     const response = await fetch(requestUrl, {
-      headers: {
-        Accept: 'application/json',
-      },
+      headers,
       cache: 'no-store',
     });
 
