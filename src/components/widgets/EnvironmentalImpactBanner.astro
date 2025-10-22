@@ -1,12 +1,12 @@
 ---
 import { getLangFromUrl, useTranslations } from '~/i18n/utils';
-import { fetchStatistics } from '~/utils/statistics';
+import { getStaticStatistics } from '~/utils/statistics';
 import { calculateEnvironmentalImpact } from '~/utils/environmentImpact';
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 
-const statistics = await fetchStatistics();
+const statistics = getStaticStatistics();
 const impact = calculateEnvironmentalImpact(statistics);
 const locale = lang === 'de' ? 'de-DE' : 'en-US';
 

@@ -1,7 +1,14 @@
+import { statisticsPayload } from '~/generated/statistics';
+
 export interface SmartBuoyStatistics {
   numberOfDevices: number;
   numberOfBuoys: number;
   numberOfBookings: number;
+}
+
+export interface StaticStatisticsPayload {
+  statistics: SmartBuoyStatistics | null;
+  fetchedAt: string | null;
 }
 
 const DEFAULT_API_URL = 'https://core-api.dev.smartbuoy.eu/statistics';
@@ -58,3 +65,8 @@ export const fetchStatistics = async (): Promise<SmartBuoyStatistics | null> => 
     return null;
   }
 };
+
+export const getStaticStatisticsPayload = (): StaticStatisticsPayload => statisticsPayload;
+
+export const getStaticStatistics = (): SmartBuoyStatistics | null =>
+  statisticsPayload.statistics ?? null;
