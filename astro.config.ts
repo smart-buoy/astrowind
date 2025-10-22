@@ -197,7 +197,7 @@ export default defineConfig({
       },
     },
     optimizeDeps: {
-      include: ['process/browser'],
+        include: ['process/browser'],
     },
     define: {
       'process.env': {},
