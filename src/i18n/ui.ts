@@ -49,7 +49,7 @@ export const ui = {
 
     "environment-impact.tagline": "Impact",
     "environment-impact.title": "Sustainable impact in real numbers",
-    "environment-impact.subtitle": "Based on the latest SmartBuoy network statistics captured for this build.",
+    "environment-impact.subtitle": "Grounded in the latest SmartBuoy network insights.",
     "environment-impact.metrics.co2": "kg of CO₂ emissions avoided thanks to faster bookings.",
     "environment-impact.metrics.fuel": "liters of fuel saved while searching for free buoys.",
     "environment-impact.metrics.fuel-unit": "L",
@@ -129,7 +129,7 @@ export const ui = {
 
     "environment-impact.tagline": "Impact",
     "environment-impact.title": "Nachhaltige Wirkung in echten Zahlen",
-    "environment-impact.subtitle": "Basierend auf den neuesten SmartBuoy-Netzwerkstatistiken, die für diesen Build ermittelt wurden.",
+    "environment-impact.subtitle": "Basierend auf den aktuellsten SmartBuoy-Netzwerkstatistiken.",
     "environment-impact.metrics.co2": "Kilogramm CO₂, die durch schnellere Reservierungen vermieden werden.",
     "environment-impact.metrics.fuel": "Liter Kraftstoff, die bei der Suche nach freien Bojen eingespart werden.",
     "environment-impact.metrics.fuel-unit": "L",
