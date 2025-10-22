@@ -47,6 +47,18 @@ export const ui = {
     "skipper.call-to-action.title": "Download the App",
     "skipper.call-to-action.sub-title": "Get started today and experience the benefits of our solution for skippers.",
 
+    "environment-impact.tagline": "Impact",
+    "environment-impact.title": "Sustainable impact in real numbers",
+    "environment-impact.subtitle": "Grounded in the latest SmartBuoy network insights.",
+    "environment-impact.metrics.co2": "kg of CO₂ emissions avoided thanks to faster bookings.",
+    "environment-impact.metrics.fuel": "liters of fuel saved while searching for free buoys.",
+    "environment-impact.metrics.fuel-unit": "L",
+    "environment-impact.metrics.seabed": "square meters of sea ground spared from anchoring.",
+    "environment-impact.metrics.microplastic": "kg of micro plastic kept out of the ocean thanks to longer-lasting buoys.",
+    "environment-impact.metrics.microplastic-unit": "kg",
+    "environment-impact.footnote": "SmartBuoy bookings and resilient buoys are already making waves for the ocean.",
+    "environment-impact.unavailable": "Live environmental statistics are temporarily unavailable. Check back soon to see how SmartBuoy keeps the oceans cleaner.",
+
     "operator.hero.tagline": "Operator Dashboard",
     "operator.hero.title": "SmartBuoy Dashboard",
     "operator.hero.title-1": "Managing Buoys",
@@ -114,6 +126,18 @@ export const ui = {
 
     "skipper.call-to-action.title": "App herunterladen",
     "skipper.call-to-action.sub-title": "Starten Sie noch heute und erleben Sie die Vorteile unserer Lösung für Skipper.",
+
+    "environment-impact.tagline": "Impact",
+    "environment-impact.title": "Nachhaltige Wirkung in echten Zahlen",
+    "environment-impact.subtitle": "Basierend auf den aktuellsten SmartBuoy-Netzwerkstatistiken.",
+    "environment-impact.metrics.co2": "Kilogramm CO₂, die durch schnellere Reservierungen vermieden werden.",
+    "environment-impact.metrics.fuel": "Liter Kraftstoff, die bei der Suche nach freien Bojen eingespart werden.",
+    "environment-impact.metrics.fuel-unit": "L",
+    "environment-impact.metrics.seabed": "Quadratmeter Meeresboden, die vor Ankern geschützt werden.",
+    "environment-impact.metrics.microplastic": "Kilogramm Mikroplastik, die dank langlebiger Bojen nicht ins Meer gelangen.",
+    "environment-impact.metrics.microplastic-unit": "kg",
+    "environment-impact.footnote": "Clevere Buchungen und robuste Bojen von SmartBuoy sorgen bereits für mehr Meeresschutz.",
+    "environment-impact.unavailable": "Live-Umweltstatistiken sind derzeit nicht verfügbar. Schau bald wieder vorbei und sieh, wie SmartBuoy die Ozeane sauberer hält.",
 
 
     "operator.hero.tagline": "Betreiber Dashboard",

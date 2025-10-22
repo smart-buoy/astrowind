@@ -4,3 +4,12 @@
 /// <reference types="vite/client" />
 /// <reference types="../vendor/integration/types.d.ts" />
 /// <reference types="@sanity/astro/module" />
+
+interface ImportMetaEnv {
+  readonly STATISTICS_API_URL?: string;
+  readonly STATISTICS_API_KEY?: string;
+}
+
+interface ImportMeta {
+  readonly env: ImportMetaEnv;
+}
