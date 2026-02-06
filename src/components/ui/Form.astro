@@ -14,8 +14,44 @@ const { inputs, textarea, disclaimer, button = 'Contact us', description = '' } 
   {
     inputs &&
       inputs.map(
-        ({ type = 'text', name, label = '', autocomplete = 'on', placeholder = '' }) =>
-          name && (
+        ({
+          type = 'text',
+          name,
+          label = '',
+          autocomplete = 'on',
+          placeholder = '',
+          options,
+          variant,
+          required,
+        }) =>
+          name &&
+          (type === 'radio' && variant === 'toggle' && options?.length ? (
+            <div class="mb-6">
+              {label && (
+                <label class="block text-sm font-medium mb-2">{label}</label>
+              )}
+              <div
+                class="flex w-full p-0.5 rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-slate-800"
+                role="group"
+                aria-label={label}
+              >
+                {options.map((opt, i) => (
+                  <label
+                    class="cursor-pointer flex-1 text-center py-2.5 px-4 text-sm font-medium rounded-md transition-colors has-[:checked]:bg-primary has-[:checked]:text-white has-[:checked]:shadow"
+                  >
+                    <input
+                      type="radio"
+                      name={name}
+                      value={opt.value}
+                      required={required}
+                      class="sr-only"
+                    />
+                    {opt.label}
+                  </label>
+                ))}
+              </div>
+            </div>
+          ) : (
             <div class="mb-6">
               {label && (
                 <label for={name} class="block text-sm font-medium">
@@ -28,10 +64,11 @@ const { inputs, textarea, disclaimer, button = 'Contact us', description = '' } 
                 id={name}
                 autocomplete={autocomplete}
                 placeholder={placeholder}
+                required={required}
                 class="py-3 px-4 block w-full text-md rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-900"
               />
             </div>
-          )
+          ))
       )
   }
 
@@ -46,6 +83,7 @@ const { inputs, textarea, disclaimer, button = 'Contact us', description = '' } 
           name={textarea.name ? textarea.name : 'message'}
           rows={textarea.rows ? textarea.rows : 4}
           placeholder={textarea.placeholder}
+          required={textarea.required}
           class="py-3 px-4 block w-full text-md rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-900"
         />
       </div>

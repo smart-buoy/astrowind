@@ -164,12 +164,20 @@ export interface Testimonial {
   image?: string | unknown;
 }
 
+export interface InputOption {
+  label: string;
+  value: string;
+}
+
 export interface Input {
   type: HTMLInputTypeAttribute;
   name: string;
   label?: string;
   autocomplete?: string;
   placeholder?: string;
+  options?: InputOption[];
+  variant?: 'toggle';
+  required?: boolean;
 }
 
 export interface Textarea {
@@ -177,6 +185,7 @@ export interface Textarea {
   name?: string;
   placeholder?: string;
   rows?: number;
+  required?: boolean;
 }
 
 export interface Disclaimer {

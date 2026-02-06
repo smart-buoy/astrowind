@@ -1,63 +1,80 @@
 ---
+import { getLangFromUrl, useTranslations } from '~/i18n/utils';
 import HeroText from '~/components/widgets/HeroText.astro';
 import ContactUs from '~/components/widgets/Contact.astro';
 import Features2 from '~/components/widgets/Features2.astro';
+
+const language = getLangFromUrl(Astro.url);
+const t = useTranslations(language);
 ---
 
 <!-- HeroText Widget ******************* -->
-<HeroText tagline="Contact" title="Let's Connect!" />
+<HeroText tagline={t('contact.hero.tagline')} title={t('contact.hero.title')} />
 
 <ContactUs
   id="form"
-  title="Drop us a message today!"
-  subtitle="For quicker answers, explore our FAQs section. You may find the solution you're looking  for right there! If not, our support team is delighted to help you."
+  title={t('contact.form.title')}
+  subtitle={t('contact.form.subtitle')}
   inputs={[
     {
       type: 'text',
       name: 'name',
-      label: 'Name',
+      label: t('contact.form.name-label'),
+      required: true,
+    },
+    {
+      type: 'radio',
+      name: 'role',
+      label: t('contact.form.role-label'),
+      variant: 'toggle',
+      options: [
+        { label: t('contact.form.role-skipper'), value: 'skipper' },
+        { label: t('contact.form.role-operator'), value: 'operator' },
+      ],
+      required: true,
     },
     {
       type: 'email',
       name: 'email',
-      label: 'Email',
+      label: t('contact.form.email-label'),
+      required: true,
     },
   ]}
   textarea={{
-    label: 'Message',
+    label: t('contact.form.message-label'),
+    required: true,
   }}
   disclaimer={{
-    label: 'By submitting this contact form, you acknowledge and agree to the collection of your personal information.',
+    label: t('contact.form.disclaimer'),
   }}
-  description="Our support team typically responds within 24 business hours."
+  button={t('contact.form.button')}
+  description={t('contact.form.description')}
 />
 
 <!-- Features2 Widget ************** -->
 
 <Features2
-  title="We are here to help!"
+  title={t('contact.features.title')}
   items={[
     {
-      title: 'General support',
-      description: `Chat with us for inquiries related to account management, website navigation, payment issues, accessing purchased templates or general questions about the website's functionality.`,
+      title: t('contact.features.general-support.title'),
+      description: t('contact.features.general-support.description'),
     },
     {
-      title: 'Contact sales',
-      description:
-        'Chat with us for questions about purchases, customization options, licensing for commercial use, inquiries about specific template, etc.',
+      title: t('contact.features.contact-sales.title'),
+      description: t('contact.features.contact-sales.description'),
     },
     {
-      title: 'Technical support',
-      description:
-        'Chat with us when facing issues like template installation, problems editing difficulties, compatibility issues with software or download errors, or other technical challenges related to using the templates.',
+      title: t('contact.features.technical-support.title'),
+      description: t('contact.features.technical-support.description'),
     },
     {
-      title: 'Email',
+      title: t('contact.features.email'),
       description: 'contact@smartbuoy.eu',
       icon: 'tabler:mail',
     },
     {
-      title: 'Location',
+      title: t('contact.features.location'),
       description: 'Retzfeld 7, 4222, St. Georgen an der Gusen, Austria',
       icon: 'tabler:map-pin',
     },

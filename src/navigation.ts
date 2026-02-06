@@ -20,6 +20,10 @@ export const headerData = {
         // {text: 'about', href: getPermalink('/about')},
         { text: 'team', href: getPermalink('/team') },
       ]
+    },
+    {
+      text: 'contact',
+      href: getPermalink('/contact')
     }
   ],
   actions: [],
