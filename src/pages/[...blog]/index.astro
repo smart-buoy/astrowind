@@ -49,6 +49,6 @@ const metadata = merge(
   <SinglePost post={{ ...post, image: image }} url={url}>
     {post.Content ? <post.Content /> : <Fragment set:html={post.content || ''} />}
   </SinglePost>
-  <ToBlogLink />
+  <ToBlogLink lang={post.lang} />
   <RelatedPosts post={post} />
 </Layout>

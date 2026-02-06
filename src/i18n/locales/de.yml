@@ -5,6 +5,7 @@ nav:
   company: "Unternehmen"
   about: "Über uns"
   team: "Team"
+  blog: "Blog"
   product: "Produkt"
   support: "Support"
   contact: "Kontakt"
@@ -86,3 +87,15 @@ operator:
 team:
   title: "Unser Team"
   subtitle: "Wir sind ein Team aus leidenschaftlichen Seglern, Ingenieuren und Unternehmern, die sich der nachhaltigen Gestaltung der maritimen Industrie verschrieben haben."
+
+# Blog
+blog:
+  title: "Der Blog"
+  subtitle: "Neuigkeiten, Anleitungen und Updates von SmartBuoy."
+  back-to-blog: "Zurück zum Blog"
+  related-posts: "Ähnliche Beiträge"
+  view-all-posts: "Alle Beiträge"
+  page: "Seite"
+  category: "Kategorie"
+  tag: "Tag"
+  posts-by-tag: "Beiträge mit Tag"

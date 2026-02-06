@@ -2,10 +2,44 @@
 import { defaultLang, languages } from '../../i18n/ui';
 import { getLangFromUrl, useTranslatedPath, getRouteWithoutLang } from '../../i18n/utils';
 import { Icon } from 'astro-icon/components';
+import { fetchPostsByLang } from '~/utils/blog';
 
 const lang = getLangFromUrl(Astro.url);
 const translatePath = useTranslatedPath(lang);
 const routeWithoutLang = getRouteWithoutLang(Astro.url, lang);
+
+// If the current route is a blog post slug, switching to a language without that post
+// should go to the blog overview (instead of a 404).
+const routeTrimmed = (routeWithoutLang ?? '/').replace(/^\/+/, '');
+const isKnownNonPostRoute =
+  routeTrimmed === '' ||
+  routeTrimmed === 'blog' ||
+  routeTrimmed.startsWith('blog/') ||
+  routeTrimmed.startsWith('category') ||
+  routeTrimmed.startsWith('tag') ||
+  routeTrimmed.startsWith('de/blog') ||
+  routeTrimmed.startsWith('de/category') ||
+  routeTrimmed.startsWith('de/tag');
+
+const currentSlugCandidate = !isKnownNonPostRoute ? routeTrimmed.split('/')[0] : undefined;
+
+const languageLinks: { targetLang: string; label: string; href: string }[] = [];
+for (const [targetLang, label] of Object.entries(languages)) {
+  let href =
+    !routeWithoutLang && defaultLang === targetLang ? '/' : translatePath(routeWithoutLang, targetLang);
+
+  if (currentSlugCandidate) {
+    const posts = await fetchPostsByLang(targetLang);
+    const targetPermalink =
+      targetLang === defaultLang ? currentSlugCandidate : `${targetLang}/${currentSlugCandidate}`;
+    const exists = posts.some((p) => p.permalink === targetPermalink);
+    if (!exists) {
+      href = translatePath('/blog', targetLang);
+    }
+  }
+
+  languageLinks.push({ targetLang, label, href });
+}
 ---
 
 <ul>
@@ -18,14 +52,14 @@ const routeWithoutLang = getRouteWithoutLang(Astro.url, lang);
       class="dropdown-menu md:backdrop-blur-md dark:md:bg-dark rounded md:absolute pl-4 md:pl-0 md:hidden font-medium md:bg-white/90 md:min-w-[200px] drop-shadow-xl"
     >
       {
-        Object.entries(languages).map(([lang, label]) => (
+        languageLinks.map(({ targetLang, label, href }) => (
           <li>
             <a
               class:list={[
                 'first:rounded-t last:rounded-b md:hover:bg-gray-100 hover:text-link dark:hover:text-white dark:hover:bg-gray-700 py-2 px-5 block whitespace-no-wrap',
-                { 'aw-link-active': lang === defaultLang },
+                { 'aw-link-active': targetLang === defaultLang },
               ]}
-              href={!routeWithoutLang && defaultLang == lang ? '/' : translatePath(routeWithoutLang, lang)}
+              href={href}
             >
               {label}
             </a>

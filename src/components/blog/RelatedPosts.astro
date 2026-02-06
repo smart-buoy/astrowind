@@ -5,6 +5,7 @@ import { getRelatedPosts } from '~/utils/blog';
 import BlogHighlightedPosts from '../widgets/BlogHighlightedPosts.astro';
 import type { Post } from '~/types';
 import { getBlogPermalink } from '~/utils/permalinks';
+import { ui } from '~/i18n/ui';
 
 export interface Props {
   post: Post;
@@ -12,7 +13,11 @@ export interface Props {
 
 const { post } = Astro.props;
 
-const relatedPosts = post.tags ? await getRelatedPosts(post, 4) : [];
+const count = APP_BLOG.relatedPostsCount ?? 4;
+const relatedPosts = post.tags ? await getRelatedPosts(post, count) : [];
+const locale = (post.lang in ui ? ui[post.lang as keyof typeof ui] : ui.en) ?? ui.en;
+const relatedTitle = locale['blog.related-posts'] ?? 'Related Posts';
+const viewAllText = locale['blog.view-all-posts'] ?? 'View All Posts';
 ---
 
 {
@@ -22,10 +27,10 @@ const relatedPosts = post.tags ? await getRelatedPosts(post, 4) : [];
         container:
           'pt-0 lg:pt-0 md:pt-0 intersect-once intersect-quarter motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade',
       }}
-      title="Related Posts"
-      linkText="View All Posts"
-      linkUrl={getBlogPermalink()}
-      postIds={relatedPosts.map((post) => post.id)}
+      title={relatedTitle}
+      linkText={viewAllText}
+      linkUrl={getBlogPermalink(post.lang)}
+      postIds={relatedPosts.map((p) => p.id)}
     />
   ) : null
 }

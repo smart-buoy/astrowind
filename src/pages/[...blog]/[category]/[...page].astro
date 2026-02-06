@@ -1,6 +1,7 @@
 ---
 import type { InferGetStaticPropsType, GetStaticPaths } from 'astro';
 import { blogCategoryRobots, getStaticPathsBlogCategory } from '~/utils/blog';
+import { languages } from '~/i18n/ui';
 
 import Layout from '~/layouts/PageLayout.astro';
 import BlogList from '~/components/blog/List.astro';
@@ -10,12 +11,19 @@ import Pagination from '~/components/blog/Pagination.astro';
 export const prerender = true;
 
 export const getStaticPaths = (async ({ paginate }) => {
-  return await getStaticPathsBlogCategory({ paginate });
+  const langs = Object.keys(languages) as Array<keyof typeof languages>;
+  const paths = await Promise.all(
+    langs.map((lang) => getStaticPathsBlogCategory({ paginate, lang }))
+  );
+  return paths.flat();
 }) satisfies GetStaticPaths;
 
-type Props = InferGetStaticPropsType<typeof getStaticPaths> & { category: Record<string, string> };
+type Props = InferGetStaticPropsType<typeof getStaticPaths> & {
+  category: Record<string, string>;
+  lang?: string;
+};
 
-const { page, category } = Astro.props as Props;
+const { page, category, lang = 'en' } = Astro.props as Props;
 
 const currentPage = page.currentPage ?? 1;
 

@@ -78,6 +78,7 @@ export const routes = {
     about: 'about',
     team: 'team',
     contact: 'contact',
+    blog: 'blog',
     'legal-notice': 'legal-notice',
     privacy: 'privacy',
   },
@@ -86,8 +87,9 @@ export const routes = {
     operator: 'betreiber',
     about: 'ueber-uns',
     team: 'team',
+    contact: 'kontakt',
+    blog: 'blog',
     'legal-notice': 'impressum',
     privacy: 'datenschutz',
-    contact: 'kontakt',
   },
 } as const;

@@ -2,6 +2,7 @@ import slugify from 'limax';
 
 import { SITE, APP_BLOG } from 'astrowind:config';
 
+import { defaultLang } from '~/i18n/ui';
 import { trim } from '~/utils/utils';
 
 export const trimSlash = (s: string) => trim(trim(s, '/'));
@@ -90,7 +91,12 @@ export const getPermalink = (slug = '', type = 'page'): string => {
 export const getHomePermalink = (): string => getPermalink('/');
 
 /** */
-export const getBlogPermalink = (): string => getPermalink(BLOG_BASE);
+export const getBlogPermalink = (lang?: string): string => {
+  if (lang && lang !== defaultLang) {
+    return getPermalink(`${lang}/${BLOG_BASE}`);
+  }
+  return getPermalink(BLOG_BASE);
+};
 
 /** */
 export const getAsset = (path: string): string =>
