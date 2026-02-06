@@ -1,23 +1,25 @@
 ---
-import { sanityClient } from 'sanity:client';
+import { getCollection } from 'astro:content';
 import { getLangFromUrl } from '../../i18n/utils';
 import TeamMember from '~/components/ui/TeamMember.astro';
 
 const language = getLangFromUrl(Astro.url);
+const teamEntries = await getCollection('team');
+const sorted = teamEntries.sort((a, b) => (a.data.order ?? 999) - (b.data.order ?? 999));
 
-const members = await sanityClient.fetch(
-  `*[_type == "teamMember"]{
-name,  
-"position": position[_key == $language][0].value,
-"description": description[_key == $language][0].value,
-socialFacebook,
-socialX,
-socialLinkedIn,
-socialInstagram,
-image
-}`,
-  { language }
-);
+const members = sorted.map((entry) => {
+  const d = entry.data;
+  return {
+    name: d.name,
+    position: (d.position && (d.position[language as 'en' | 'de'] ?? d.position.en)) ?? '',
+    description: (d.description && (d.description[language as 'en' | 'de'] ?? d.description.en)) ?? '',
+    image: d.image,
+    socialFacebook: d.socialFacebook,
+    socialX: d.socialX,
+    socialLinkedIn: d.socialLinkedIn,
+    socialInstagram: d.socialInstagram,
+  };
+});
 ---
 
 <ul>

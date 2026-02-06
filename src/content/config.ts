@@ -46,6 +46,12 @@ const metadataDefinition = () =>
     })
     .optional();
 
+const localizedString = () =>
+  z.object({
+    en: z.string().optional(),
+    de: z.string().optional(),
+  });
+
 const postCollection = defineCollection({
   loader: glob({
     pattern: ['en/*.md', 'en/*.mdx', 'de/*.md', 'de/*.mdx'],
@@ -71,6 +77,25 @@ const postCollection = defineCollection({
   }),
 });
 
+const teamCollection = defineCollection({
+  loader: glob({
+    pattern: '*.mdx',
+    base: 'src/data/team',
+  }),
+  schema: z.object({
+    name: z.string(),
+    image: z.string().optional(),
+    order: z.number().optional(),
+    position: localizedString().optional(),
+    description: localizedString().optional(),
+    socialFacebook: z.string().url().optional(),
+    socialX: z.string().url().optional(),
+    socialLinkedIn: z.string().url().optional(),
+    socialInstagram: z.string().url().optional(),
+  }),
+});
+
 export const collections = {
   post: postCollection,
+  team: teamCollection,
 };

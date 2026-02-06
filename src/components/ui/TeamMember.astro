@@ -1,5 +1,4 @@
 ---
-import { urlForImage } from '~/utils/sanity';
 import Image from '~/components/common/Image.astro';
 import { Icon } from 'astro-icon/components';
 
@@ -10,16 +9,17 @@ const { member } = Astro.props;
   class={`max-w-md mx-auto md:max-w-none grid gap-6 md:gap-8 intersect-once intersect-quarter motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade ${member.image ? 'md:grid-cols-2' : ''}`}
 >
   <div
-    class="relative h-[300px] pb-[56.25%] md:pb-[75%] lg:pb-[56.25%] overflow-hidden bg-gray-400 dark:bg-slate-700 rounded shadow-lg"
+    class="relative aspect-[4/3.5] w-full overflow-hidden bg-gray-400 dark:bg-slate-700 rounded shadow-lg"
   >
     {
       member.image && (
         <Image
-          src={urlForImage(member.image).width(400).url()}
-          class="absolute inset-0 object-cover !object-top w-full h-full mb-4 md:mb-6 rounded shadow-lg bg-gray-400 dark:bg-slate-700"
-          widths={[400, 900]}
-          width={900}
-          sizes="(max-width: 900px) 400px, 900px"
+          src={member.image}
+          class="absolute inset-0 w-full h-full object-cover rounded shadow-lg bg-gray-400 dark:bg-slate-700"
+          objectPosition="center top"
+          widths={[400, 800]}
+          width={800}
+          sizes="(max-width: 768px) 100vw, 50vw"
           alt={member.name}
           loading="lazy"
           decoding="async"
