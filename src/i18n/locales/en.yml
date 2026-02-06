@@ -1,0 +1,88 @@
+# Navigation
+nav:
+  skipper: "For Skippers"
+  operator: "For Owners"
+  company: "Company"
+  about: "About Us"
+  team: "Team"
+  product: "Product"
+  support: "Support"
+  contact: "Contact"
+  legal-notice: "Legal Notice"
+  privacy: "Privacy Policy"
+  sdg: "SDG"
+
+# Skipper section
+skipper:
+  hero:
+    tagline: "Skipper App"
+    title: "SmartBuoy App"
+    title-1: "Booking Buoys"
+    title-2: "made easy"
+    sub-title-1: "Book a buoy in seconds."
+    sub-title-2: "Download now and enjoy your stay"
+  highlights:
+    title: "Our Advantages"
+    sub-title: "SmartBuoy offers skippers an innovative, sustainable and user-friendly way to operate their boats more efficiently - while actively contributing to environmental protection."
+    tagline: "Advantages"
+  features:
+    title: "Our Solution for Skippers"
+    sub-title: "SmartBuoy offers a variety of innovative features, including real-time information, flexible reservation adjustments and data analysis to optimize your boat trips."
+    tagline: "Features"
+  statistics:
+    title: "Statistics of our app"
+  testimonials:
+    title: "What Our Users Say"
+  faq:
+    title: "Frequently Asked Questions"
+    sub-title: "Here are some frequently asked questions about our solution for skippers."
+    tagline: "FAQ"
+  call-to-action:
+    title: "Download the App"
+    sub-title: "Get started today and experience the benefits of our solution for skippers."
+
+# Environment impact
+environment-impact:
+  tagline: "Impact"
+  title: "Sustainable impact in real numbers"
+  subtitle: "Grounded in the latest SmartBuoy network insights."
+  metrics:
+    co2: "kg of CO₂ emissions avoided thanks to faster bookings."
+    fuel: "liters of fuel saved while searching for free buoys."
+    fuel-unit: "L"
+    seabed: "square meters of sea ground spared from anchoring."
+    microplastic: "kg of micro plastic kept out of the ocean thanks to longer-lasting buoys."
+    microplastic-unit: "kg"
+  footnote: "SmartBuoy bookings and resilient buoys are already making waves for the ocean."
+  unavailable: "Live environmental statistics are temporarily unavailable. Check back soon to see how SmartBuoy keeps the oceans cleaner."
+
+# Operator section
+operator:
+  hero:
+    tagline: "Operator Dashboard"
+    title: "SmartBuoy Dashboard"
+    title-1: "Managing Buoys"
+    title-2: "made easy"
+    sub-title-1: "Manage your buoys in real-time."
+    sub-title-2: "Get started now and increase your revenue"
+    get-started: "Get Started"
+    learn-more: "Learn More"
+  highlights:
+    title: "Our Advantages"
+    sub-title: "SmartBuoy offers operators a holistic, user-friendly and sustainable option that allows them to manage their buoys more efficiently and effectively."
+    tagline: "Advantages"
+  use-cases:
+    title: "Our Use Cases"
+    sub-title: "The SmartBuoy solution offers buoy field operators a variety of use cases that enable efficient management, proactive maintenance management and improved customer retention."
+    tagline: "Use Cases"
+  testimonials:
+    title: "What Our Users Say"
+  faq:
+    title: "Frequently Asked Questions"
+    sub-title: "Here are some frequently asked questions about our solution for skippers."
+    tagline: "FAQ"
+
+# Team
+team:
+  title: "Our Team"
+  subtitle: "We are a team of passionate sailors, engineers, and entrepreneurs who are dedicated to making the maritime industry more sustainable."

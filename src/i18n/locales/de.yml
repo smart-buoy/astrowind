@@ -1,0 +1,88 @@
+# Navigation
+nav:
+  skipper: "Für Skipper"
+  operator: "Für Betreiber"
+  company: "Unternehmen"
+  about: "Über uns"
+  team: "Team"
+  product: "Produkt"
+  support: "Support"
+  contact: "Kontakt"
+  legal-notice: "Impressum"
+  privacy: "Datenschutzerklärung"
+  sdg: "SDG"
+
+# Skipper section
+skipper:
+  hero:
+    tagline: "Skipper App"
+    title: "SmartBuoy App"
+    title-1: "Bojen buchen"
+    title-2: "einfach gemacht"
+    sub-title-1: "Buchen Sie eine Boje in Sekunden."
+    sub-title-2: "Jetzt herunterladen und Ihren Aufenthalt genießen!!"
+  highlights:
+    title: "Unsere Vorteile"
+    sub-title: "SmartBuoy bietet Skippern eine innovative, nachhaltige und benutzerfreundliche Möglichkeit, ihre Boote effizienter zu betreiben – und dabei aktiv zum Umweltschutz beizutragen."
+    tagline: "Vorteile"
+  features:
+    title: "Unsere Lösung für Skipper"
+    sub-title: "SmartBuoy bietet eine Vielzahl von innovativen Features, darunter Echtzeitinformationen, flexible Reservierungsanpassungen und Datenanalysen, um deine Bootsfahrten optimal zu gestalten."
+    tagline: "Features"
+  statistics:
+    title: "Statistiken unserer App"
+  testimonials:
+    title: "Was unsere Kunden sagen"
+  faq:
+    title: "Häufig gestellte Fragen"
+    sub-title: "Hier sind einige häufig gestellte Fragen zu unserer Lösung für Skipper."
+    tagline: "FAQ"
+  call-to-action:
+    title: "App herunterladen"
+    sub-title: "Starten Sie noch heute und erleben Sie die Vorteile unserer Lösung für Skipper."
+
+# Environment impact
+environment-impact:
+  tagline: "Impact"
+  title: "Nachhaltige Wirkung in echten Zahlen"
+  subtitle: "Basierend auf den aktuellsten SmartBuoy-Netzwerkstatistiken."
+  metrics:
+    co2: "Kilogramm CO₂, die durch schnellere Reservierungen vermieden werden."
+    fuel: "Liter Kraftstoff, die bei der Suche nach freien Bojen eingespart werden."
+    fuel-unit: "L"
+    seabed: "Quadratmeter Meeresboden, die vor Ankern geschützt werden."
+    microplastic: "Kilogramm Mikroplastik, die dank langlebiger Bojen nicht ins Meer gelangen."
+    microplastic-unit: "kg"
+  footnote: "Clevere Buchungen und robuste Bojen von SmartBuoy sorgen bereits für mehr Meeresschutz."
+  unavailable: "Live-Umweltstatistiken sind derzeit nicht verfügbar. Schau bald wieder vorbei und sieh, wie SmartBuoy die Ozeane sauberer hält."
+
+# Operator section
+operator:
+  hero:
+    tagline: "Betreiber Dashboard"
+    title: "SmartBuoy Dashboard"
+    title-1: "Bojen verwalten"
+    title-2: "leicht gemacht"
+    sub-title-1: "Verwalten Sie Ihre Bojen in Echtzeit."
+    sub-title-2: "Setzen Sie auf innovative Lösungen und profitieren Sie von neuen Möglichkeiten!"
+    get-started: "Los Geht's"
+    learn-more: "Mehr Erfahren"
+  highlights:
+    title: "Unsere Vorteile"
+    sub-title: "SmartBuoy bietet Betreibern eine ganzheitliche, benutzerfreundliche und nachhaltige Option, die es ihnen ermöglicht, ihre Bojen effizienter und effektiver zu verwalten."
+    tagline: "Vorteile"
+  use-cases:
+    title: "Unsere Anwendungsfälle"
+    sub-title: "Die SmartBuoy-Lösung bietet Bojenfeldbetreibern vielfältige Anwendungsfälle, die eine effiziente Verwaltung, proaktives Wartungsmanagement und eine verbesserte Kundenbindung ermöglichen."
+    tagline: "Anwendungsfälle"
+  testimonials:
+    title: "Was unsere Kunden sagen"
+  faq:
+    title: "Häufig gestellte Fragen"
+    sub-title: "Hier sind einige häufig gestellte Fragen zu unserer Lösung für Bojenbetreiber."
+    tagline: "FAQ"
+
+# Team
+team:
+  title: "Unser Team"
+  subtitle: "Wir sind ein Team aus leidenschaftlichen Seglern, Ingenieuren und Unternehmern, die sich der nachhaltigen Gestaltung der maritimen Industrie verschrieben haben."
