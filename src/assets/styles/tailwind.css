@@ -66,6 +66,18 @@
   display: block;
 }
 
+/* Language dropdown in mobile menu: open upward so it stays in view */
+#header .aw-lang-dropdown {
+  top: auto;
+  bottom: 100%;
+}
+@media (min-width: 768px) {
+  #header .aw-lang-dropdown {
+    top: 100%;
+    bottom: auto;
+  }
+}
+
 [astro-icon].icon-light > * {
   stroke-width: 1.2;
 }

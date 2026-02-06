@@ -36,13 +36,16 @@ for (const [targetLang, label] of Object.entries(languages)) {
 ---
 
 <ul>
-  <li class="dropdown">
-    <button type="button" class="hover:text-link dark:hover:text-white px-4 py-3 flex items-center whitespace-nowrap">
+  <li class="dropdown relative">
+    <button
+      type="button"
+      class="hover:text-link dark:hover:text-white px-4 py-3 flex items-center whitespace-nowrap text-xl md:text-[0.9375rem] font-medium"
+    >
       {lang.toUpperCase()}
-      <Icon name="tabler:chevron-down" class="w-3.5 h-3.5 ml-0.5 rtl:ml-0 rtl:mr-0.5 hidden md:inline" />
+      <Icon name="tabler:chevron-down" class="w-3.5 h-3.5 ml-0.5 rtl:ml-0 rtl:mr-0.5" />
     </button>
     <ul
-      class="dropdown-menu md:backdrop-blur-md dark:md:bg-dark rounded md:absolute pl-4 md:pl-0 md:hidden font-medium md:bg-white/90 md:min-w-[200px] drop-shadow-xl"
+      class="dropdown-menu aw-lang-dropdown hidden absolute right-0 bottom-full mb-1 rounded drop-shadow-xl font-medium pl-4 md:pl-0 md:mb-0 md:bottom-auto md:left-auto backdrop-blur-md bg-white/90 dark:bg-dark min-w-[200px] max-h-[50vh] overflow-y-auto"
     >
       {
         languageLinks.map(({ targetLang, label, href }) => (
@@ -50,7 +53,7 @@ for (const [targetLang, label] of Object.entries(languages)) {
             <a
               class:list={[
                 'first:rounded-t last:rounded-b md:hover:bg-gray-100 hover:text-link dark:hover:text-white dark:hover:bg-gray-700 py-2 px-5 block whitespace-no-wrap',
-                { 'aw-link-active': targetLang === defaultLang },
+                { 'aw-link-active': targetLang === lang },
               ]}
               href={href}
             >
