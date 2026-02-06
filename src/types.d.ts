@@ -48,6 +48,9 @@ export interface Post {
 
   /**  */
   readingTime?: number;
+
+  /** Headings from rendered content (H1–H6) for table of contents. */
+  headings?: Array<{ depth: number; slug: string; text: string }>;
 }
 
 export interface Taxonomy {

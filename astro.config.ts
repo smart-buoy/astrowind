@@ -13,6 +13,7 @@ import type { AstroIntegration } from 'astro';
 
 import astrowind from './vendor/integration';
 
+import rehypeSlug from 'rehype-slug';
 import { readingTimeRemarkPlugin, responsiveTablesRehypePlugin, lazyImagesRehypePlugin } from './src/utils/frontmatter';
 
 import sanity from '@sanity/astro';
@@ -186,7 +187,7 @@ export default defineConfig({
 
   markdown: {
     remarkPlugins: [readingTimeRemarkPlugin],
-    rehypePlugins: [responsiveTablesRehypePlugin, lazyImagesRehypePlugin],
+    rehypePlugins: [rehypeSlug, responsiveTablesRehypePlugin, lazyImagesRehypePlugin],
   },
 
   vite: {

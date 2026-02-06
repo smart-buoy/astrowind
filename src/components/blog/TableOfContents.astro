@@ -1,0 +1,251 @@
+---
+import { Icon } from 'astro-icon/components';
+import type { Post } from '~/types';
+
+export interface Props {
+  /** Post whose headings (H2/H3) to show. Renders nothing if fewer than 2. */
+  post: Post;
+}
+
+const { post } = Astro.props;
+
+const tocHeadings = (post.headings ?? []).filter((h) => h.depth === 2 || h.depth === 3);
+const showToc = tocHeadings.length >= 2;
+---
+
+{showToc && (
+  <nav aria-label="Table of contents" class="toc toc--align-content">
+    <div class="toc__header">
+      <h2 class="toc__title">On this page</h2>
+    </div>
+    <div class="toc__content">
+      <ul class="toc__list">
+        {tocHeadings.map((h) => (
+          <li class={`toc__item ${h.depth === 3 ? 'toc__item--nested' : ''}`}>
+            <a class="toc__link" href={`#${h.slug}`} data-toc-slug={h.slug}>
+              <span class="toc__icon-wrap">
+                <Icon name="tabler:link" class="toc__icon" aria-hidden="true" />
+              </span>
+              <span class="toc__link-content">
+                <span class="toc__link-reserve" aria-hidden="true">{h.text}</span>
+                <span class="toc__link-text">{h.text}</span>
+              </span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </nav>
+)}
+
+{showToc && (
+  <script define:vars={{ tocSlugs: tocHeadings.map((h) => h.slug) }}>
+    (function (slugs) {
+      if (!slugs || slugs.length === 0) return;
+      const nav = document.querySelector('nav.toc');
+      if (!nav) return;
+
+      const links = nav.querySelectorAll('[data-toc-slug]');
+      const headingIds = slugs.filter(function (id) {
+        return document.getElementById(id);
+      });
+
+      var activeOffset = 100;
+
+      function setActiveFromScroll() {
+        var lastPassed = null;
+        for (var i = 0; i < headingIds.length; i++) {
+          var el = document.getElementById(headingIds[i]);
+          if (!el) continue;
+          var top = el.getBoundingClientRect().top;
+          if (top <= activeOffset) lastPassed = el;
+        }
+        var activeId = lastPassed ? lastPassed.id : headingIds[0] || null;
+        links.forEach(function (link) {
+          var slug = link.getAttribute('data-toc-slug');
+          link.classList.toggle('toc__link--active', slug === activeId);
+        });
+      }
+
+      window.addEventListener('scroll', function () {
+        requestAnimationFrame(setActiveFromScroll);
+      }, { passive: true });
+      setActiveFromScroll();
+    })(tocSlugs);
+  </script>
+)}
+
+<style>
+  .toc {
+    border: 1px solid var(--aw-color-toc-border, #e2e8f0);
+    border-radius: 0.5rem;
+    overflow: hidden;
+    font-size: 0.9375rem;
+  }
+
+  .toc--align-content {
+    margin-top: 0;
+  }
+
+  @media (min-width: 1024px) {
+    .toc--align-content {
+      margin-top: 2rem;
+    }
+  }
+
+  :global(.dark) .toc {
+    border-color: var(--aw-color-toc-border-dark, #334155);
+  }
+
+  .toc__header {
+    background: var(--aw-color-primary, rgb(0 67 140));
+    padding: 0.75rem 1.25rem;
+    display: flex;
+    align-items: center;
+    min-height: 2.75rem;
+    box-sizing: border-box;
+  }
+
+  .toc__title {
+    margin: 0;
+    font-size: 0.875rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    color: var(--aw-color-primary-contrast, rgb(255 255 255));
+    line-height: 1.35;
+    display: flex;
+    align-items: center;
+  }
+
+  .toc__content {
+    background: var(--aw-color-bg-page, rgb(255 255 255));
+    padding: 1rem 1.25rem;
+  }
+
+  :global(.dark) .toc__content {
+    background: var(--aw-color-bg-page-dark, rgb(43 43 43));
+  }
+
+  .toc__list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .toc__item {
+    margin: 0;
+    padding: 0.25rem 0;
+    padding-left: 0;
+    border-left: 2px solid transparent;
+    margin-left: 0;
+  }
+
+  .toc__item:first-of-type {
+    padding-top: 0;
+  }
+
+  .toc__item--nested {
+    padding-left: 1rem;
+    margin-left: 0.25rem;
+    border-left-color: var(--aw-color-primary, rgb(0 67 140));
+    opacity: 0.95;
+  }
+
+  :global(.dark) .toc__item--nested {
+    border-left-color: var(--aw-color-primary, rgb(96 165 250));
+  }
+
+  .toc__link {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    color: var(--aw-color-text-default, #334155);
+    text-decoration: none;
+    transition: color 0.15s ease;
+    line-height: 1.4;
+  }
+
+  .toc__icon-wrap {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    height: 1.4em;
+    margin-top: 0.05em;
+  }
+
+  .toc__link:hover {
+    color: var(--aw-color-primary, rgb(0 67 140));
+  }
+
+  .toc__link:hover .toc__icon {
+    color: var(--aw-color-primary, rgb(0 67 140));
+  }
+
+  .toc__icon {
+    flex-shrink: 0;
+    width: 1rem;
+    height: 1rem;
+    color: var(--aw-color-text-muted, #64748b);
+    transition: color 0.15s ease;
+  }
+
+  :global(.dark) .toc__link {
+    color: var(--aw-color-text-default, #e2e8f0);
+  }
+
+  :global(.dark) .toc__link:hover {
+    color: var(--aw-color-primary, rgb(96 165 250));
+  }
+
+  :global(.dark) .toc__icon {
+    color: var(--aw-color-text-muted, rgb(229 236 246 / 0.66));
+  }
+
+  :global(.dark) .toc__link:hover .toc__icon {
+    color: var(--aw-color-primary, rgb(96 165 250));
+  }
+
+  .toc__link-content {
+    position: relative;
+    min-width: 0;
+    flex: 1;
+  }
+
+  .toc__link-reserve {
+    visibility: hidden;
+    display: block;
+    line-height: 1.4;
+    font-size: inherit;
+  }
+
+  .toc__link-text {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    line-height: 1.4;
+    display: block;
+  }
+
+  .toc__link--active,
+  .toc__link.toc__link--active {
+    color: var(--aw-color-primary, rgb(0 67 140));
+    border-left: 2px solid var(--aw-color-primary, rgb(0 67 140));
+    margin-left: -4px;
+    padding-left: 2px;
+  }
+
+  .toc__link--active .toc__icon {
+    color: var(--aw-color-primary, rgb(0 67 140));
+  }
+
+  :global(.dark) .toc__link--active {
+    color: var(--aw-color-primary, rgb(96 165 250));
+    border-left-color: var(--aw-color-primary, rgb(96 165 250));
+  }
+
+  :global(.dark) .toc__link--active .toc__icon {
+    color: var(--aw-color-primary, rgb(96 165 250));
+  }
+</style>
