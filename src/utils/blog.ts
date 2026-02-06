@@ -64,6 +64,7 @@ const getNormalizedPost = async (post: CollectionEntry<'post'>): Promise<Post> =
     draft = false,
     metadata = {},
     lang: frontmatterLang,
+    translationId,
   } = data;
 
   const pathSegments = id.split('/');
@@ -91,6 +92,7 @@ const getNormalizedPost = async (post: CollectionEntry<'post'>): Promise<Post> =
     id: id,
     lang,
     slug: slug,
+    translationId,
     permalink: await generatePermalink({
       id,
       slug,

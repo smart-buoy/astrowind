@@ -11,6 +11,9 @@ export interface Post {
   /** Language code (e.g. en, de). */
   lang: string;
 
+  /** Shared ID across translated posts; used by the language switcher. */
+  translationId?: string;
+
   /**  */
   permalink: string;
 

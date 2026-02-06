@@ -6,6 +6,7 @@ tags:
   - smartbuoy
   - news
 lang: de
+translationId: welcome
 ---
 
 Dies ist der erste Blogbeitrag auf Deutsch. Weitere Artikel folgen.

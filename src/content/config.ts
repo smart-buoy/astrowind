@@ -73,6 +73,9 @@ const postCollection = defineCollection({
     /** Language code (e.g. en, de). If omitted, derived from file path (en/ or de/). */
     lang: z.string().optional(),
 
+    /** Shared ID across translated posts; used by the language switcher to find the same post in another language. */
+    translationId: z.string().optional(),
+
     metadata: metadataDefinition(),
   }),
 });
