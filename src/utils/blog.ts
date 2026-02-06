@@ -255,8 +255,9 @@ export const getStaticPathsBlogCategory = async ({
     }
   });
 
+  const blogBase = [BLOG_BASE, CATEGORY_BASE].filter(Boolean).join('/');
   const blogParam =
-    lang === defaultLang ? CATEGORY_BASE || undefined : `${lang}/${CATEGORY_BASE || 'category'}`;
+    lang === defaultLang ? blogBase || undefined : `${lang}/${blogBase || CATEGORY_BASE || 'category'}`;
 
   return Array.from(Object.keys(categories)).flatMap((categorySlug) =>
     paginate(
@@ -290,8 +291,8 @@ export const getStaticPathsBlogTag = async ({
     }
   });
 
-  const blogParam =
-    lang === defaultLang ? TAG_BASE || undefined : `${lang}/${TAG_BASE || 'tag'}`;
+  const blogBase = [BLOG_BASE, TAG_BASE].filter(Boolean).join('/');
+  const blogParam = lang === defaultLang ? blogBase || undefined : `${lang}/${blogBase || TAG_BASE || 'tag'}`;
 
   return Array.from(Object.keys(tags)).flatMap((tagSlug) =>
     paginate(
