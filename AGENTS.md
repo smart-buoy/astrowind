@@ -45,3 +45,4 @@ This repo is the **SmartBuoy marketing/website**: an Astro static site with Type
 2. Run `npm run check` (and `npm run fix` if needed) when changing code.
 3. New blog posts go in `src/data/post/` and must match the collection schema in `src/content/config.ts`.
 4. For new pages, follow existing patterns in `src/pages/` and use the same layouts and i18n structure where applicable.
+5. Translations are file-based: default `en` pages live in `src/pages/`, and `de` pages mirror them under `src/pages/de/`. Each page and URL must be in the correct language, so any new page, route, or content must be added for all supported languages.
