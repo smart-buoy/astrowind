@@ -1,0 +1,11 @@
+---
+description: SmartBuoy repo conventions and workflow
+alwaysApply: true
+---
+
+# SmartBuoy repo conventions
+
+- **Stack**: Astro 5, TypeScript, React 19, Tailwind. Blog content in `src/data/post/` (MD/MDX); schema in `src/content/config.ts`. i18n: `en` (default), `de` under `src/pages/de/`.
+- **Commands**: Use `npm run dev` / `npm run build` (they run the statistics generator first). Run `npm run check` and `npm run fix` when changing code.
+- **Where to edit**: Pages in `src/pages/`, layouts in `src/layouts/`, components in `src/components/`, blog in `src/data/post/`, styles in `src/assets/styles/`. Sanity schemas in `schemas/`.
+- **New blog posts**: Add to `src/data/post/` with frontmatter matching the collection in `src/content/config.ts` (e.g. `title`, `publishDate`, `category`, `tags`).
