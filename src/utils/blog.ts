@@ -65,6 +65,7 @@ const getNormalizedPost = async (post: CollectionEntry<'post'>): Promise<Post> =
     metadata = {},
     lang: frontmatterLang,
     translationId,
+    banner,
   } = data;
 
   const pathSegments = id.split('/');
@@ -115,6 +116,8 @@ const getNormalizedPost = async (post: CollectionEntry<'post'>): Promise<Post> =
     draft: draft,
 
     metadata,
+
+    banner,
 
     Content: Content,
     // or 'content' in case you consume from API

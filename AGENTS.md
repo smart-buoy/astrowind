@@ -44,5 +44,6 @@ This repo is the **SmartBuoy marketing/website**: an Astro static site with Type
 1. Before suggesting edits to statistics or counts, check whether the data comes from `src/generated/statistics.ts`; if so, suggest changes to `scripts/generate-statistics.mjs` or env/API, not the generated file.
 2. Run `npm run check` (and `npm run fix` if needed) when changing code.
 3. New blog posts go in `src/data/post/` and must match the collection schema in `src/content/config.ts`.
-4. For new pages, follow existing patterns in `src/pages/` and use the same layouts and i18n structure where applicable.
-5. Translations are file-based: default `en` pages live in `src/pages/`, and `de` pages mirror them under `src/pages/de/`. Each page and URL must be in the correct language, so any new page, route, or content must be added for all supported languages.
+4. **In-article banner**: To add the “I read enough” style banner mid-post, add optional `banner: { heading, ctaText, ctaUrl }` to the post frontmatter (see `src/content/config.ts`) and insert `PostBanner` in the MDX body where you want it. Import: `import PostBanner from '~/components/blog/PostBanner.astro';`. Pass values from frontmatter or as props, e.g. `<PostBanner heading="I read enough" ctaText="Let's start" ctaUrl="/contact" />`. Use an internal path (e.g. `/contact`) or full URL for external links.
+5. For new pages, follow existing patterns in `src/pages/` and use the same layouts and i18n structure where applicable.
+6. Translations are file-based: default `en` pages live in `src/pages/`, and `de` pages mirror them under `src/pages/de/`. Each page and URL must be in the correct language, so any new page, route, or content must be added for all supported languages.

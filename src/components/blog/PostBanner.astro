@@ -1,0 +1,48 @@
+---
+/**
+ * In-article CTA banner (primary background, contrast text).
+ * Use in blog MDX: import and place where the banner should appear.
+ * Optional: add banner { heading, ctaText, ctaUrl } to frontmatter and pass as props.
+ */
+export interface Props {
+  /** Large heading on the left (e.g. "I read enough") */
+  heading: string;
+  /** CTA button label (e.g. "Let's start") */
+  ctaText: string;
+  /** Link URL – internal path or external URL */
+  ctaUrl: string;
+}
+
+const { heading, ctaText, ctaUrl } = Astro.props;
+
+const isExternal = ctaUrl.startsWith('http://') || ctaUrl.startsWith('https://');
+const linkAttrs = isExternal
+  ? { href: ctaUrl, rel: 'noopener noreferrer', target: '_blank' }
+  : { href: ctaUrl };
+---
+
+<div class="post-banner not-prose my-8 rounded-lg bg-primary px-6 py-6 sm:px-8 sm:py-8">
+  <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+    <p class="font-heading text-2xl font-bold tracking-tight sm:text-3xl">{heading}</p>
+    <a
+      class="btn-primary shrink-0"
+      {...linkAttrs}
+    >
+      {ctaText}
+    </a>
+  </div>
+</div>
+
+<style>
+  .post-banner {
+    color: var(--aw-color-primary-contrast, rgb(255 255 255));
+  }
+  .post-banner .btn-primary {
+    background-color: var(--aw-color-primary-contrast, rgb(255 255 255));
+    color: var(--aw-color-primary);
+    border-color: var(--aw-color-primary-contrast, rgb(255 255 255));
+  }
+  .post-banner .btn-primary:hover {
+    opacity: 0.9;
+  }
+</style>

@@ -51,6 +51,15 @@ export interface Post {
 
   /** Headings from rendered content (H1–H6) for table of contents. */
   headings?: Array<{ depth: number; slug: string; text: string }>;
+
+  /** Optional in-article banner; use with PostBanner component in MDX. */
+  banner?: PostBanner;
+}
+
+export interface PostBanner {
+  heading: string;
+  ctaText: string;
+  ctaUrl: string;
 }
 
 export interface Taxonomy {
