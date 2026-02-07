@@ -107,7 +107,21 @@ const teamCollection = defineCollection({
   }),
 });
 
+const faqCollection = defineCollection({
+  loader: glob({
+    pattern: '*.mdx',
+    base: 'src/data/faq',
+  }),
+  schema: z.object({
+    area: z.enum(['skipper', 'operator']),
+    order: z.number().optional(),
+    question: localizedString(),
+    answer: localizedString(),
+  }),
+});
+
 export const collections = {
   post: postCollection,
   team: teamCollection,
+  faq: faqCollection,
 };

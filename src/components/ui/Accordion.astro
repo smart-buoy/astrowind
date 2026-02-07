@@ -1,0 +1,66 @@
+---
+import { twMerge } from 'tailwind-merge';
+
+interface Item {
+  title: string;
+  description: string;
+}
+
+const { items = [], classes = {} } = Astro.props;
+
+const baseContainerClass = 'rounded-lg border border-gray-200 dark:border-gray-700 overflow-hidden';
+const {
+  container: containerClass = '',
+  item: itemClass = 'group border-b border-gray-200 dark:border-gray-700 last:border-b-0',
+  title: titleClass = 'cursor-pointer list-none px-4 py-3 text-xl font-bold tracking-tight dark:text-white sm:text-xl flex items-center justify-between gap-2 hover:bg-gray-50 dark:hover:bg-gray-800/50 [&::-webkit-details-marker]:hidden',
+  description: descriptionClass = 'px-4 pt-2 pb-5 text-muted',
+} = classes;
+const mergedContainerClass = twMerge(baseContainerClass, containerClass);
+---
+
+{items.length > 0 && (
+  <>
+    <div class={mergedContainerClass} data-accordion>
+      {items.map((item, index) => (
+        <details class={itemClass} data-accordion-item open={index === 0}>
+          <summary class={titleClass}>
+            <span>{item.title}</span>
+            <span class="accordion-chevron flex-shrink-0 text-primary transition-transform duration-200 ease-out group-open:rotate-90" aria-hidden="true">▶</span>
+          </summary>
+          <div class="accordion-content">
+            <div class={`accordion-content-inner ${descriptionClass}`} set:html={item.description} />
+          </div>
+        </details>
+      ))}
+    </div>
+    <style>
+      [data-accordion] .accordion-content {
+        display: grid;
+        grid-template-rows: 0fr;
+        transition: grid-template-rows 0.35s ease-out;
+      }
+      [data-accordion] details[open] .accordion-content {
+        grid-template-rows: 1fr;
+      }
+      [data-accordion] .accordion-content-inner {
+        overflow: hidden;
+        min-height: 0;
+      }
+    </style>
+    <script is:inline>
+      document.querySelectorAll('[data-accordion]').forEach(function (accordion) {
+        var accordionItems = accordion.querySelectorAll('[data-accordion-item]');
+        accordionItems.forEach(function (item) {
+          var details = item;
+          details.addEventListener('toggle', function () {
+            if (details.open) {
+              accordionItems.forEach(function (other) {
+                if (other !== details) other.open = false;
+              });
+            }
+          });
+        });
+      });
+    </script>
+  </>
+)}

@@ -1,4 +1,5 @@
 ---
+import { getCollection } from 'astro:content';
 import Features from '~/components/widgets/Features.astro';
 import FAQs from '~/components/widgets/FAQs.astro';
 import { sanityClient } from 'sanity:client';
@@ -20,13 +21,18 @@ const features = await sanityClient.fetch(`*[_type == "feature" && language == $
   area: 'operator',
 });
 
-const faqs = await sanityClient.fetch(
-  `*[_type == "faq" && area==$area]{
-"question": question[_key == $language][0].value,
-"answer": answer[_key == $language][0].value,
-}`,
-  { language, area: 'operator' }
-);
+const faqEntries = await getCollection('faq');
+const faqs = faqEntries
+  .filter((entry) => entry.data.area === 'operator')
+  .sort((a, b) => (a.data.order ?? 999) - (b.data.order ?? 999))
+  .map((entry) => {
+    const d = entry.data;
+    const lang = language as 'en' | 'de';
+    return {
+      title: (d.question && (d.question[lang] ?? d.question.en)) ?? '',
+      description: (d.answer && (d.answer[lang] ?? d.answer.en)) ?? '',
+    };
+  });
 
 const testimonials = await sanityClient.fetch(
   `*[_type == "testimonial" && area==$area]{
@@ -150,10 +156,7 @@ const highlights = await sanityClient.fetch(
       subtitle={t('operator.faq.sub-title')}
       tagline={t('operator.faq.tagline')}
       classes={{ container: 'max-w-6xl' }}
-      items={faqs.map((faq) => ({
-        title: faq.question,
-        description: faq.answer,
-      }))}
+      items={faqs}
     />
   )
 }
