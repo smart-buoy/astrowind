@@ -1,5 +1,6 @@
 ---
 import { Icon } from 'astro-icon/components';
+import { ui } from '~/i18n/ui';
 import type { Post } from '~/types';
 
 export interface Props {
@@ -9,7 +10,12 @@ export interface Props {
 
 const { post } = Astro.props;
 
-const tocHeadings = (post.headings ?? []).filter((h) => h.depth === 2 || h.depth === 3);
+const contentHeadings = (post.headings ?? []).filter((h) => h.depth === 2 || h.depth === 3);
+const faqEntry =
+  post.faq && post.faq.length > 0
+    ? ({ depth: 2, slug: 'faq', text: ui[post.lang as keyof typeof ui]?.['skipper.faq.tagline'] ?? 'FAQ' } as const)
+    : null;
+const tocHeadings = faqEntry ? [...contentHeadings, faqEntry] : contentHeadings;
 const showToc = tocHeadings.length >= 2;
 ---
 

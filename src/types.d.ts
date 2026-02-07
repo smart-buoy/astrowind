@@ -54,6 +54,14 @@ export interface Post {
 
   /** Optional in-article banner; use with PostBanner component in MDX. */
   banner?: PostBanner;
+
+  /** Optional blog-specific FAQ; rendered below post content. */
+  faq?: PostFaqItem[];
+}
+
+export interface PostFaqItem {
+  question: string;
+  answer: string;
 }
 
 export interface PostBanner {

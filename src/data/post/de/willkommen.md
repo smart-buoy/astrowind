@@ -8,6 +8,11 @@ tags:
   - news
 lang: de
 translationId: welcome
+faq:
+  - question: Was ist SmartBuoy?
+    answer: SmartBuoy bietet intelligente Liegeplatz-Buchung und Marina-Verwaltung für Skipper und Betreiber – für einen reibungsloseren Anlegeablauf.
+  - question: Wo finde ich weitere Beiträge?
+    answer: Neue Artikel erscheinen in diesem Blog. Nutzen Sie Tags und Kategorien zum Stöbern oder schauen Sie regelmäßig vorbei.
 ---
 
 Dies ist der erste Blogbeitrag auf Deutsch. Weitere Artikel folgen.

@@ -8,6 +8,11 @@ tags:
   - news
 lang: en
 translationId: welcome
+faq:
+  - question: What is SmartBuoy?
+    answer: SmartBuoy delivers intelligent berth booking and marina management so skippers and operators get a smoother arrival experience.
+  - question: Where can I find more posts?
+    answer: New articles appear on this blog. Use the tags and categories to explore, or check back for the latest updates.
 ---
 
 This is the first post in the English SmartBuoy blog. We will share product updates, marina insights, and practical tips for skippers and operators.

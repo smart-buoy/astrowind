@@ -85,6 +85,16 @@ const postCollection = defineCollection({
       })
       .optional(),
 
+    /** Optional blog-specific FAQ; one entry per language file. Rendered below post content. */
+    faq: z
+      .array(
+        z.object({
+          question: z.string(),
+          answer: z.string(),
+        })
+      )
+      .optional(),
+
     metadata: metadataDefinition(),
   }),
 });
