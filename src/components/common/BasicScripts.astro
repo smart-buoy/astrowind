@@ -168,11 +168,12 @@ import { UI } from 'astrowind:config';
   /* Inspired by: https://github.com/heidkaemper/tailwindcss-intersect */
   const Observer = {
     observer: null,
-    delayBetweenAnimations: 100,
+    delayBetweenAnimations: 50,
     animationCounter: 0,
     elements: null,
 
     start() {
+      this.animationCounter = 0;
       const selectors = [
         '[class*=" intersect:"]',
         '[class*=":intersect:"]',
