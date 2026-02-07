@@ -1,9 +1,28 @@
 ---
+import { getCollection } from 'astro:content';
 import type { Item } from '~/types';
 import HeroText from '~/components/widgets/HeroText.astro';
 import WidgetWrapper from '~/components/ui/WidgetWrapper.astro';
 import Headline from '~/components/ui/Headline.astro';
 import ItemGrid from '~/components/ui/ItemGrid.astro';
+import FAQs from '~/components/widgets/FAQs.astro';
+import { getLangFromUrl, useTranslations } from '~/i18n/utils';
+
+const language = getLangFromUrl(Astro.url);
+const t = useTranslations(language);
+
+const faqEntries = await getCollection('faq');
+const faqs = faqEntries
+  .filter((entry) => entry.data.area === 'buoy')
+  .sort((a, b) => (a.data.order ?? 999) - (b.data.order ?? 999))
+  .map((entry) => {
+    const d = entry.data;
+    const lang = language as 'en' | 'de';
+    return {
+      title: (d.question && (d.question[lang] ?? d.question.en)) ?? '',
+      description: (d.answer && (d.answer[lang] ?? d.answer.en)) ?? '',
+    };
+  });
 
 export interface Props {
   heroTitle: string;
@@ -90,3 +109,12 @@ const downloadGridItems: Item[] = downloadItems.map((d) => ({
     }}
   />
 </WidgetWrapper>
+
+{faqs.length > 0 && (
+  <FAQs
+    title={t('buoy.faq.title')}
+    subtitle={t('buoy.faq.sub-title')}
+    tagline={t('buoy.faq.tagline')}
+    items={faqs}
+  />
+)}

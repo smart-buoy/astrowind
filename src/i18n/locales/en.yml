@@ -58,6 +58,13 @@ environment-impact:
   footnote: "SmartBuoy bookings and resilient buoys are already making waves for the ocean."
   unavailable: "Live environmental statistics are temporarily unavailable. Check back soon to see how SmartBuoy keeps the oceans cleaner."
 
+# Buoy section (The Buoy product page)
+buoy:
+  faq:
+    title: "Frequently Asked Questions"
+    sub-title: "Here are some frequently asked questions about the SmartBuoy hardware."
+    tagline: "FAQ"
+
 # Operator section
 operator:
   hero:

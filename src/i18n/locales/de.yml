@@ -58,6 +58,13 @@ environment-impact:
   footnote: "Clevere Buchungen und robuste Bojen von SmartBuoy sorgen bereits für mehr Meeresschutz."
   unavailable: "Live-Umweltstatistiken sind derzeit nicht verfügbar. Schau bald wieder vorbei und sieh, wie SmartBuoy die Ozeane sauberer hält."
 
+# Buoy section (Die Boje product page)
+buoy:
+  faq:
+    title: "Häufig gestellte Fragen"
+    sub-title: "Hier sind einige häufig gestellte Fragen zur SmartBuoy-Hardware."
+    tagline: "FAQ"
+
 # Operator section
 operator:
   hero:

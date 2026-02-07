@@ -123,7 +123,7 @@ const faqCollection = defineCollection({
     base: 'src/data/faq',
   }),
   schema: z.object({
-    area: z.enum(['skipper', 'operator']),
+    area: z.enum(['buoy', 'skipper', 'operator']),
     order: z.number().optional(),
     question: localizedString(),
     answer: localizedString(),
