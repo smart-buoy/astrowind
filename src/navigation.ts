@@ -3,6 +3,10 @@ import { getPermalink, getBlogPermalink } from './utils/permalinks';
 export const headerData = {
   links: [
     {
+      text: 'the-buoy',
+      href: getPermalink('/the-buoy')
+    },
+    {
       text: 'skipper',
       href: getPermalink('/')
     },
@@ -34,6 +38,7 @@ export const footerData = {
     {
       title: 'product',
       links: [
+        { text: 'the-buoy', href: getPermalink('/the-buoy') },
         { text: 'skipper', href: getPermalink('/') },
         { text: 'operator', href: getPermalink('/operator') }
       ],

@@ -65,12 +65,12 @@ const t = useTranslations(lang);
   <div class="absolute inset-0"></div>
   <div
     class:list={[
-      'relative text-default py-3 px-3 lg:px-6 mx-auto w-full',
+      'relative text-default py-3 px-3 lg:px-4 mx-auto w-full',
       {
         'lg:flex lg:justify-between': position !== 'center',
       },
       {
-        'lg:grid lg:grid-cols-3 lg:items-center': position === 'center',
+        'lg:grid lg:grid-cols-[auto_1fr_auto] lg:items-center lg:gap-2': position === 'center',
       },
       {
         'max-w-7xl': !isFullWidth,
@@ -78,7 +78,7 @@ const t = useTranslations(lang);
     ]}
   >
     <div class:list={[{ 'mr-auto rtl:mr-0 rtl:ml-auto': position === 'right' }, 'flex justify-between']}>
-      <a class="flex items-center" href={translatePath(getHomePermalink(), lang)}>
+      <a class="flex items-center shrink-0" href={translatePath(getHomePermalink(), lang)}>
         <Logo />
       </a>
       <div class="flex items-center lg:hidden">
@@ -86,7 +86,7 @@ const t = useTranslations(lang);
       </div>
     </div>
     <nav
-      class="items-center w-full lg:w-auto hidden lg:flex lg:mx-5 text-default overflow-y-auto overflow-x-hidden lg:overflow-y-visible lg:overflow-x-auto lg:justify-self-center"
+      class="items-center w-full lg:w-auto hidden lg:flex lg:min-w-0 lg:justify-center text-default overflow-y-auto overflow-x-hidden lg:overflow-visible"
       aria-label="Main navigation"
     >
       <ul
@@ -99,7 +99,7 @@ const t = useTranslations(lang);
                 <>
                   <button
                     type="button"
-                    class="hover:text-link dark:hover:text-white px-4 py-3 flex items-center whitespace-nowrap"
+                    class="hover:text-link dark:hover:text-white px-4 py-3 lg:px-3 lg:py-2.5 flex items-center whitespace-nowrap"
                   >
                     {t('nav.' + text)}{' '}
                     <Icon name="tabler:chevron-down" class="w-3.5 h-3.5 ml-0.5 rtl:ml-0 rtl:mr-0.5 hidden lg:inline" />
@@ -123,7 +123,7 @@ const t = useTranslations(lang);
               ) : (
                 <a
                   class:list={[
-                    'hover:text-link dark:hover:text-white px-4 py-3 flex items-center whitespace-nowrap',
+                    'hover:text-link dark:hover:text-white px-4 py-3 lg:px-3 lg:py-2.5 flex items-center whitespace-nowrap',
                     { 'aw-link-active': href === currentPath },
                   ]}
                   href={translatePath(href, lang)}

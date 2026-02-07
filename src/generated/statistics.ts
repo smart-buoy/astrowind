@@ -5,5 +5,5 @@ export const statisticsPayload = {
     "numberOfBuoys": 3,
     "numberOfBookings": 13
   },
-  "fetchedAt": "2026-02-06T22:56:47.447Z"
+  "fetchedAt": "2026-02-07T13:00:24.790Z"
 } as const;

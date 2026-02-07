@@ -1,0 +1,92 @@
+---
+import type { Item } from '~/types';
+import HeroText from '~/components/widgets/HeroText.astro';
+import WidgetWrapper from '~/components/ui/WidgetWrapper.astro';
+import Headline from '~/components/ui/Headline.astro';
+import ItemGrid from '~/components/ui/ItemGrid.astro';
+
+export interface Props {
+  heroTitle: string;
+  heroSubtitle: string;
+  techTitle: string;
+  techSubtitle?: string;
+  techItems: Item[];
+  downloadTitle: string;
+  downloadSubtitle?: string;
+  downloadItems: Array<{ title: string; description?: string; href: string; ctaText: string }>;
+}
+
+const {
+  heroTitle,
+  heroSubtitle,
+  techTitle,
+  techSubtitle,
+  techItems,
+  downloadTitle,
+  downloadSubtitle,
+  downloadItems,
+} = Astro.props;
+
+const downloadGridItems: Item[] = downloadItems.map((d) => ({
+  title: d.title,
+  description: d.description,
+  icon: 'tabler:file-type-pdf',
+  callToAction: {
+    href: d.href,
+    text: d.ctaText,
+    target: '_blank',
+    rel: 'noopener noreferrer',
+  },
+}));
+---
+
+<HeroText title={heroTitle} subtitle={heroSubtitle} />
+
+<WidgetWrapper id="technical-details" containerClass="max-w-5xl">
+  <Headline
+    title={techTitle}
+    subtitle={techSubtitle}
+    classes={{
+      container: 'max-w-3xl mx-auto',
+      title: 'text-3xl md:text-4xl font-bold tracking-tighter mb-4 font-heading',
+      subtitle: 'text-xl text-muted',
+    }}
+  />
+  <ItemGrid
+    items={techItems}
+    columns={2}
+    defaultIcon="tabler:anchor"
+    classes={{
+      container: 'gap-y-8 md:gap-y-10',
+      panel: 'max-w-none',
+      title: 'text-lg font-bold dark:text-white',
+      description: 'text-muted dark:text-slate-400',
+      icon: 'text-primary flex-shrink-0',
+    }}
+  />
+</WidgetWrapper>
+
+<WidgetWrapper id="downloads" containerClass="max-w-5xl">
+  <Headline
+    title={downloadTitle}
+    subtitle={downloadSubtitle}
+    classes={{
+      container: 'max-w-3xl mx-auto',
+      title: 'text-3xl md:text-4xl font-bold tracking-tighter mb-4 font-heading',
+      subtitle: 'text-xl text-muted',
+    }}
+  />
+  <ItemGrid
+    items={downloadGridItems}
+    columns={2}
+    defaultIcon="tabler:file-type-pdf"
+    classes={{
+      container: 'gap-y-8 md:gap-y-10',
+      panel: 'max-w-none',
+      title: 'text-lg font-bold dark:text-white',
+      description: 'text-muted dark:text-slate-400',
+      icon: 'text-primary flex-shrink-0',
+      action: 'mt-2',
+    }}
+  />
+</WidgetWrapper>

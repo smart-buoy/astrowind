@@ -1,0 +1,65 @@
+---
+import Layout from '~/layouts/PageLayout.astro';
+import BuoyPage from '~/components/widgets/BuoyPage.astro';
+import { getAsset } from '~/utils/permalinks';
+
+const metadata = {
+  title: 'Die Boje',
+  description: 'Technische Details und Downloads für SmartBuoy-Hardware.',
+};
+
+const techItems = [
+  {
+    title: 'Kernhardware',
+    description:
+      'Robuster Bojenkörper, Verankerungssystem und Bordelektronik für maritime Umgebungen und Langzeiteinsatz.',
+    icon: 'tabler:anchor',
+  },
+  {
+    title: 'Konnektivität & Energie',
+    description:
+      'Mobilfunk für Echtzeitdaten und solarbetriebener Betrieb für durchgängige Überwachung bei minimalem Wartungsaufwand.',
+    icon: 'tabler:antenna-bars-5',
+  },
+  {
+    title: 'Monitoring & Sicherheit',
+    description:
+      'Integrierte Sensoren und Statusmeldungen, damit Betreiber den Bojenzustand überwachen und Skipper die Verfügbarkeit auf einen Blick sehen.',
+    icon: 'tabler:shield-check',
+  },
+];
+
+const downloadItems = [
+  {
+    title: 'Benutzerhandbuch',
+    description: 'SmartBuoy-Systemübersicht und Nutzungshinweise.',
+    href: getAsset('/downloads/smartbuoy-user-guide.pdf'),
+    ctaText: 'PDF herunterladen',
+  },
+  {
+    title: 'Installation & Wartung',
+    description: 'Installationsschritte und Wartungsrichtlinien.',
+    href: getAsset('/downloads/smartbuoy-installation-maintenance.pdf'),
+    ctaText: 'PDF herunterladen',
+  },
+  {
+    title: 'Konformitätserklärung',
+    description: 'Offizielle Konformitätserklärung für SmartBuoy-Hardware.',
+    href: getAsset('/downloads/smartbuoy-certificate-of-conformity.pdf'),
+    ctaText: 'PDF herunterladen',
+  },
+];
+---
+
+<Layout metadata={metadata}>
+  <BuoyPage
+    heroTitle="Die Boje"
+    heroSubtitle="Technische Details und Downloads für SmartBuoy‑Hardware."
+    techTitle="Technische Details"
+    techSubtitle="Überblick über SmartBuoy-Hardware und Funktionen."
+    techItems={techItems}
+    downloadTitle="Downloads"
+    downloadSubtitle="Benutzerhandbücher, Zertifikate und weitere Dokumente."
+    downloadItems={downloadItems}
+  />
+</Layout>

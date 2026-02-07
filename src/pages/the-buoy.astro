@@ -1,0 +1,65 @@
+---
+import Layout from '~/layouts/PageLayout.astro';
+import BuoyPage from '~/components/widgets/BuoyPage.astro';
+import { getAsset } from '~/utils/permalinks';
+
+const metadata = {
+  title: 'The Buoy',
+  description: 'Technical details and downloads for SmartBuoy hardware.',
+};
+
+const techItems = [
+  {
+    title: 'Core hardware',
+    description:
+      'Robust buoy body, mooring system, and onboard electronics designed for marine environments and long-term deployment.',
+    icon: 'tabler:anchor',
+  },
+  {
+    title: 'Connectivity & power',
+    description:
+      'Cellular connectivity for real-time data and solar-powered operation to ensure continuous monitoring with minimal maintenance.',
+    icon: 'tabler:antenna-bars-5',
+  },
+  {
+    title: 'Monitoring & security',
+    description:
+      'Integrated sensors and status reporting so operators can monitor buoy health and skippers can see availability at a glance.',
+    icon: 'tabler:shield-check',
+  },
+];
+
+const downloadItems = [
+  {
+    title: 'User Guide',
+    description: 'SmartBuoy system overview and usage instructions.',
+    href: getAsset('/downloads/smartbuoy-user-guide.pdf'),
+    ctaText: 'Download PDF',
+  },
+  {
+    title: 'Installation & Maintenance',
+    description: 'Installation steps and maintenance guidelines.',
+    href: getAsset('/downloads/smartbuoy-installation-maintenance.pdf'),
+    ctaText: 'Download PDF',
+  },
+  {
+    title: 'Certificate of Conformity',
+    description: 'Official conformity certificate for SmartBuoy hardware.',
+    href: getAsset('/downloads/smartbuoy-certificate-of-conformity.pdf'),
+    ctaText: 'Download PDF',
+  },
+];
+---
+
+<Layout metadata={metadata}>
+  <BuoyPage
+    heroTitle="The Buoy"
+    heroSubtitle="Technical details and downloads for SmartBuoy hardware."
+    techTitle="Technical details"
+    techSubtitle="Overview of SmartBuoy hardware and capabilities."
+    techItems={techItems}
+    downloadTitle="Downloads"
+    downloadSubtitle="User guides, certificates, and other documents."
+    downloadItems={downloadItems}
+  />
+</Layout>

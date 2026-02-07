@@ -73,6 +73,7 @@ export function getMissingTranslations(): Record<LangCode, string[]> {
 
 export const routes = {
   en: {
+    'the-buoy': 'the-buoy',
     skipper: 'skipper',
     operator: 'operator',
     about: 'about',
@@ -83,6 +84,7 @@ export const routes = {
     privacy: 'privacy',
   },
   de: {
+    'the-buoy': 'die-boje',
     skipper: 'skipper',
     operator: 'betreiber',
     about: 'ueber-uns',
