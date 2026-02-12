@@ -11,9 +11,10 @@ import type { MetaData } from '~/types';
 
 export interface Props {
   metadata?: MetaData;
+  showEnvironmentImpact?: boolean;
 }
 
-const { metadata } = Astro.props;
+const { metadata, showEnvironmentImpact = false } = Astro.props;
 ---
 
 <Layout metadata={metadata}>
@@ -26,9 +27,11 @@ const { metadata } = Astro.props;
   <main>
     <slot />
   </main>
-  <slot name="environment-impact">
-    <EnvironmentalImpactBanner />
-  </slot>
+  {showEnvironmentImpact && (
+    <slot name="environment-impact">
+      <EnvironmentalImpactBanner />
+    </slot>
+  )}
   <slot name="footer">
     <Footer {...footerData} />
   </slot>
