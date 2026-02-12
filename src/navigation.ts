@@ -21,7 +21,7 @@ export const headerData = {
     {
       text: 'company',
       links: [
-        // {text: 'about', href: getPermalink('/about')},
+        { text: 'about', href: getPermalink('/about') },
         { text: 'team', href: getPermalink('/team') },
       ]
     },
@@ -46,7 +46,7 @@ export const footerData = {
     {
       title: 'company',
       links: [
-        // { text: 'about', href: getPermalink('/about') },
+        { text: 'about', href: getPermalink('/about') },
         { text: 'team', href: getPermalink('/team') },
         { text: 'blog', href: getBlogPermalink() },
         { text: 'sdg', href: getPermalink('/sdg') },

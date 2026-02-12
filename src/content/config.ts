@@ -130,8 +130,26 @@ const faqCollection = defineCollection({
   }),
 });
 
+const aboutTimelineCollection = defineCollection({
+  loader: glob({
+    pattern: '*.md',
+    base: 'src/data/about-timeline',
+  }),
+  schema: z.object({
+    order: z.number(),
+    type: z.enum(['start', 'end', 'milestone']).optional(),
+    year: z.string().optional(),
+    yearRange: z.string().optional(),
+    description: z.object({
+      en: z.string(),
+      de: z.string(),
+    }),
+  }),
+});
+
 export const collections = {
   post: postCollection,
   team: teamCollection,
   faq: faqCollection,
+  aboutTimeline: aboutTimelineCollection,
 };

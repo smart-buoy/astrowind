@@ -1,9 +1,13 @@
 ---
 import Layout from '~/layouts/PageLayout.astro';
+import AboutPage from '~/components/widgets/AboutPage.astro';
 
 const metadata = {
   title: 'Über uns',
+  description: 'Wer wir sind: SmartBuoy entwickelt smarte Bojen für sicheres, komfortables und ökologisch verantwortungsvolles Anlegen.',
 };
 ---
 
-<Layout metadata={metadata}> Coming soon... </Layout>
+<Layout metadata={metadata}>
+  <AboutPage />
+</Layout>

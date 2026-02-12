@@ -91,6 +91,25 @@ operator:
     sub-title: "Hier sind einige häufig gestellte Fragen zu unserer Lösung für Bojenbetreiber."
     tagline: "FAQ"
 
+# Über uns
+about:
+  hero:
+    tagline: "Über uns"
+    title: "SmartBuoy"
+    subtitle: "Wer wir sind"
+  intro:
+    paragraph1: "SmartBuoy entwickelt smarte Bojen, um Anlegen sicherer, komfortabler und ökologisch verantwortlicher zu machen. Wir sind Skipper, Techniker und Unternehmer mit einer gemeinsamen Überzeugung: Technologie soll das Leben auf dem Wasser einfacher machen, nicht komplizierter. Und sie soll die Natur schützen, nicht belasten."
+    subheadline: "Smarte Bojen für Skipper von Skippern"
+  story:
+    title: "Wie alles begann"
+    paragraph1: "SmartBuoy wurde 2023 gegründet. Die Idee entstand nicht im Büro, sondern auf einer privaten Bootsfahrt."
+    paragraph2: "Unsere Gründer Michi und Georg, Geschäftsführer eines Yachtbauunternehmens, standen vor einem alltäglichen Problem: Nicht dort anlegen zu können, wo man eigentlich hinmöchte, sondern dort, wo zufällig noch eine Boje frei ist."
+    bullets: "unnötiges Bojensuchen|zusätzliche Fahrten|Treibstoffverschwendung|Stress am Ende eines eigentlich schönen Tages"
+    conclusion: "Aus diesem Frust wurde eine einfache Frage: Warum gibt es keine planbare, faire und nachhaltige Lösung für Bojenplätze? Die Antwort darauf ist SmartBuoy."
+  timeline:
+    title: "Vom Konzept zur Boje"
+    subtitle: "SmartBuoy ist das Ergebnis jahrelanger Entwicklung, Tests und Lernschleifen. Schritt für Schritt vom Gedanken zur marktreifen Lösung."
+
 # Team
 team:
   title: "Unser Team"

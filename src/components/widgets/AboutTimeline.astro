@@ -1,0 +1,287 @@
+---
+import { getCollection } from 'astro:content';
+import { getLangFromUrl, useTranslations } from '~/i18n/utils';
+import WidgetWrapper from '~/components/ui/WidgetWrapper.astro';
+import type { TimelineEvent } from '~/data/about-timeline';
+
+const language = getLangFromUrl(Astro.url);
+const t = useTranslations(language);
+
+const rawTimeline = await getCollection('aboutTimeline');
+const aboutTimelineEvents: TimelineEvent[] = rawTimeline
+  .sort((a, b) => a.data.order - b.data.order)
+  .map((entry) => ({
+    type: entry.data.type,
+    year: entry.data.year,
+    yearRange: entry.data.yearRange,
+    description: entry.data.description,
+  }));
+
+import faviconSvg from '~/assets/favicons/favicon.svg';
+
+const n = aboutTimelineEvents.length;
+const EVENTS_PER_ROW = 3;
+
+/** Chunk events into rows of max 3. Last row may have 1 or 2. */
+const rows: TimelineEvent[][] = [];
+for (let i = 0; i < aboutTimelineEvents.length; i += EVENTS_PER_ROW) {
+  rows.push(aboutTimelineEvents.slice(i, i + EVENTS_PER_ROW));
+}
+
+/** Segment dimensions – no gap between events. */
+const SEG_W = 140; // narrower segments
+const BAR_H = 12;
+const KNOB_R = 5; // white knob where year line meets segment (with shadow)
+const ROW_H = 140; // row height: space for bubble + text above/below
+const BUBBLE_OFFSET = 26;
+const BUBBLE_R = 22; // larger so single years and ranges fit
+const START_NODE_R = 20; // start circle radius (larger)
+const START_OFFSET = START_NODE_R * 2 + 4; // 36: after circle + short connector
+const ARC_RADIUS = ROW_H / 2;
+const END_NODE_SIZE = 104;
+
+/** Slightly different color per segment. */
+const segmentColors = ['#94a3b8', '#60a5fa', '#3b82f6', '#6366f1', '#4f46e5', '#22d3ee', '#0ea5e9', '#2563eb', '#1e40af'];
+const CONNECTOR_GRAY = '#94a3b8';
+const ROW2_FIRST_SEGMENT_COLOR = segmentColors[EVENTS_PER_ROW];
+
+/** Segment events only (exclude start and end for the snake line). */
+const segmentEvents = aboutTimelineEvents.filter((e) => e.type !== 'start' && e.type !== 'end');
+const numSegments = segmentEvents.length;
+
+const TOTAL_ROW_WIDTH = START_OFFSET + EVENTS_PER_ROW * SEG_W; // 464
+/** End node at same x as connector start; no line after the node */
+const VB_WIDTH = TOTAL_ROW_WIDTH + END_NODE_SIZE; // last segment end + end node width
+/** Tight viewBox bounds so there is no empty space on the left. */
+const VIEW_MIN_X = START_OFFSET - ARC_RADIUS;
+const VIEW_MAX_X = TOTAL_ROW_WIDTH + ARC_RADIUS;
+const VIEW_WIDTH = VIEW_MAX_X - VIEW_MIN_X;
+/** Extra horizontal padding avoids clipping at both sides. */
+const VIEWBOX_PAD_X = 18;
+const VIEWBOX_MIN_X = VIEW_MIN_X - VIEWBOX_PAD_X;
+const VIEWBOX_WIDTH = VIEW_WIDTH + VIEWBOX_PAD_X * 2;
+/** Top padding so year bubbles sit above first row; bar center = TOP_PADDING + row*ROW_H */
+const TOP_PADDING = 24 + BUBBLE_OFFSET + BUBBLE_R * 2; // 94
+const VB_HEIGHT = TOP_PADDING + 2 * ROW_H + BAR_H / 2 + 14 + 56; // rows + text
+
+/** Get segment position (in SVG units). No space between segments. Bar center y = TOP_PADDING + row*ROW_H. */
+function getSegmentPos(i: number): { row: number; col: number; left: number; y: number; centerX: number } {
+  const row = Math.floor(i / EVENTS_PER_ROW);
+  const col = i % EVENTS_PER_ROW;
+  const isReversed = row % 2 === 1;
+  const y = TOP_PADDING + row * ROW_H;
+  const left = isReversed
+    ? TOTAL_ROW_WIDTH - SEG_W - col * SEG_W
+    : START_OFFSET + col * SEG_W;
+  return { row, col, left, y, centerX: left + SEG_W / 2 };
+}
+
+/** Every second element in a row (col === 1) is swapped: bubble below, text above. */
+function getBubbleY(barY: number, col: number): number {
+  return col === 1
+    ? barY + BUBBLE_OFFSET + BUBBLE_R
+    : barY - BUBBLE_OFFSET - BUBBLE_R;
+}
+
+function description(ev: TimelineEvent): string {
+  const lang = language as 'en' | 'de';
+  return (ev.description[lang] ?? ev.description.en ?? '').trim();
+}
+
+function yearLabel(ev: TimelineEvent): string {
+  if (ev.year) return ev.year;
+  if (ev.yearRange) return ev.yearRange;
+  return '';
+}
+
+/** For yearRange "2021-2022" return ["2021", "2022"]; for single year return one string. */
+function yearLabelLines(ev: TimelineEvent): string[] {
+  if (ev.year) return [ev.year];
+  if (ev.yearRange) return ev.yearRange.split(/-/).map((s) => s.trim()).filter(Boolean);
+  return [];
+}
+---
+
+<WidgetWrapper id="timeline" containerClass="max-w-6xl">
+  <div class="text-center mb-10">
+    <h2 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl font-heading">
+      {t('about.timeline.title')}
+    </h2>
+    <p class="text-muted dark:text-slate-300 mt-2 max-w-3xl mx-auto">
+      {t('about.timeline.subtitle')}
+    </p>
+  </div>
+
+  <!-- Desktop: snake line – full content width, no empty left space -->
+  <div class="hidden md:block w-full max-w-full overflow-hidden">
+    <div class="relative w-full" style={`aspect-ratio: ${VIEWBOX_WIDTH}/${VB_HEIGHT};`}>
+      <svg
+        class="absolute top-0 left-0 w-full h-full block"
+        viewBox={`${VIEWBOX_MIN_X} 0 ${VIEWBOX_WIDTH} ${VB_HEIGHT}`}
+        preserveAspectRatio="xMidYMin meet"
+        aria-hidden="true"
+      >
+        <defs>
+          <filter id="timeline-knob-shadow-down" x="-40%" y="-40%" width="180%" height="180%">
+            <feDropShadow dx="0" dy="1.25" stdDeviation="1.5" flood-color="#000000" flood-opacity="0.5" />
+          </filter>
+          <filter id="timeline-knob-shadow-up" x="-40%" y="-40%" width="180%" height="180%">
+            <feDropShadow dx="0" dy="-1.25" stdDeviation="1.5" flood-color="#000000" flood-opacity="0.5" />
+          </filter>
+        </defs>
+        <!-- Start: empty gray circle (larger radius) -->
+        <circle cx={START_NODE_R} cy={TOP_PADDING} r={START_NODE_R} fill="none" stroke={CONNECTOR_GRAY} stroke-width="2" />
+        <rect x={START_NODE_R * 2} y={TOP_PADDING - BAR_H / 2} width={4} height={BAR_H} fill={segmentColors[0]} />
+
+        <!-- Event segments -->
+        {segmentEvents.map((ev, i) => {
+          const { left, y, centerX, col } = getSegmentPos(i);
+          const color = segmentColors[i % segmentColors.length];
+          const bubbleY = getBubbleY(y, col);
+          const isSecondInRow = col === 1;
+          const lineY1 = isSecondInRow ? y + BAR_H / 2 : y - BAR_H / 2;
+          const lineY2 = isSecondInRow ? bubbleY - BUBBLE_R : bubbleY + BUBBLE_R;
+          const lines = yearLabelLines(ev);
+
+          return (
+            <g>
+              <rect x={left} y={y - BAR_H / 2} width={SEG_W} height={BAR_H} fill={color} />
+              <line x1={centerX} y1={lineY1} x2={centerX} y2={lineY2} stroke={CONNECTOR_GRAY} stroke-width="1.5" />
+              <circle cx={centerX} cy={bubbleY} r={BUBBLE_R} fill={color} />
+                {lines.length >= 2 ? (
+                  <g>
+                    <text x={centerX} y={bubbleY - 6} text-anchor="middle" dominant-baseline="middle" fill="white" font-size="10" font-weight="600" font-family="system-ui, sans-serif">{lines[0]}</text>
+                    <text x={centerX} y={bubbleY + 6} text-anchor="middle" dominant-baseline="middle" fill="white" font-size="10" font-weight="600" font-family="system-ui, sans-serif">{lines[1]}</text>
+                  </g>
+                ) : (
+                  <text x={centerX} y={bubbleY} text-anchor="middle" dominant-baseline="middle" fill="white" font-size="11" font-weight="600" font-family="system-ui, sans-serif">
+                    {lines[0] ?? yearLabel(ev)}
+                  </text>
+                )}
+            </g>
+          );
+        })}
+
+        <!-- Gray half-arc row 1 → row 2 (semicircle bulging right) -->
+        <path
+          d={`M ${TOTAL_ROW_WIDTH} ${TOP_PADDING} A ${ARC_RADIUS} ${ARC_RADIUS} 0 0 1 ${TOTAL_ROW_WIDTH} ${TOP_PADDING + ROW_H}`}
+          fill="none"
+          stroke={CONNECTOR_GRAY}
+          stroke-width={BAR_H}
+          stroke-linecap="butt"
+        />
+        <rect x={TOTAL_ROW_WIDTH - SEG_W} y={TOP_PADDING + ROW_H - BAR_H / 2} width={SEG_W} height={BAR_H} fill={ROW2_FIRST_SEGMENT_COLOR} />
+
+        <!-- Gray half-arc row 2 → row 3 (mirrored: semicircle bulging left) -->
+        <path
+          d={`M ${START_OFFSET} ${TOP_PADDING + ROW_H} A ${ARC_RADIUS} ${ARC_RADIUS} 0 0 0 ${START_OFFSET} ${TOP_PADDING + 2 * ROW_H}`}
+          fill="none"
+          stroke={CONNECTOR_GRAY}
+          stroke-width={BAR_H}
+          stroke-linecap="butt"
+        />
+
+        <!-- Knobs rendered last so they always stay in front of bars/connectors -->
+        {segmentEvents.map((_, i) => {
+          const { centerX, y, col } = getSegmentPos(i);
+          const isSecondInRow = col === 1;
+          const knobY = isSecondInRow ? y + BAR_H / 2 : y - BAR_H / 2;
+          const knobFilter = isSecondInRow
+            ? 'url(#timeline-knob-shadow-up)'
+            : 'url(#timeline-knob-shadow-down)';
+          return (
+            <circle
+              cx={centerX}
+              cy={knobY}
+              r={KNOB_R}
+              fill="white"
+              stroke="#e2e8f0"
+              stroke-width="1"
+              filter={knobFilter}
+            />
+          );
+        })}
+      </svg>
+
+      <!-- Text labels: centered at connector x; second element in each row is above -->
+      {segmentEvents.map((ev, i) => {
+        const { centerX, y, col } = getSegmentPos(i);
+        const desc = description(ev);
+        const isSecondInRow = col === 1;
+        const textAnchorYPx = isSecondInRow
+          ? y - BAR_H / 2 - 8
+          : y + BAR_H / 2 + 14;
+        const textTransform = isSecondInRow
+          ? 'translate(-50%, -100%)'
+          : 'translate(-50%, 0)';
+        const widthPct = (SEG_W / VIEWBOX_WIDTH) * 100;
+        const leftPct = ((centerX - VIEWBOX_MIN_X) / VIEWBOX_WIDTH) * 100;
+        return (
+          <div
+            class="absolute pointer-events-none box-border"
+            style={`
+              left: ${leftPct}%;
+              top: ${(textAnchorYPx / VB_HEIGHT) * 100}%;
+              width: ${widthPct}%;
+              transform: ${textTransform};
+            `}
+          >
+            <span class="text-[11px] text-default dark:text-slate-200 leading-tight block line-clamp-3 text-center w-full">
+              {desc}
+            </span>
+          </div>
+        );
+      })}
+
+      <!-- End node: same x as where last segment ends; no line drawn after -->
+      <div
+        class="absolute rounded-full overflow-hidden flex items-center justify-center"
+        style={`left: ${((TOTAL_ROW_WIDTH - VIEWBOX_MIN_X) / VIEWBOX_WIDTH) * 100}%; top: calc(${TOP_PADDING + 2 * ROW_H} / ${VB_HEIGHT} * 100%); transform: translate(0, -50%); width: ${END_NODE_SIZE}px; height: ${END_NODE_SIZE}px;`}
+      >
+        <img src={faviconSvg.src} alt="" class="w-full h-full object-contain" width={END_NODE_SIZE} height={END_NODE_SIZE} />
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile: vertical timeline -->
+  <div class="md:hidden space-y-0">
+    {aboutTimelineEvents.map((ev, i) => {
+      const desc = description(ev);
+      const year = yearLabel(ev);
+      const isStart = ev.type === 'start';
+      const isEnd = ev.type === 'end';
+      const isLast = i === n - 1;
+      return (
+        <div class="flex gap-4 items-stretch">
+          <div class="flex flex-col items-center shrink-0 w-14">
+            <div
+              class:list={[
+                'rounded-full border-2 flex items-center justify-center overflow-hidden shrink-0',
+                isStart && 'w-10 h-10 border-slate-300 bg-slate-100 dark:bg-slate-700 dark:border-slate-600',
+                isEnd && 'w-14 h-14 border-0 bg-transparent p-0',
+                !isStart && !isEnd && 'w-12 h-12 px-2 py-1.5 bg-primary border-2 border-primary text-white text-xs font-semibold leading-tight text-center',
+              ]}
+            >
+              {isEnd ? (
+                <img src={faviconSvg.src} alt="" class="w-full h-full object-contain" width={56} height={56} />
+              ) : !isStart && year ? (
+                year
+              ) : null}
+            </div>
+            {!isLast && <div class="w-0.5 flex-1 min-h-[1rem] bg-blue-200 dark:bg-blue-900/50" />}
+          </div>
+          <div class="pb-6 pt-1 min-w-0 flex-1">
+            {(desc || isStart || isEnd) && (
+              <p class="text-sm text-default dark:text-slate-200 leading-snug">
+                {desc}
+              </p>
+            )}
+            {!isStart && !isEnd && year && (
+              <p class="text-xs text-muted dark:text-slate-400 mt-0.5">{year}</p>
+            )}
+          </div>
+        </div>
+      );
+    })}
+  </div>
+</WidgetWrapper>

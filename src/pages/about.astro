@@ -1,9 +1,13 @@
 ---
 import Layout from '~/layouts/PageLayout.astro';
+import AboutPage from '~/components/widgets/AboutPage.astro';
 
 const metadata = {
-  title: 'About us',
+  title: 'About Us',
+  description: 'Who we are: SmartBuoy develops smart buoys to make mooring safer, more comfortable and ecologically responsible.',
 };
 ---
 
-<Layout metadata={metadata}> Coming soon... </Layout>
+<Layout metadata={metadata}>
+  <AboutPage />
+</Layout>
