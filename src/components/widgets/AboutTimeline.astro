@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content';
 import { getLangFromUrl, useTranslations } from '~/i18n/utils';
 import WidgetWrapper from '~/components/ui/WidgetWrapper.astro';
+import Headline from '~/components/ui/Headline.astro';
 import type { TimelineEvent } from '~/data/about-timeline';
 
 const language = getLangFromUrl(Astro.url);
@@ -21,6 +22,7 @@ import faviconSvg from '~/assets/favicons/favicon.svg';
 
 const n = aboutTimelineEvents.length;
 const EVENTS_PER_ROW = 3;
+const aboutHeadlineTitleClass = 'text-2xl sm:text-3xl tracking-tight dark:text-white';
 
 /** Chunk events into rows of max 3. Last row may have 1 or 2. */
 const rows: TimelineEvent[][] = [];
@@ -102,18 +104,21 @@ function yearLabelLines(ev: TimelineEvent): string[] {
 }
 ---
 
-<WidgetWrapper id="timeline" containerClass="max-w-6xl">
-  <div class="text-center mb-10">
-    <h2 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl font-heading">
-      {t('about.timeline.title')}
-    </h2>
-    <p class="text-muted dark:text-slate-300 mt-2 max-w-3xl mx-auto">
-      {t('about.timeline.subtitle')}
-    </p>
-  </div>
+<WidgetWrapper id="timeline" containerClass="max-w-5xl">
+  <Headline
+    title={t('about.timeline.title')}
+    classes={{
+      container: 'text-left md:mx-0 max-w-none mb-6 md:mb-6',
+      title: aboutHeadlineTitleClass,
+    }}
+  />
+
+  <p class="text-lg leading-relaxed text-muted dark:text-slate-300">
+  {t('about.timeline.subtitle')}
+  </p>
 
   <!-- Desktop: snake line – full content width, no empty left space -->
-  <div class="hidden md:block w-full max-w-full overflow-hidden">
+  <div class="hidden md:block w-full max-w-full overflow-hidden pt-8">
     <div class="relative w-full" style={`aspect-ratio: ${VIEWBOX_WIDTH}/${VB_HEIGHT};`}>
       <svg
         class="absolute top-0 left-0 w-full h-full block"
