@@ -248,6 +248,7 @@ function yearLabelLines(ev: TimelineEvent): string[] {
     {aboutTimelineEvents.map((ev, i) => {
       const desc = description(ev);
       const year = yearLabel(ev);
+      const yearLines = yearLabelLines(ev);
       const isStart = ev.type === 'start';
       const isEnd = ev.type === 'end';
       const isLast = i === n - 1;
@@ -264,8 +265,15 @@ function yearLabelLines(ev: TimelineEvent): string[] {
             >
               {isEnd ? (
                 <img src={faviconSvg.src} alt="" class="w-full h-full object-contain" width={56} height={56} />
-              ) : !isStart && year ? (
-                year
+              ) : !isStart && yearLines.length > 0 ? (
+                yearLines.length >= 2 ? (
+                  <span class="flex flex-col items-center justify-center leading-tight">
+                    <span>{yearLines[0]}</span>
+                    <span>{yearLines[1]}</span>
+                  </span>
+                ) : (
+                  yearLines[0]
+                )
               ) : null}
             </div>
             {!isLast && <div class="w-0.5 flex-1 min-h-[1rem] bg-blue-200 dark:bg-blue-900/50" />}
