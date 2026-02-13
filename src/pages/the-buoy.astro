@@ -2,10 +2,14 @@
 import Layout from '~/layouts/PageLayout.astro';
 import BuoyPage from '~/components/widgets/BuoyPage.astro';
 import { getAsset } from '~/utils/permalinks';
+import { getLangFromUrl, useTranslations } from '~/i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
 
 const metadata = {
-  title: 'The Buoy',
-  description: 'Technical details and downloads for SmartBuoy hardware.',
+  title: t('buoy.hero.title'),
+  description: t('buoy.hero.subtitle'),
 };
 
 const techItems = [
@@ -53,13 +57,7 @@ const downloadItems = [
 
 <Layout metadata={metadata} showEnvironmentImpact={true}>
   <BuoyPage
-    heroTitle="The Buoy"
-    heroSubtitle="Technical details and downloads for SmartBuoy hardware."
-    techTitle="Technical details"
-    techSubtitle="Overview of SmartBuoy hardware and capabilities."
     techItems={techItems}
-    downloadTitle="Downloads"
-    downloadSubtitle="User guides, certificates, and other documents."
     downloadItems={downloadItems}
   />
 </Layout>

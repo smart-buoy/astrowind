@@ -60,6 +60,15 @@ environment-impact:
 
 # Buoy section (The Buoy product page)
 buoy:
+  hero:
+    title: "The SmartBuoy Buoy"
+    subtitle: "Digital reservations. Reliable technology. Protection for nature."
+  tech:
+    title: "Technical details"
+    subtitle: "Overview of SmartBuoy hardware and capabilities."
+  download:
+    title: "Downloads"
+    subtitle: "User guides, certificates, and other documents."
   faq:
     title: "Frequently Asked Questions"
     sub-title: "Here are some frequently asked questions about the SmartBuoy hardware."

@@ -16,6 +16,14 @@ const {
   id,
   bg = await Astro.slots.render('bg'),
 } = Astro.props;
+
+const imageMetadata =
+  typeof image === 'object' && image !== null && 'width' in image && 'height' in image ? image : undefined;
+const imageAspectRatio = imageMetadata
+  ? Number(imageMetadata.width) / Number(imageMetadata.height)
+  : 16 / 9;
+const heroImageWidth = imageMetadata ? Math.min(Number(imageMetadata.width), 1200) : 1200;
+const heroImageHeight = Math.round(heroImageWidth / imageAspectRatio);
 ---
 
 <section class="relative md:-mt-[76px] not-prose" {...id ? { id } : {}}>
@@ -75,17 +83,18 @@ const {
       <div class="basis-1/2">
         {
           image && (
-            <div class="relative m-auto max-w-5xl intersect-once intersect-no-queue motion-safe:md:intersect:animate-fade motion-safe:md:opacity-0 intersect-quarter">
+            <div class="relative m-auto max-w-5xl lg:aspect-[10/9] intersect-once intersect-no-queue motion-safe:md:intersect:animate-fade motion-safe:md:opacity-0 intersect-quarter">
               {typeof image === 'string' ? (
                 <Fragment set:html={image} />
               ) : (
                 <Image
-                  class="mx-auto rounded-md w-full"
+                  class="mx-auto rounded-md w-full h-auto lg:h-full object-cover"
                   widths={[400, 768, 1024, 2040]}
                   sizes="(max-width: 767px) 400px, (max-width: 1023px) 768px, (max-width: 2039px) 1024px, 2040px"
                   loading="eager"
-                  width={600}
-                  height={600}
+                  layout="cover"
+                  width={heroImageWidth}
+                  height={heroImageHeight}
                   {...image}
                 />
               )}

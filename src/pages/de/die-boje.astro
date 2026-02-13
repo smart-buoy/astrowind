@@ -2,10 +2,14 @@
 import Layout from '~/layouts/PageLayout.astro';
 import BuoyPage from '~/components/widgets/BuoyPage.astro';
 import { getAsset } from '~/utils/permalinks';
+import { getLangFromUrl, useTranslations } from '~/i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
 
 const metadata = {
-  title: 'Die Boje',
-  description: 'Technische Details und Downloads für SmartBuoy-Hardware.',
+  title: t('buoy.hero.title'),
+  description: t('buoy.hero.subtitle'),
 };
 
 const techItems = [
@@ -53,13 +57,7 @@ const downloadItems = [
 
 <Layout metadata={metadata} showEnvironmentImpact={true}>
   <BuoyPage
-    heroTitle="Die Boje"
-    heroSubtitle="Technische Details und Downloads für SmartBuoy‑Hardware."
-    techTitle="Technische Details"
-    techSubtitle="Überblick über SmartBuoy-Hardware und Funktionen."
     techItems={techItems}
-    downloadTitle="Downloads"
-    downloadSubtitle="Benutzerhandbücher, Zertifikate und weitere Dokumente."
     downloadItems={downloadItems}
   />
 </Layout>

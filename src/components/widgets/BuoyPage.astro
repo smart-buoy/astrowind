@@ -1,7 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import type { Item } from '~/types';
-import HeroText from '~/components/widgets/HeroText.astro';
+import Hero2 from '~/components/widgets/Hero2.astro';
 import WidgetWrapper from '~/components/ui/WidgetWrapper.astro';
 import Headline from '~/components/ui/Headline.astro';
 import ItemGrid from '~/components/ui/ItemGrid.astro';
@@ -10,6 +10,9 @@ import { getLangFromUrl, useTranslations } from '~/i18n/utils';
 
 const language = getLangFromUrl(Astro.url);
 const t = useTranslations(language);
+
+import buoyImage from '~/assets/images/boje.jpg';
+
 
 const faqEntries = await getCollection('faq');
 const faqs = faqEntries
@@ -25,24 +28,12 @@ const faqs = faqEntries
   });
 
 export interface Props {
-  heroTitle: string;
-  heroSubtitle: string;
-  techTitle: string;
-  techSubtitle?: string;
   techItems: Item[];
-  downloadTitle: string;
-  downloadSubtitle?: string;
   downloadItems: Array<{ title: string; description?: string; href: string; ctaText: string }>;
 }
 
 const {
-  heroTitle,
-  heroSubtitle,
-  techTitle,
-  techSubtitle,
   techItems,
-  downloadTitle,
-  downloadSubtitle,
   downloadItems,
 } = Astro.props;
 
@@ -59,12 +50,24 @@ const downloadGridItems: Item[] = downloadItems.map((d) => ({
 }));
 ---
 
-<HeroText title={heroTitle} subtitle={heroSubtitle} />
+<Hero2
+  image={{
+    src: buoyImage,
+    alt: 'SmartBuoy buoy on the water',
+  }}
+>
+  <Fragment slot="title">
+    <span class="text-primary dark:text-white highlight">{t('buoy.hero.title')}</span> <br />
+    {t('buoy.hero.subtitle')}
+  </Fragment>
+
+  <Fragment slot="subtitle"></Fragment>
+</Hero2>
 
 <WidgetWrapper id="technical-details" containerClass="max-w-5xl">
   <Headline
-    title={techTitle}
-    subtitle={techSubtitle}
+    title={t('buoy.tech.title')}
+    subtitle={t('buoy.tech.subtitle')}
     classes={{
       container: 'max-w-3xl mx-auto',
       title: 'text-3xl md:text-4xl font-bold tracking-tighter mb-4 font-heading',
@@ -87,8 +90,8 @@ const downloadGridItems: Item[] = downloadItems.map((d) => ({
 
 <WidgetWrapper id="downloads" containerClass="max-w-5xl">
   <Headline
-    title={downloadTitle}
-    subtitle={downloadSubtitle}
+    title={t('buoy.download.title')}
+    subtitle={t('buoy.download.subtitle')}
     classes={{
       container: 'max-w-3xl mx-auto',
       title: 'text-3xl md:text-4xl font-bold tracking-tighter mb-4 font-heading',

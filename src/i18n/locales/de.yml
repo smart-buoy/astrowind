@@ -60,6 +60,15 @@ environment-impact:
 
 # Buoy section (Die Boje product page)
 buoy:
+  hero:
+    title: "Die SmartBuoy Boje"
+    subtitle: "Digitale Reservierung. Verlässliche Technik. Schutz für die Natur."
+  tech:
+    title: "Technische Details"
+    subtitle: "Überblick über SmartBuoy-Hardware und Funktionen."
+  download:
+    title: "Downloads"
+    subtitle: "Benutzerhandbücher, Zertifikate und weitere Dokumente."
   faq:
     title: "Häufig gestellte Fragen"
     sub-title: "Hier sind einige häufig gestellte Fragen zur SmartBuoy-Hardware."
