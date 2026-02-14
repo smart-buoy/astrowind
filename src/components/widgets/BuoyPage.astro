@@ -6,6 +6,7 @@ import Headline from '~/components/ui/Headline.astro';
 import ItemGrid from '~/components/ui/ItemGrid.astro';
 import FAQs from '~/components/widgets/FAQs.astro';
 import PageCarousel from '~/components/widgets/PageCarousel.astro';
+import EnvironmentalImpactBanner from '~/components/widgets/EnvironmentalImpactBanner.astro';
 import { getLangFromUrl, useTranslations } from '~/i18n/utils';
 import { formatFrontmatterRichText } from '~/i18n/richText';
 
@@ -64,6 +65,7 @@ const downloadGridItems = downloadItems.map((d) => ({
 }));
 
 const technicalDetailsHtml = formatFrontmatterRichText(t('buoy.tech.content') as string);
+const ecologyHtml = formatFrontmatterRichText(t('buoy.ecology.content') as string);
 ---
 
 <Hero2
@@ -100,8 +102,21 @@ const technicalDetailsHtml = formatFrontmatterRichText(t('buoy.tech.content') as
       subtitle: 'text-xl text-muted',
     }}
   />
-  <div class="buoy-tech-richtext mx-auto max-w-4xl text-lg text-muted dark:text-slate-300" set:html={technicalDetailsHtml} />
+  <div class="buoy-richtext mx-auto max-w-4xl text-lg text-muted dark:text-slate-300" set:html={technicalDetailsHtml} />
 </WidgetWrapper>
+
+<WidgetWrapper id="sustainability-ecology" containerClass="max-w-5xl">
+  <Headline
+    title={t('buoy.ecology.title')}
+    classes={{
+      container: 'max-w-3xl mx-auto',
+      title: 'text-3xl md:text-4xl font-bold tracking-tighter mb-4 font-heading',
+    }}
+  />
+  <div class="buoy-richtext mx-auto max-w-4xl text-lg text-muted dark:text-slate-300" set:html={ecologyHtml} />
+</WidgetWrapper>
+
+<EnvironmentalImpactBanner />
 
 <WidgetWrapper id="downloads" containerClass="max-w-5xl">
   <Headline
@@ -138,23 +153,23 @@ const technicalDetailsHtml = formatFrontmatterRichText(t('buoy.tech.content') as
 )}
 
 <style>
-  .buoy-tech-richtext :global(p) {
+  .buoy-richtext :global(p) {
     margin: 0 0 0.85rem;
     line-height: 1.65;
   }
 
-  .buoy-tech-richtext :global(ul) {
+  .buoy-richtext :global(ul) {
     margin: 0.25rem 0 1rem;
     padding-left: 1.25rem;
     list-style: disc;
   }
 
-  .buoy-tech-richtext :global(li) {
+  .buoy-richtext :global(li) {
     margin: 0.22rem 0;
     line-height: 1.55;
   }
 
-  .buoy-tech-richtext :global(strong) {
+  .buoy-richtext :global(strong) {
     color: inherit;
     font-weight: 700;
   }
