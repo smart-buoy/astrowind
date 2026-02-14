@@ -12,27 +12,6 @@ const metadata = {
   description: t('buoy.hero.subtitle'),
 };
 
-const techItems = [
-  {
-    title: 'Core hardware',
-    description:
-      'Robust buoy body, mooring system, and onboard electronics designed for marine environments and long-term deployment.',
-    icon: 'tabler:anchor',
-  },
-  {
-    title: 'Connectivity & power',
-    description:
-      'Cellular connectivity for real-time data and solar-powered operation to ensure continuous monitoring with minimal maintenance.',
-    icon: 'tabler:antenna-bars-5',
-  },
-  {
-    title: 'Monitoring & security',
-    description:
-      'Integrated sensors and status reporting so operators can monitor buoy health and skippers can see availability at a glance.',
-    icon: 'tabler:shield-check',
-  },
-];
-
 const downloadItems = [
   {
     title: 'User Guide',
@@ -56,8 +35,5 @@ const downloadItems = [
 ---
 
 <Layout metadata={metadata} showEnvironmentImpact={true}>
-  <BuoyPage
-    techItems={techItems}
-    downloadItems={downloadItems}
-  />
+  <BuoyPage downloadItems={downloadItems} />
 </Layout>

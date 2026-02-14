@@ -68,8 +68,29 @@ buoy:
     title: "The SmartBuoy Buoy"
     subtitle: "Digital reservations. Reliable technology. Protection for nature."
   tech:
-    title: "Technical details"
-    subtitle: "Overview of SmartBuoy hardware and capabilities."
+    title: "Technical specifications"
+    subtitle: "The key technical specifications of the SmartBuoy buoy at a glance."
+    content: |-
+      **Housing material:** CFRP & GRP
+      (Planned future development: natural fibers with epoxy resin)
+      **Corrosion protection:** Seawater-resistant components from yacht engineering
+      **Protection class:** IP67
+      **Dimensions:**
+      - Total height incl. rod: approx. 1.0 m
+      - Diameter: approx. 38 cm
+      - Buoy height (without rod): approx. 54 cm
+      **Weight:** approx. 5 kg
+      **Load capacity / tensile strength:** approx. 8,100 kg (comparable to a 24 mm rope)
+      **Communication:** NB-IoT, LTE-M
+      **GPS accuracy:** approx. 5-10 m (depending on real-world conditions)
+      **Solar:** 4 × polycrystalline solar modules, 12 V / 1.5 W
+      (Further development and enhanced certification planned)
+      **Battery:** LFP (Lithium Iron Phosphate)
+      **Service life:** approx. 7 years
+      **Warranty:** Statutory warranty (currently 2 years)
+      **Testing & certifications:**
+      - TCKT Wels (weathering test, dynamic testing, pressure testing)
+      - CE marking
   carousel:
     title: "Why SmartBuoy"
     subtitle: "SmartBuoy combines reliable technology and smart digital control to make mooring safer, simpler, and more efficient."

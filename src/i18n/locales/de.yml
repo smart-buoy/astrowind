@@ -69,7 +69,28 @@ buoy:
     subtitle: "Digitale Reservierung. Verlässliche Technik. Schutz für die Natur."
   tech:
     title: "Technische Details"
-    subtitle: "Überblick über SmartBuoy-Hardware und Funktionen."
+    subtitle: "Die wichtigsten technischen Daten der SmartBuoy Boje im Überblick."
+    content: |-
+      **Gehäusematerial:** CFK & GFK
+      (Zukünftig: Naturfasern mit Epoxidharz geplant)
+      **Korrosionsschutz:** Meerwasserbeständige Komponenten aus dem Yachtbau
+      **Schutzklasse:** IP67
+      **Maße:**
+      - Gesamthöhe inkl. Stab: ca. 1,0 m
+      - Durchmesser: ca. 38 cm
+      - Höhe Boje (ohne Stab): ca. 54 cm
+      **Gewicht:** ca. 5 kg
+      **Tragfähigkeit / Zugbelastung:** ca. 8.100 kg (vergleichbar mit einem 24-mm-Seil)
+      **Kommunikation:** NB-IoT, LTE-M
+      **GPS-Genauigkeit:** ca. 5-10 m (praxisabhängig)
+      **Solar:** 4 × polykristalline Solarmodule, 12 V / 1,5 W
+      (Weiterentwicklung und verbesserte Zertifizierung geplant)
+      **Batterie:** LFP (Lithium-Eisenphosphat)
+      **Lebensdauer:** ca. 7 Jahre
+      **Garantie / Gewährleistung:** Gesetzliche Gewährleistung (derzeit 2 Jahre)
+      **Prüfungen & Zertifikate:**
+      - TCKT Wels (Bewitterungstest, dynamische Prüfung, Druckprüfung)
+      - CE-Kennzeichnung
   carousel:
     title: "Warum SmartBuoy"
     subtitle: "SmartBuoy verbindet verlässliche Technik mit intelligenter digitaler Steuerung und macht Anlegen sicherer, einfacher und effizienter."
