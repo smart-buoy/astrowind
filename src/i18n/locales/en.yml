@@ -27,6 +27,10 @@ skipper:
     title: "Our Advantages"
     sub-title: "SmartBuoy offers skippers an innovative, sustainable and user-friendly way to operate their boats more efficiently - while actively contributing to environmental protection."
     tagline: "Advantages"
+  carousel:
+    title: "See SmartBuoy in Action"
+    sub-title: "A quick overview of what skippers get with SmartBuoy."
+    tagline: "Features"
   features:
     title: "Our Solution for Skippers"
     sub-title: "SmartBuoy offers a variety of innovative features, including real-time information, flexible reservation adjustments and data analysis to optimize your boat trips."
@@ -66,6 +70,10 @@ buoy:
   tech:
     title: "Technical details"
     subtitle: "Overview of SmartBuoy hardware and capabilities."
+  carousel:
+    title: "Why SmartBuoy"
+    subtitle: "SmartBuoy combines reliable technology and smart digital control to make mooring safer, simpler, and more efficient."
+    tagline: "Features"
   download:
     title: "Downloads"
     subtitle: "User guides, certificates, and other documents."
@@ -89,6 +97,10 @@ operator:
     title: "Our Advantages"
     sub-title: "SmartBuoy offers operators a holistic, user-friendly and sustainable option that allows them to manage their buoys more efficiently and effectively."
     tagline: "Advantages"
+  carousel:
+    title: "Built for Operators"
+    sub-title: "Core capabilities for efficient buoy field operations."
+    tagline: "Features"
   use-cases:
     title: "Our Use Cases"
     sub-title: "The SmartBuoy solution offers buoy field operators a variety of use cases that enable efficient management, proactive maintenance management and improved customer retention."

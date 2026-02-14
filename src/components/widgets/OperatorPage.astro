@@ -8,6 +8,7 @@ import Testimonials from '~/components/widgets/Testimonials.astro';
 import Button from '~/components/ui/Button.astro';
 import Hero2 from '~/components/widgets/Hero2.astro';
 import FeatureContent from '~/components/widgets/FeatureContent.astro';
+import PageCarousel from '~/components/widgets/PageCarousel.astro';
 import { urlForImage } from '~/utils/sanity';
 
 const appLink = '#'; //https://operator-web.dev.smartbuoy.eu
@@ -31,6 +32,22 @@ const faqs = faqEntries
     return {
       title: (d.question && (d.question[lang] ?? d.question.en)) ?? '',
       description: (d.answer && (d.answer[lang] ?? d.answer.en)) ?? '',
+    };
+  });
+
+const pageCarouselEntries = await getCollection('pageCarousel');
+const carouselItems = pageCarouselEntries
+  .filter((entry) => entry.data.area === 'operator')
+  .sort((a, b) => (a.data.order ?? 999) - (b.data.order ?? 999))
+  .map((entry) => {
+    const d = entry.data;
+    const lang = language as 'en' | 'de';
+    const localizedTitle = (d.title && (d.title[lang] ?? d.title.en)) ?? '';
+    return {
+      image: d.image,
+      imageAlt: (d.imageAlt && (d.imageAlt[lang] ?? d.imageAlt.en)) ?? localizedTitle,
+      title: localizedTitle,
+      description: (d.description && (d.description[lang] ?? d.description.en)) ?? '',
     };
   });
 
@@ -85,6 +102,18 @@ const highlights = await sanityClient.fetch(
 
   </div>
 </Hero2>
+
+{
+  carouselItems.length > 0 && (
+    <PageCarousel
+      id="operator-carousel"
+      title={t('operator.carousel.title')}
+      subtitle={t('operator.carousel.sub-title')}
+      tagline={t('operator.carousel.tagline')}
+      items={carouselItems}
+    />
+  )
+}
 
 <!-- Features Widget *************** -->
 

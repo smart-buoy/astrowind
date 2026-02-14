@@ -6,6 +6,7 @@ import WidgetWrapper from '~/components/ui/WidgetWrapper.astro';
 import Headline from '~/components/ui/Headline.astro';
 import ItemGrid from '~/components/ui/ItemGrid.astro';
 import FAQs from '~/components/widgets/FAQs.astro';
+import PageCarousel from '~/components/widgets/PageCarousel.astro';
 import { getLangFromUrl, useTranslations } from '~/i18n/utils';
 
 const language = getLangFromUrl(Astro.url);
@@ -24,6 +25,22 @@ const faqs = faqEntries
     return {
       title: (d.question && (d.question[lang] ?? d.question.en)) ?? '',
       description: (d.answer && (d.answer[lang] ?? d.answer.en)) ?? '',
+    };
+  });
+
+const pageCarouselEntries = await getCollection('pageCarousel');
+const carouselItems = pageCarouselEntries
+  .filter((entry) => entry.data.area === 'buoy')
+  .sort((a, b) => (a.data.order ?? 999) - (b.data.order ?? 999))
+  .map((entry) => {
+    const d = entry.data;
+    const lang = language as 'en' | 'de';
+    const localizedTitle = (d.title && (d.title[lang] ?? d.title.en)) ?? '';
+    return {
+      image: d.image,
+      imageAlt: (d.imageAlt && (d.imageAlt[lang] ?? d.imageAlt.en)) ?? localizedTitle,
+      title: localizedTitle,
+      description: (d.description && (d.description[lang] ?? d.description.en)) ?? '',
     };
   });
 
@@ -57,12 +74,22 @@ const downloadGridItems: Item[] = downloadItems.map((d) => ({
   }}
 >
   <Fragment slot="title">
-    <span class="text-primary dark:text-white highlight">{t('buoy.hero.title')}</span> <br />
-    {t('buoy.hero.subtitle')}
+    <span class="text-primary dark:text-white highlight">{t('buoy.hero.title')}</span>
+    
   </Fragment>
 
-  <Fragment slot="subtitle"></Fragment>
+  <Fragment slot="subtitle">{t('buoy.hero.subtitle')}</Fragment>
 </Hero2>
+
+{carouselItems.length > 0 && (
+  <PageCarousel
+    id="buoy-carousel"
+    title={t('buoy.carousel.title')}
+    subtitle={t('buoy.carousel.subtitle')}
+    tagline={t('buoy.carousel.tagline')}
+    items={carouselItems}
+  />
+)}
 
 <WidgetWrapper id="technical-details" containerClass="max-w-5xl">
   <Headline

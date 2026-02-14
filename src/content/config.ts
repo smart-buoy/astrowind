@@ -130,6 +130,21 @@ const faqCollection = defineCollection({
   }),
 });
 
+const pageCarouselCollection = defineCollection({
+  loader: glob({
+    pattern: '*.mdx',
+    base: 'src/data/page-carousel',
+  }),
+  schema: z.object({
+    area: z.enum(['buoy', 'skipper', 'operator']),
+    order: z.number().optional(),
+    image: z.string(),
+    title: localizedString(),
+    description: localizedString(),
+    imageAlt: localizedString().optional(),
+  }),
+});
+
 const aboutTimelineCollection = defineCollection({
   loader: glob({
     pattern: '*.md',
@@ -151,5 +166,6 @@ export const collections = {
   post: postCollection,
   team: teamCollection,
   faq: faqCollection,
+  pageCarousel: pageCarouselCollection,
   aboutTimeline: aboutTimelineCollection,
 };

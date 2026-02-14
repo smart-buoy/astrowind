@@ -1,0 +1,573 @@
+---
+import WidgetWrapper from '~/components/ui/WidgetWrapper.astro';
+import Headline from '~/components/ui/Headline.astro';
+import Image from '~/components/common/Image.astro';
+import { formatFrontmatterRichText } from '~/i18n/richText';
+
+export interface CarouselItem {
+  image: string;
+  imageAlt: string;
+  title: string;
+  description: string;
+}
+
+export interface Props {
+  id: string;
+  title?: string;
+  subtitle?: string;
+  tagline?: string;
+  items: CarouselItem[];
+}
+
+const { id, title, subtitle, tagline, items = [] } = Astro.props;
+
+const itemsWithHtml = items.map((item) => ({
+  ...item,
+  descriptionHtml: formatFrontmatterRichText(item.description),
+}));
+---
+
+{
+  items.length > 0 && (
+    <WidgetWrapper id={id} containerClass="max-w-6xl">
+      <Headline
+        title={title}
+        subtitle={subtitle}
+        tagline={tagline}
+        classes={{
+          container: 'max-w-3xl mx-auto',
+          title: 'text-3xl md:text-4xl font-bold tracking-tighter mb-4 font-heading',
+          subtitle: 'text-xl text-muted',
+        }}
+      />
+
+      <div data-carousel={id} class="relative">
+        <div class="carousel-stage relative">
+          <ul
+            data-carousel-track
+            class="carousel-track flex snap-x snap-mandatory gap-4 overflow-x-auto scroll-smooth pb-2 cursor-grab select-none touch-auto"
+            aria-label={title ?? 'Carousel'}
+          >
+            {itemsWithHtml.map((item) => (
+              <li class="min-w-0 shrink-0 basis-full snap-start md:basis-[calc((100%-1rem)/2)] lg:basis-[calc((100%-2rem)/3)]">
+                <article class="h-full overflow-hidden rounded-2xl bg-white/95 ring-1 ring-black/5 dark:bg-neutral-900/90 dark:ring-white/10">
+                  <div class="overflow-hidden">
+                    <Image
+                      src={item.image}
+                      alt={item.imageAlt}
+                      width={700}
+                      height={420}
+                      class="h-48 w-full object-cover"
+                    />
+                  </div>
+                  <div class="p-4">
+                    <h3 class="carousel-title mb-2 text-xl font-bold leading-tight text-heading dark:text-white">{item.title}</h3>
+                    <div class="carousel-richtext text-muted dark:text-slate-300" set:html={item.descriptionHtml} />
+                  </div>
+                </article>
+              </li>
+            ))}
+          </ul>
+          <button
+            type="button"
+            data-carousel-prev
+            class="carousel-nav-button carousel-nav-prev is-hidden"
+            aria-label="Previous slide"
+          >
+            <span aria-hidden="true" class="carousel-nav-icon">&#x2039;</span>
+          </button>
+          <button
+            type="button"
+            data-carousel-next
+            class="carousel-nav-button carousel-nav-next"
+            aria-label="Next slide"
+          >
+            <span aria-hidden="true" class="carousel-nav-icon">&#x203A;</span>
+          </button>
+        </div>
+
+        <div data-carousel-dots class="mt-4 flex justify-center gap-2" aria-hidden="true" />
+      </div>
+    </WidgetWrapper>
+  )
+}
+
+<script define:vars={{ carouselId: id }}>
+  const root = document.querySelector(`[data-carousel="${carouselId}"]`);
+  if (!(root instanceof HTMLElement) || root.dataset.initialized === 'true') {
+    // Run only once and skip when component is not on the page.
+  } else {
+    const initCarousel = () => {
+      if (root.dataset.initialized === 'true') return;
+      root.dataset.initialized = 'true';
+
+      const track = root.querySelector('[data-carousel-track]');
+      const prevButton = root.querySelector('[data-carousel-prev]');
+      const nextButton = root.querySelector('[data-carousel-next]');
+      const dotsContainer = root.querySelector('[data-carousel-dots]');
+
+      if (
+        !(track instanceof HTMLElement) ||
+        !(prevButton instanceof HTMLButtonElement) ||
+        !(nextButton instanceof HTMLButtonElement) ||
+        !(dotsContainer instanceof HTMLElement)
+      ) {
+        return;
+      }
+
+      const slides = Array.from(track.children).filter((child) => child instanceof HTMLElement);
+      const dots = [];
+      let isDragging = false;
+      let hasDragged = false;
+      let dragStartX = 0;
+      let dragStartScrollLeft = 0;
+      let dragStartIndex = 0;
+      let lastPointerX = null;
+      let activePointerId = null;
+      let autoScrollTimer = null;
+      let scrollSnapTimer = null;
+      let touchStartX = null;
+
+      const getVisibleCount = () => {
+        if (window.matchMedia('(min-width: 1024px)').matches) return 3;
+        if (window.matchMedia('(min-width: 768px)').matches) return 2;
+        return 1;
+      };
+
+      const isCarouselVisible = () => {
+        const rect = root.getBoundingClientRect();
+        return rect.bottom > 0 && rect.top < window.innerHeight;
+      };
+
+      const getMaxStartIndex = () => Math.max(0, slides.length - getVisibleCount());
+
+      const normalizeIndex = (index) => {
+        const maxStart = getMaxStartIndex();
+        if (index < 0) return 0;
+        if (index > maxStart) return maxStart;
+        return index;
+      };
+
+      const goToSlide = (index, behavior = 'smooth') => {
+        if (slides.length === 0) return;
+        const normalized = normalizeIndex(index);
+        const target = slides[normalized];
+        if (!target) return;
+        track.scrollTo({ left: target.offsetLeft, behavior });
+      };
+
+      const activeIndex = () => {
+        if (slides.length === 0) return 0;
+        const currentLeft = track.scrollLeft;
+        const maxStart = getMaxStartIndex();
+        let bestIndex = 0;
+        let bestDistance = Number.POSITIVE_INFINITY;
+
+        for (let index = 0; index <= maxStart; index += 1) {
+          const slide = slides[index];
+          if (!slide) continue;
+          const distance = Math.abs(slide.offsetLeft - currentLeft);
+          if (distance < bestDistance) {
+            bestDistance = distance;
+            bestIndex = index;
+          }
+        }
+
+        return normalizeIndex(bestIndex);
+      };
+
+      const goToNext = (behavior = 'smooth') => {
+        const current = activeIndex();
+        const nextIndex = Math.min(getMaxStartIndex(), current + 1);
+        goToSlide(nextIndex, behavior);
+      };
+
+      const goToPrev = (behavior = 'smooth') => {
+        const current = activeIndex();
+        const prevIndex = Math.max(0, current - 1);
+        goToSlide(prevIndex, behavior);
+      };
+
+      const goToNextLoop = (behavior = 'smooth') => {
+        const maxStart = getMaxStartIndex();
+        const current = activeIndex();
+        const nextIndex = current >= maxStart ? 0 : current + 1;
+        goToSlide(nextIndex, behavior);
+      };
+
+      const snapToNearest = (behavior = 'smooth') => {
+        goToSlide(activeIndex(), behavior);
+      };
+
+      const updateUi = () => {
+        const maxStart = getMaxStartIndex();
+        const current = activeIndex();
+        const canGoPrev = current > 0;
+        const canGoNext = current < maxStart;
+
+        prevButton.disabled = !canGoPrev;
+        nextButton.disabled = !canGoNext;
+        prevButton.classList.toggle('is-hidden', !canGoPrev);
+        nextButton.classList.toggle('is-hidden', !canGoNext);
+
+        dots.forEach((dot, index) => {
+          dot.setAttribute('aria-current', index === current ? 'true' : 'false');
+          dot.className =
+            index === current
+              ? 'h-2 w-6 rounded-full bg-primary transition'
+              : 'h-2 w-2 rounded-full bg-slate-300 transition dark:bg-slate-600';
+        });
+      };
+
+      const endDragging = () => {
+        const pointerDelta = dragStartX - (lastPointerX ?? dragStartX);
+        const threshold = 36;
+        const moveBy = Math.abs(pointerDelta) >= threshold ? Math.sign(pointerDelta) : 0;
+        const maxStart = getMaxStartIndex();
+        let targetIndex = dragStartIndex + moveBy;
+        if (targetIndex > maxStart) targetIndex = 0;
+        if (targetIndex < 0) targetIndex = maxStart;
+
+        isDragging = false;
+        activePointerId = null;
+        lastPointerX = null;
+        track.classList.remove('cursor-grabbing');
+        track.classList.add('cursor-grab');
+        track.style.scrollSnapType = '';
+        goToSlide(targetIndex, 'smooth');
+      };
+
+      const scheduleSnapToNearest = () => {
+        if (scrollSnapTimer !== null) {
+          window.clearTimeout(scrollSnapTimer);
+        }
+        scrollSnapTimer = window.setTimeout(() => {
+          if (!isDragging && isCarouselVisible()) {
+            snapToNearest('smooth');
+          }
+        }, 120);
+      };
+
+      const renderDots = () => {
+        dots.splice(0, dots.length);
+        dotsContainer.replaceChildren();
+        const count = getMaxStartIndex() + 1;
+        for (let index = 0; index < count; index += 1) {
+          const dot = document.createElement('button');
+          dot.type = 'button';
+          dot.className = 'h-2 w-2 rounded-full bg-slate-300 transition dark:bg-slate-600';
+          dot.setAttribute('aria-label', `Go to slide ${index + 1}`);
+          dot.addEventListener('click', () => {
+            goToSlide(index, 'smooth');
+            startAutoScroll();
+          });
+          dots.push(dot);
+          dotsContainer.append(dot);
+        }
+      };
+
+      prevButton.addEventListener(
+        'click',
+        () => {
+          goToPrev('smooth');
+          startAutoScroll();
+        },
+        { passive: true }
+      );
+      nextButton.addEventListener(
+        'click',
+        () => {
+          goToNext('smooth');
+          startAutoScroll();
+        },
+        { passive: true }
+      );
+
+      track.addEventListener('pointerdown', (event) => {
+        startAutoScroll();
+        // Keep native touch scrolling for mobile; custom drag is mouse-only.
+        if (event.pointerType !== 'mouse' || event.button !== 0) return;
+        isDragging = true;
+        hasDragged = false;
+        dragStartX = event.clientX;
+        dragStartScrollLeft = track.scrollLeft;
+        dragStartIndex = activeIndex();
+        lastPointerX = event.clientX;
+        activePointerId = event.pointerId;
+        track.style.scrollSnapType = 'none';
+        track.classList.remove('cursor-grab');
+        track.classList.add('cursor-grabbing');
+        track.setPointerCapture(event.pointerId);
+      });
+
+      track.addEventListener('pointermove', (event) => {
+        if (!isDragging || activePointerId !== event.pointerId) return;
+        const deltaX = event.clientX - dragStartX;
+        lastPointerX = event.clientX;
+        if (Math.abs(deltaX) > 4) hasDragged = true;
+        const dragSensitivity = 0.9;
+        track.scrollLeft = dragStartScrollLeft - deltaX * dragSensitivity;
+        if (event.pointerType === 'mouse') event.preventDefault();
+      });
+
+      track.addEventListener('pointerup', (event) => {
+        if (activePointerId === event.pointerId) endDragging();
+      });
+      track.addEventListener('pointercancel', (event) => {
+        if (activePointerId === event.pointerId) endDragging();
+      });
+      track.addEventListener('pointerleave', (event) => {
+        if (event.pointerType === 'mouse' && isDragging && activePointerId === event.pointerId) endDragging();
+      });
+      track.addEventListener(
+        'click',
+        (event) => {
+          if (!hasDragged) return;
+          event.preventDefault();
+          event.stopPropagation();
+          hasDragged = false;
+        },
+        true
+      );
+      track.addEventListener('dragstart', (event) => event.preventDefault());
+      track.addEventListener('wheel', () => startAutoScroll(), { passive: true });
+      track.addEventListener(
+        'touchstart',
+        (event) => {
+          startAutoScroll();
+          touchStartX = event.touches[0]?.clientX ?? null;
+        },
+        { passive: true }
+      );
+      track.addEventListener(
+        'touchend',
+        (event) => {
+          const startX = touchStartX;
+          const endX = event.changedTouches[0]?.clientX ?? null;
+          touchStartX = null;
+          if (startX === null || endX === null) return;
+          const delta = startX - endX;
+          if (Math.abs(delta) < 28) return;
+
+          const current = activeIndex();
+          const maxStart = getMaxStartIndex();
+          const isSwipeLeft = delta > 0;
+          if (isSwipeLeft && current >= maxStart) {
+            goToSlide(0, 'smooth');
+          } else if (!isSwipeLeft && current <= 0) {
+            goToSlide(maxStart, 'smooth');
+          }
+        },
+        { passive: true }
+      );
+      track.addEventListener('keydown', () => startAutoScroll(), { passive: true });
+
+      const startAutoScroll = () => {
+        if (autoScrollTimer !== null) {
+          window.clearInterval(autoScrollTimer);
+        }
+        autoScrollTimer = window.setInterval(() => {
+          if (!document.hidden && !isDragging && isCarouselVisible()) {
+            goToNextLoop('smooth');
+          }
+        }, 10000);
+      };
+
+      track.addEventListener(
+        'scroll',
+        () => {
+          updateUi();
+          scheduleSnapToNearest();
+        },
+        { passive: true }
+      );
+      window.addEventListener(
+        'resize',
+        () => {
+          renderDots();
+          updateUi();
+          snapToNearest('auto');
+        },
+        { passive: true }
+      );
+      renderDots();
+      startAutoScroll();
+      updateUi();
+      if (isCarouselVisible()) {
+        snapToNearest('auto');
+      }
+    };
+
+    const scheduleInit = () => {
+      if ('requestIdleCallback' in window) {
+        window.requestIdleCallback(initCarousel, { timeout: 700 });
+      } else {
+        window.setTimeout(initCarousel, 0);
+      }
+    };
+
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          const visible = entries.some((entry) => entry.isIntersecting);
+          if (!visible) return;
+          observer.disconnect();
+          scheduleInit();
+        },
+        { rootMargin: '250px 0px' }
+      );
+      observer.observe(root);
+    } else {
+      scheduleInit();
+    }
+  }
+</script>
+
+<style>
+  .carousel-track {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .carousel-track::-webkit-scrollbar {
+    display: none;
+  }
+
+  .carousel-track img {
+    -webkit-user-drag: none;
+    user-select: none;
+  }
+
+  .carousel-nav-button {
+    position: absolute;
+    top: 0;
+    bottom: 0.5rem;
+    z-index: 20;
+    width: 33.333%;
+    display: flex;
+    align-items: center;
+    transition:
+      opacity 160ms ease,
+      filter 160ms ease,
+      background 160ms ease;
+    border: 0;
+    color: #334155;
+    display: none;
+  }
+
+  @media (min-width: 768px) {
+    .carousel-nav-button {
+      display: flex;
+      width: 16.666%;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .carousel-nav-button {
+      width: 11.111%;
+    }
+  }
+
+  .carousel-nav-prev {
+    left: 0;
+    justify-content: flex-start;
+    padding-left: 0.9rem;
+    background: linear-gradient(to right, rgba(229, 231, 235, 0.9), rgba(229, 231, 235, 0.5), rgba(229, 231, 235, 0));
+  }
+
+  .carousel-nav-next {
+    right: 0;
+    justify-content: flex-end;
+    padding-right: 0.9rem;
+    background: linear-gradient(to left, rgba(229, 231, 235, 0.9), rgba(229, 231, 235, 0.5), rgba(229, 231, 235, 0));
+  }
+
+  .carousel-nav-icon {
+    font-size: 3.5rem;
+    line-height: 1;
+    opacity: 0.72;
+    transition:
+      opacity 160ms ease,
+      transform 160ms ease;
+  }
+
+  .carousel-nav-button:hover {
+    filter: saturate(1.1);
+  }
+
+  .carousel-nav-prev:hover {
+    background: linear-gradient(to right, rgba(229, 231, 235, 0.98), rgba(229, 231, 235, 0.68), rgba(229, 231, 235, 0));
+  }
+
+  .carousel-nav-next:hover {
+    background: linear-gradient(to left, rgba(229, 231, 235, 0.98), rgba(229, 231, 235, 0.68), rgba(229, 231, 235, 0));
+  }
+
+  .carousel-nav-button:hover .carousel-nav-icon {
+    opacity: 1;
+  }
+
+  .carousel-nav-prev:hover .carousel-nav-icon {
+    transform: translateX(-2px);
+  }
+
+  .carousel-nav-next:hover .carousel-nav-icon {
+    transform: translateX(2px);
+  }
+
+  .carousel-nav-button.is-hidden {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  :global(.dark) .carousel-nav-button {
+    color: #e2e8f0;
+  }
+
+  :global(.dark) .carousel-nav-prev {
+    background: linear-gradient(to right, rgba(38, 38, 38, 0.9), rgba(38, 38, 38, 0.5), rgba(38, 38, 38, 0));
+  }
+
+  :global(.dark) .carousel-nav-next {
+    background: linear-gradient(to left, rgba(38, 38, 38, 0.9), rgba(38, 38, 38, 0.5), rgba(38, 38, 38, 0));
+  }
+
+  :global(.dark) .carousel-nav-prev:hover {
+    background: linear-gradient(to right, rgba(38, 38, 38, 0.98), rgba(38, 38, 38, 0.68), rgba(38, 38, 38, 0));
+  }
+
+  :global(.dark) .carousel-nav-next:hover {
+    background: linear-gradient(to left, rgba(38, 38, 38, 0.98), rgba(38, 38, 38, 0.68), rgba(38, 38, 38, 0));
+  }
+
+  .carousel-title {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-height: 2.8em;
+  }
+
+  .carousel-richtext :global(p) {
+    margin: 0 0 0.75rem;
+  }
+
+  .carousel-richtext :global(p:last-child) {
+    margin-bottom: 0;
+  }
+
+  .carousel-richtext :global(ul) {
+    margin: 0 0 0.75rem;
+    padding-left: 1.1rem;
+    list-style: disc;
+  }
+
+  .carousel-richtext :global(ul:last-child) {
+    margin-bottom: 0;
+  }
+
+  .carousel-richtext :global(li) {
+    margin: 0.15rem 0;
+  }
+</style>

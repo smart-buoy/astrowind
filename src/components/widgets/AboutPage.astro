@@ -3,7 +3,7 @@ import { getLangFromUrl, useTranslations } from '~/i18n/utils';
 import Hero2 from '~/components/widgets/Hero2.astro';
 import WidgetWrapper from '~/components/ui/WidgetWrapper.astro';
 import AboutTimeline from '~/components/widgets/AboutTimeline.astro';
-import { formatTranslationRichText } from '~/i18n/richText';
+import { formatFrontmatterRichText, formatTranslationRichText } from '~/i18n/richText';
 import Headline from '~/components/ui/Headline.astro';
 
 const language = getLangFromUrl(Astro.url);
@@ -11,7 +11,8 @@ const t = useTranslations(language);
 
 import aboutImage from '~/assets/images/ueberuns.jpg';
 
-const tr = (key: string) => formatTranslationRichText(t(key) as string);
+const trInline = (key: string) => formatTranslationRichText(t(key) as string);
+const trBlock = (key: string) => formatFrontmatterRichText(t(key) as string);
 const bullets = (t('about.story.bullets') as string).split('|').map((item) => item.trim());
 const paragraphClass = 'text-lg leading-relaxed text-muted dark:text-slate-300';
 const aboutHeadlineTitleClass = 'text-2xl sm:text-3xl tracking-tight dark:text-white';
@@ -34,9 +35,9 @@ const aboutHeadlineTitleClass = 'text-2xl sm:text-3xl tracking-tight dark:text-w
 
 <WidgetWrapper id="intro" containerClass="max-w-5xl">
   <div class="max-w-none text-left">
-    <p class={paragraphClass} set:html={tr('about.intro.paragraph1')}></p>
+    <div class={paragraphClass} set:html={trBlock('about.intro.paragraph1')}></div>
     <Headline
-      title={tr('about.intro.subheadline')}
+      title={trInline('about.intro.subheadline')}
       classes={{
         container: 'mt-6 mb-6 md:mb-6 text-left md:mx-0 max-w-none',
         title: `${aboutHeadlineTitleClass} text-primary dark:text-primary`,
@@ -48,14 +49,14 @@ const aboutHeadlineTitleClass = 'text-2xl sm:text-3xl tracking-tight dark:text-w
 <WidgetWrapper id="story" containerClass="max-w-5xl">
   <div class="max-w-none text-left">
     <Headline
-      title={tr('about.story.title')}
+      title={trInline('about.story.title')}
       classes={{
         container: 'mb-6 md:mb-6 text-left md:mx-0 max-w-none',
         title: aboutHeadlineTitleClass,
       }}
     />
-    <p class={paragraphClass} set:html={tr('about.story.paragraph1')}></p>
-    <p class={paragraphClass} set:html={tr('about.story.paragraph2')}></p>
+    <div class={paragraphClass} set:html={trBlock('about.story.paragraph1')}></div>
+    <div class={paragraphClass} set:html={trBlock('about.story.paragraph2')}></div>
     <ul class={`list-disc pl-6 space-y-2 my-6 ${paragraphClass}`}>
       {bullets.map((item) => (
         <li>
@@ -63,7 +64,7 @@ const aboutHeadlineTitleClass = 'text-2xl sm:text-3xl tracking-tight dark:text-w
         </li>
       ))}
     </ul>
-    <p class={paragraphClass} set:html={tr('about.story.conclusion')}></p>
+    <div class={paragraphClass} set:html={trBlock('about.story.conclusion')}></div>
   </div>
 </WidgetWrapper>
 

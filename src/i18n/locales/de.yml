@@ -27,6 +27,10 @@ skipper:
     title: "Unsere Vorteile"
     sub-title: "SmartBuoy bietet Skippern eine innovative, nachhaltige und benutzerfreundliche Möglichkeit, ihre Boote effizienter zu betreiben – und dabei aktiv zum Umweltschutz beizutragen."
     tagline: "Vorteile"
+  carousel:
+    title: "SmartBuoy im Einsatz"
+    sub-title: "Ein kompakter Ueberblick, was Skipper mit SmartBuoy erhalten."
+    tagline: "Features"
   features:
     title: "Unsere Lösung für Skipper"
     sub-title: "SmartBuoy bietet eine Vielzahl von innovativen Features, darunter Echtzeitinformationen, flexible Reservierungsanpassungen und Datenanalysen, um deine Bootsfahrten optimal zu gestalten."
@@ -66,6 +70,10 @@ buoy:
   tech:
     title: "Technische Details"
     subtitle: "Überblick über SmartBuoy-Hardware und Funktionen."
+  carousel:
+    title: "Warum SmartBuoy"
+    subtitle: "SmartBuoy verbindet verlässliche Technik mit intelligenter digitaler Steuerung und macht Anlegen sicherer, einfacher und effizienter."
+    tagline: "Features"
   download:
     title: "Downloads"
     subtitle: "Benutzerhandbücher, Zertifikate und weitere Dokumente."
@@ -89,6 +97,10 @@ operator:
     title: "Unsere Vorteile"
     sub-title: "SmartBuoy bietet Betreibern eine ganzheitliche, benutzerfreundliche und nachhaltige Option, die es ihnen ermöglicht, ihre Bojen effizienter und effektiver zu verwalten."
     tagline: "Vorteile"
+  carousel:
+    title: "Fuer Betreiber entwickelt"
+    sub-title: "Zentrale Funktionen fuer effiziente Bojenfeld-Operationen."
+    tagline: "Features"
   use-cases:
     title: "Unsere Anwendungsfälle"
     sub-title: "Die SmartBuoy-Lösung bietet Bojenfeldbetreibern vielfältige Anwendungsfälle, die eine effiziente Verwaltung, proaktives Wartungsmanagement und eine verbesserte Kundenbindung ermöglichen."
