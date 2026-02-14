@@ -1,5 +1,6 @@
 ---
 import Image from '~/components/common/Image.astro';
+import { Icon } from 'astro-icon/components';
 import Button from '~/components/ui/Button.astro';
 
 import type { Hero as Props } from '~/types';
@@ -15,6 +16,7 @@ const {
 
   id,
   bg = await Astro.slots.render('bg'),
+  imageObjectPositionDesktop = '50% 50%',
 } = Astro.props;
 
 const imageMetadata =
@@ -24,22 +26,44 @@ const imageAspectRatio = imageMetadata
   : 16 / 9;
 const heroImageWidth = imageMetadata ? Math.min(Number(imageMetadata.width), 1200) : 1200;
 const heroImageHeight = Math.round(heroImageWidth / imageAspectRatio);
+const hasObjectImage = typeof image === 'object' && image !== null;
+const hasImage = Boolean(image);
 ---
 
-<section class="relative md:-mt-[76px] not-prose" {...id ? { id } : {}}>
+<section class="relative overflow-hidden md:-mt-[76px] not-prose" {...id ? { id } : {}}>
   <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
     <slot name="bg">
       {bg ? <Fragment set:html={bg} /> : null}
     </slot>
   </div>
+  {
+    hasObjectImage && (
+      <div class="absolute inset-0" style={`--hero2-desktop-object-position: ${imageObjectPositionDesktop};`} aria-hidden="true">
+        <Image
+          class="hero2-bg-image h-full w-full object-cover"
+          widths={[1024, 1366, 1920, 2560]}
+          sizes="100vw"
+          loading="eager"
+          layout="cover"
+          width={1920}
+          height={1080}
+          {...image}
+        />
+        <div class="absolute inset-0 bg-gradient-to-b from-gray-900/80 via-gray-900/60 to-gray-900/70 lg:from-gray-900/88 lg:via-gray-900/48 lg:to-gray-900/28 dark:from-black/88 dark:via-black/62 dark:to-black/35" />
+      </div>
+    )
+  }
   <div class="relative max-w-7xl mx-auto px-4 sm:px-6">
     <div class="pt-0 md:pt-[76px] pointer-events-none"></div>
-    <div class="py-12 md:py-20 lg:py-0 lg:flex lg:items-center lg:h-screen lg:gap-8">
-      <div class="basis-1/2 text-center lg:text-left pb-10 md:pb-16 mx-auto">
+    <div class="flex min-h-[calc(100svh-70px)] items-start pt-8 pb-10 sm:pt-20 sm:pb-12 md:min-h-[calc(100svh-76px)] md:pt-28 md:pb-16 lg:min-h-[calc(100svh-76px)] lg:justify-center lg:pt-14 lg:pb-14">
+      <div class:list={['mx-auto w-full text-center lg:max-w-3xl', { 'rounded-2xl bg-black/55 p-4 shadow-2xl ring-1 ring-white/20 backdrop-blur-[2px] sm:p-6 lg:p-10': hasObjectImage }]}>
         {
           tagline && (
             <p
-              class="text-base text-secondary font-bold tracking-wide uppercase intersect-once motion-safe:md:intersect:animate-fade motion-safe:md:opacity-0 intersect-quarter"
+              class:list={[
+                'text-base font-bold tracking-wide text-secondary uppercase intersect-once intersect-quarter motion-safe:md:intersect:animate-fade motion-safe:md:opacity-0',
+                { '!text-white drop-shadow-[0_1px_8px_rgba(0,0,0,0.8)]': hasObjectImage },
+              ]}
               set:html={tagline}
             />
           )
@@ -47,7 +71,10 @@ const heroImageHeight = Math.round(heroImageWidth / imageAspectRatio);
         {
           title && (
             <h1
-              class="text-5xl md:text-6xl font-bold leading-tighter tracking-tighter mb-4 font-heading dark:text-gray-200 intersect-once motion-safe:md:intersect:animate-fade motion-safe:md:opacity-0 intersect-quarter"
+              class:list={[
+                'mb-4 font-heading text-4xl font-bold leading-tighter tracking-tighter intersect-once intersect-quarter motion-safe:md:intersect:animate-fade motion-safe:md:opacity-0 sm:text-5xl md:text-6xl',
+                { 'text-white drop-shadow-[0_2px_10px_rgba(0,0,0,0.8)] [&_*]:!text-white': hasObjectImage },
+              ]}
               set:html={title}
             />
           )
@@ -56,7 +83,10 @@ const heroImageHeight = Math.round(heroImageWidth / imageAspectRatio);
           {
             subtitle && (
               <p
-                class="text-xl text-muted mb-6 dark:text-slate-300 intersect-once motion-safe:md:intersect:animate-fade motion-safe:md:opacity-0 intersect-quarter"
+                class:list={[
+                  'mb-0 text-lg text-muted intersect-once intersect-quarter motion-safe:md:intersect:animate-fade motion-safe:md:opacity-0 dark:text-slate-300 sm:text-xl',
+                  { '!text-white drop-shadow-[0_1px_6px_rgba(0,0,0,0.8)] [&_*]:!text-white': hasObjectImage },
+                ]}
                 set:html={subtitle}
               />
             )
@@ -64,7 +94,7 @@ const heroImageHeight = Math.round(heroImageWidth / imageAspectRatio);
 
           {
             actions && (
-              <div class="max-w-xs sm:max-w-md m-auto flex flex-nowrap flex-col sm:flex-row sm:justify-center gap-4 lg:justify-start lg:m-0 lg:max-w-7xl intersect-once motion-safe:md:intersect:animate-fade motion-safe:md:opacity-0 intersect-quarter">
+              <div class="m-auto flex max-w-xs flex-nowrap flex-col gap-4 intersect-once intersect-quarter motion-safe:md:intersect:animate-fade motion-safe:md:opacity-0 sm:max-w-md sm:flex-row sm:justify-center lg:max-w-7xl lg:justify-center">
                 {Array.isArray(actions) ? (
                   actions.map((action) => (
                     <div class="flex w-full sm:w-auto">
@@ -80,15 +110,15 @@ const heroImageHeight = Math.round(heroImageWidth / imageAspectRatio);
         </div>
         {content && <Fragment set:html={content} />}
       </div>
-      <div class="basis-1/2">
+      <div class:list={['mt-8', { hidden: hasObjectImage }]}>
         {
-          image && (
-            <div class="relative m-auto max-w-5xl lg:aspect-[10/9] intersect-once intersect-no-queue motion-safe:md:intersect:animate-fade motion-safe:md:opacity-0 intersect-quarter">
+          hasImage && (
+            <div class="relative m-auto max-w-5xl intersect-once intersect-no-queue intersect-quarter motion-safe:md:intersect:animate-fade motion-safe:md:opacity-0">
               {typeof image === 'string' ? (
                 <Fragment set:html={image} />
               ) : (
                 <Image
-                  class="mx-auto rounded-md w-full h-auto lg:h-full object-cover"
+                  class="mx-auto h-auto w-full rounded-md object-cover lg:h-full"
                   widths={[400, 768, 1024, 2040]}
                   sizes="(max-width: 767px) 400px, (max-width: 1023px) 768px, (max-width: 2039px) 1024px, 2040px"
                   loading="eager"
@@ -104,4 +134,35 @@ const heroImageHeight = Math.round(heroImageWidth / imageAspectRatio);
       </div>
     </div>
   </div>
+  {
+    hasImage && (
+      <div class="pointer-events-none absolute inset-x-0 bottom-4 z-10 flex justify-center">
+        <button
+          type="button"
+          class="group pointer-events-auto inline-flex flex-col items-center gap-1 rounded-xl px-3 py-2 text-white"
+          aria-label="Scroll to next section"
+          onclick="const section = this.closest('section'); const next = section?.nextElementSibling; if (next) { next.scrollIntoView({ behavior: 'smooth', block: 'start' }); } else { window.scrollTo({ top: window.innerHeight, behavior: 'smooth' }); }"
+        >
+          <span class="text-[0.65rem] font-semibold uppercase tracking-[0.22em] text-white/90 drop-shadow-[0_1px_6px_rgba(0,0,0,0.8)]">
+            Scroll down
+          </span>
+          <span class="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/70 bg-black/35 transition duration-200 group-hover:translate-y-0.5 group-hover:bg-black/50">
+            <Icon name="tabler:chevron-down" class="h-5 w-5" />
+          </span>
+        </button>
+      </div>
+    )
+  }
 </section>
+
+<style>
+  .hero2-bg-image {
+    object-position: center;
+  }
+
+  @media (min-width: 1024px) {
+    .hero2-bg-image {
+      object-position: var(--hero2-desktop-object-position, center);
+    }
+  }
+</style>

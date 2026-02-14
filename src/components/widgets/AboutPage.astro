@@ -28,18 +28,17 @@ const aboutValues = (await getCollection('aboutValues'))
 ---
 
 <Hero2
-  tagline={t('about.hero.tagline')}
+  imageObjectPositionDesktop="78% 50%"
   image={{
     src: aboutImage,
     alt: 'SmartBuoy team on the water',
   }}
 >
   <Fragment slot="title">
-    <span class="text-primary dark:text-white highlight">{t('about.hero.title')}</span> <br />
-    {t('about.hero.subtitle')}
+    <span class="text-primary dark:text-white highlight">{t('about.hero.title')}</span>
   </Fragment>
 
-  <Fragment slot="subtitle"></Fragment>
+  <Fragment slot="subtitle">{t('about.hero.subtitle')}</Fragment>
 </Hero2>
 
 <WidgetWrapper id="intro" containerClass="max-w-5xl">
