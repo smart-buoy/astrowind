@@ -162,10 +162,24 @@ const aboutTimelineCollection = defineCollection({
   }),
 });
 
+const aboutValuesCollection = defineCollection({
+  loader: glob({
+    pattern: '*.mdx',
+    base: 'src/data/about-values',
+  }),
+  schema: z.object({
+    order: z.number(),
+    icon: z.string().optional(),
+    title: localizedString(),
+    description: localizedString(),
+  }),
+});
+
 export const collections = {
   post: postCollection,
   team: teamCollection,
   faq: faqCollection,
   pageCarousel: pageCarouselCollection,
   aboutTimeline: aboutTimelineCollection,
+  aboutValues: aboutValuesCollection,
 };

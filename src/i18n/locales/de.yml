@@ -175,6 +175,12 @@ about:
   timeline:
     title: "Vom Konzept zur Boje"
     subtitle: "SmartBuoy ist das Ergebnis jahrelanger Entwicklung, Tests und Lernschleifen. Schritt für Schritt vom Gedanken zur marktreifen Lösung."
+  values:
+    tagline: "WERTE"
+    title: "Wofür wir stehen"
+    subtitle: |-
+      Unsere Werte sind nicht nur ein Marketingversprechen.
+      Sie leiten Entscheidungen, im Produkt, im Team und im Umgang mit Partnern.
 
 # Team
 team:

@@ -1,8 +1,10 @@
 ---
+import { getCollection } from 'astro:content';
 import { getLangFromUrl, useTranslations } from '~/i18n/utils';
 import Hero2 from '~/components/widgets/Hero2.astro';
 import WidgetWrapper from '~/components/ui/WidgetWrapper.astro';
 import AboutTimeline from '~/components/widgets/AboutTimeline.astro';
+import Features from '~/components/widgets/Features.astro';
 import { formatFrontmatterRichText, formatTranslationRichText } from '~/i18n/richText';
 import Headline from '~/components/ui/Headline.astro';
 
@@ -16,6 +18,13 @@ const trBlock = (key: string) => formatFrontmatterRichText(t(key) as string);
 const bullets = (t('about.story.bullets') as string).split('|').map((item) => item.trim());
 const paragraphClass = 'text-lg leading-relaxed text-muted dark:text-slate-300';
 const aboutHeadlineTitleClass = 'text-2xl sm:text-3xl tracking-tight dark:text-white';
+const aboutValues = (await getCollection('aboutValues'))
+  .sort((a, b) => a.data.order - b.data.order)
+  .map((entry) => ({
+    title: entry.data.title[language] ?? entry.data.title.en ?? '',
+    description: entry.data.description[language] ?? entry.data.description.en ?? '',
+    icon: entry.data.icon ?? 'tabler:circle-check',
+  }));
 ---
 
 <Hero2
@@ -69,3 +78,15 @@ const aboutHeadlineTitleClass = 'text-2xl sm:text-3xl tracking-tight dark:text-w
 </WidgetWrapper>
 
 <AboutTimeline />
+
+{
+  aboutValues.length > 0 && (
+    <Features
+      id="about-values"
+      tagline={t('about.values.tagline')}
+      title={t('about.values.title')}
+      subtitle={t('about.values.subtitle')}
+      items={aboutValues}
+    />
+  )
+}

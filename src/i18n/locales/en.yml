@@ -175,6 +175,10 @@ about:
   timeline:
     title: "From Concept to Buoy"
     subtitle: "SmartBuoy is the result of years of development, testing and learning cycles. Step by step from idea to market-ready solution."
+  values:
+    tagline: "VALUES"
+    title: "What we stand for"
+    subtitle: "Our values are more than a marketing promise. They guide decisions in the product, within the team, and in how we work with partners."
 
 # Team
 team:
