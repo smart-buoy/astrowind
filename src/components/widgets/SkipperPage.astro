@@ -1,6 +1,5 @@
 ---
 import { getCollection } from 'astro:content';
-import Features from '~/components/widgets/Features.astro';
 import FAQs from '~/components/widgets/FAQs.astro';
 import Stats from '~/components/widgets/Stats.astro';
 import CallToAction from '~/components/widgets/CallToAction.astro';
@@ -10,9 +9,13 @@ import Testimonials from '~/components/widgets/Testimonials.astro';
 import Button from '~/components/ui/Button.astro';
 import Image from '~/components/common/Image.astro';
 import Hero2 from '~/components/widgets/Hero2.astro';
-import FeatureContent from '~/components/widgets/FeatureContent.astro';
 import PageCarousel from '~/components/widgets/PageCarousel.astro';
+import WidgetWrapper from '~/components/ui/WidgetWrapper.astro';
+import Headline from '~/components/ui/Headline.astro';
+import { Icon } from 'astro-icon/components';
+import { formatFrontmatterRichText } from '~/i18n/richText';
 import { urlForImage } from '~/utils/sanity';
+import skipperHeroImage from '~/assets/images/app2.jpg';
 
 const appStoreImg = '~/assets/images/app-store.png';
 const appStoreDownloadLink = '#';
@@ -22,11 +25,6 @@ const googlePlayDownloadLink = '#';
 
 const language = getLangFromUrl(Astro.url);
 const t = useTranslations(language);
-
-const features = await sanityClient.fetch(`*[_type == "feature" && language == $language && area == $area]`, {
-  language,
-  area: 'skipper',
-});
 
 const faqEntries = await getCollection('faq');
 const faqs = faqEntries
@@ -57,6 +55,19 @@ const carouselItems = pageCarouselEntries
     };
   });
 
+const skipperAdvantagesEntries = await getCollection('skipperAdvantages');
+const skipperAdvantages = skipperAdvantagesEntries
+  .sort((a, b) => (a.data.order ?? 999) - (b.data.order ?? 999))
+  .map((entry) => {
+    const d = entry.data;
+    const lang = language as 'en' | 'de';
+    return {
+      title: (d.title && (d.title[lang] ?? d.title.en)) ?? '',
+      descriptionHtml: formatFrontmatterRichText((d.description && (d.description[lang] ?? d.description.en)) ?? ''),
+      icon: d.icon ?? 'tabler:circle-check',
+    };
+  });
+
 const testimonials = await sanityClient.fetch(
   `*[_type == "testimonial" && area==$area]{
   name,
@@ -67,36 +78,22 @@ image
   { language, area: 'skipper' }
 );
 
-const highlights = await sanityClient.fetch(
-  `*[_type == "highlight" && area==$area]{
-  name,
-"title": title[_key == $language][0].value,
-"description": description[_key == $language][0].value
-}`,
-  { language, area: 'skipper' }
-);
 ---
 
 <!-- Hero Widget ******************* -->
 <Hero2
-  tagline={t('skipper.hero.tagline')}
   imageObjectPositionDesktop="66% 50%"
   image={{
-    src: 'https://images.unsplash.com/photo-1535303311164-664fc9ec6532?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80',
+    src: skipperHeroImage,
     alt: 'SmartBuoy App Image',
   }}
 >
   <Fragment slot="title">
-    <span class="text-primary dark:text-white highlight">{t('skipper.hero.title')}</span>: <br />
-    {t('skipper.hero.title-1')}
-    <span class="hidden xl:inline"> {t('skipper.hero.title-2')}</span>
+    {t('skipper.hero.headline')}
   </Fragment>
 
   <Fragment slot="subtitle">
-    <span class="hidden sm:inline">
-      {t('skipper.hero.sub-title-1')}
-    </span>
-    {t('skipper.hero.sub-title-2')}
+    {t('skipper.hero.subtitle')}
   </Fragment>
 
   <div slot="actions" class="flex max-w-sm gap-4">
@@ -115,6 +112,25 @@ const highlights = await sanityClient.fetch(
   </div>
 </Hero2>
 
+<WidgetWrapper id="skipper-video" containerClass="max-w-5xl pt-12 md:pt-16">
+  <div class="overflow-hidden rounded-2xl shadow-lg ring-1 ring-black/5 dark:ring-white/10">
+    <div class="relative w-full pb-[56.25%]">
+      <iframe
+        class="absolute inset-0 h-full w-full"
+        src="https://www.youtube-nocookie.com/embed/g2PolCxK4vY"
+        title="SmartBuoy skipper video"
+        loading="lazy"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        referrerpolicy="strict-origin-when-cross-origin"
+        allowfullscreen
+      />
+    </div>
+  </div>
+  <p class="mt-4 text-gray-700 dark:text-slate-200">
+    {t('skipper.video.hint')}
+  </p>
+</WidgetWrapper>
+
 {
   carouselItems.length > 0 && (
     <PageCarousel
@@ -130,43 +146,28 @@ const highlights = await sanityClient.fetch(
 <!-- Features Widget *************** -->
 
 {
-  highlights.length > 0 && (
-    <Features
-      id="features"
-      tagline={t('skipper.highlights.tagline')}
-      title={t('skipper.highlights.title')}
-      subtitle={t('skipper.highlights.sub-title')}
-      items={highlights.map((highlight) => ({
-        title: highlight.title,
-        description: highlight.description,
-        icon: 'tabler:brand-tailwind',
-      }))}
-    />
+  skipperAdvantages.length > 0 && (
+    <WidgetWrapper id="features" containerClass="max-w-6xl">
+      <Headline
+        title={t('skipper.highlights.title')}
+        subtitle={t('skipper.highlights.sub-title')}
+        tagline={t('skipper.highlights.tagline')}
+      />
+      <div class="grid gap-x-10 gap-y-14 sm:grid-cols-2">
+        {skipperAdvantages.map((advantage) => (
+          <article class="max-w-xl">
+            <div class="flex items-center gap-4">
+              <div class="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-primary text-white">
+                <Icon name={advantage.icon} class="h-7 w-7" />
+              </div>
+              <h3 class="text-xl font-bold dark:text-white">{advantage.title}</h3>
+            </div>
+            <div class="skipper-advantages-richtext mt-4 text-muted dark:text-slate-300" set:html={advantage.descriptionHtml} />
+          </article>
+        ))}
+      </div>
+    </WidgetWrapper>
   )
-}
-
-<!-- Content Widget **************** -->
-{
-  features.length > 0 &&
-    features.map((feature, index) => (
-      <FeatureContent
-        title={t('skipper.features.title')}
-        subtitle={t('skipper.features.sub-title')}
-        tagline={t('skipper.features.tagline')}
-        isAfterContent={index > 0}
-        isReversed={index % 2 == 0}
-        feature={feature}
-      >
-        <Fragment slot="content">
-          <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">{feature.title}</h3>
-          {feature.subtitle}
-        </Fragment>
-
-        <Fragment slot="bg">
-          <div class="absolute inset-0 bg-blue-50 dark:bg-transparent" />
-        </Fragment>
-      </FeatureContent>
-    ))
 }
 
 <!-- Stats Widget ****************** -->
@@ -232,3 +233,26 @@ const highlights = await sanityClient.fetch(
 )}
 
 
+<style>
+  .skipper-advantages-richtext :global(p) {
+    margin: 0 0 0.8rem;
+  }
+
+  .skipper-advantages-richtext :global(p:last-child) {
+    margin-bottom: 0;
+  }
+
+  .skipper-advantages-richtext :global(ul) {
+    margin: 0 0 0.8rem;
+    padding-left: 1.25rem;
+    list-style: disc;
+  }
+
+  .skipper-advantages-richtext :global(ul:last-child) {
+    margin-bottom: 0;
+  }
+
+  .skipper-advantages-richtext :global(li) {
+    margin: 0.2rem 0;
+  }
+</style>

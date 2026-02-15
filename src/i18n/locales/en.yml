@@ -18,11 +18,11 @@ nav:
 skipper:
   hero:
     tagline: "Skipper App"
-    title: "SmartBuoy App"
-    title-1: "Booking Buoys"
-    title-2: "made easy"
-    sub-title-1: "Book a buoy in seconds."
-    sub-title-2: "Download now and enjoy your stay"
+    headline: "No calls. No chaos. Just relax."
+    subtitle: "Mit der SmartBuoy-App entspannter aufs Wasser."
+  video:
+    title: "SmartBuoy in action"
+    hint: "We use location data only for reservations; payment data is processed securely. Details can be found in the privacy policy."
   highlights:
     title: "Our Advantages"
     sub-title: "SmartBuoy offers skippers an innovative, sustainable and user-friendly way to operate their boats more efficiently - while actively contributing to environmental protection."

@@ -119,7 +119,7 @@ const teamCollection = defineCollection({
 
 const faqCollection = defineCollection({
   loader: glob({
-    pattern: '*.mdx',
+    pattern: '**/*.mdx',
     base: 'src/data/faq',
   }),
   schema: z.object({
@@ -132,7 +132,7 @@ const faqCollection = defineCollection({
 
 const pageCarouselCollection = defineCollection({
   loader: glob({
-    pattern: '*.mdx',
+    pattern: '**/*.mdx',
     base: 'src/data/page-carousel',
   }),
   schema: z.object({
@@ -175,6 +175,19 @@ const aboutValuesCollection = defineCollection({
   }),
 });
 
+const skipperAdvantagesCollection = defineCollection({
+  loader: glob({
+    pattern: '*.mdx',
+    base: 'src/data/skipper-advantages',
+  }),
+  schema: z.object({
+    order: z.number().optional(),
+    icon: z.string().optional(),
+    title: localizedString(),
+    description: localizedString(),
+  }),
+});
+
 export const collections = {
   post: postCollection,
   team: teamCollection,
@@ -182,4 +195,5 @@ export const collections = {
   pageCarousel: pageCarouselCollection,
   aboutTimeline: aboutTimelineCollection,
   aboutValues: aboutValuesCollection,
+  skipperAdvantages: skipperAdvantagesCollection,
 };

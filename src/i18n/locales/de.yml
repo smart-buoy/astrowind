@@ -18,11 +18,11 @@ nav:
 skipper:
   hero:
     tagline: "Skipper App"
-    title: "SmartBuoy App"
-    title-1: "Bojen buchen"
-    title-2: "einfach gemacht"
-    sub-title-1: "Buchen Sie eine Boje in Sekunden."
-    sub-title-2: "Jetzt herunterladen und Ihren Aufenthalt genießen!!"
+    headline: "Keine Anrufe. Kein Chaos. Einfach anlegen."
+    subtitle: "More relaxed on the water with the SmartBuoy app."
+  video:
+    title: "SmartBuoy im Einsatz"
+    hint: "Wir verwenden Standortdaten nur zur Reservierung; Zahlungsdaten werden sicher verarbeitet. Details in der Datenschutz-Erklärung."
   highlights:
     title: "Unsere Vorteile"
     sub-title: "SmartBuoy bietet Skippern eine innovative, nachhaltige und benutzerfreundliche Möglichkeit, ihre Boote effizienter zu betreiben – und dabei aktiv zum Umweltschutz beizutragen."
