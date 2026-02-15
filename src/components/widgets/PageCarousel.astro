@@ -45,7 +45,7 @@ const itemsWithHtml = items.map((item) => ({
         <div class="carousel-stage relative">
           <ul
             data-carousel-track
-            class="carousel-track flex snap-x snap-mandatory gap-4 overflow-x-auto scroll-smooth pb-2 cursor-grab select-none touch-auto"
+            class="carousel-track flex snap-x snap-mandatory gap-4 overflow-x-auto scroll-smooth pb-2 cursor-grab select-none touch-pan-y"
             aria-label={title ?? 'Carousel'}
           >
             {itemsWithHtml.map((item) => (
@@ -127,6 +127,7 @@ const itemsWithHtml = items.map((item) => ({
       let autoScrollTimer = null;
       let scrollSnapTimer = null;
       let touchStartX = null;
+      let touchStartY = null;
 
       const getVisibleCount = () => {
         if (window.matchMedia('(min-width: 1024px)').matches) return 3;
@@ -336,6 +337,7 @@ const itemsWithHtml = items.map((item) => ({
         (event) => {
           startAutoScroll();
           touchStartX = event.touches[0]?.clientX ?? null;
+          touchStartY = event.touches[0]?.clientY ?? null;
         },
         { passive: true }
       );
@@ -343,19 +345,29 @@ const itemsWithHtml = items.map((item) => ({
         'touchend',
         (event) => {
           const startX = touchStartX;
+          const startY = touchStartY;
           const endX = event.changedTouches[0]?.clientX ?? null;
+          const endY = event.changedTouches[0]?.clientY ?? null;
           touchStartX = null;
-          if (startX === null || endX === null) return;
-          const delta = startX - endX;
-          if (Math.abs(delta) < 28) return;
+          touchStartY = null;
+          if (startX === null || startY === null || endX === null || endY === null) return;
+
+          const deltaX = startX - endX;
+          const deltaY = startY - endY;
+          // Only treat clear horizontal swipes as carousel gestures.
+          if (Math.abs(deltaX) < 34 || Math.abs(deltaX) <= Math.abs(deltaY)) return;
 
           const current = activeIndex();
           const maxStart = getMaxStartIndex();
-          const isSwipeLeft = delta > 0;
+          const isSwipeLeft = deltaX > 0;
           if (isSwipeLeft && current >= maxStart) {
             goToSlide(0, 'smooth');
           } else if (!isSwipeLeft && current <= 0) {
             goToSlide(maxStart, 'smooth');
+          } else if (isSwipeLeft) {
+            goToSlide(current + 1, 'smooth');
+          } else {
+            goToSlide(current - 1, 'smooth');
           }
         },
         { passive: true }
