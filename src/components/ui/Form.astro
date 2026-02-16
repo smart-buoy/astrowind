@@ -31,7 +31,7 @@ const { inputs, textarea, disclaimer, button = 'Contact us', description = '' } 
                 <label class="block text-sm font-medium mb-2">{label}</label>
               )}
               <div
-                class="flex w-full p-0.5 rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-slate-800"
+                class="flex w-full p-0.5 rounded-lg border border-gray-200 dark:border-[#4a4a4a] bg-gray-100 dark:bg-[#242424]"
                 role="group"
                 aria-label={label}
               >
@@ -65,7 +65,7 @@ const { inputs, textarea, disclaimer, button = 'Contact us', description = '' } 
                 autocomplete={autocomplete}
                 placeholder={placeholder}
                 required={required}
-                class="py-3 px-4 block w-full text-md rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-900"
+                class="py-3 px-4 block w-full text-md rounded-lg border border-gray-200 dark:border-[#4a4a4a] bg-white dark:bg-[#1f1f1f]"
               />
             </div>
           ))
@@ -84,7 +84,7 @@ const { inputs, textarea, disclaimer, button = 'Contact us', description = '' } 
           rows={textarea.rows ? textarea.rows : 4}
           placeholder={textarea.placeholder}
           required={textarea.required}
-          class="py-3 px-4 block w-full text-md rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-900"
+          class="py-3 px-4 block w-full text-md rounded-lg border border-gray-200 dark:border-[#4a4a4a] bg-white dark:bg-[#1f1f1f]"
         />
       </div>
     )
@@ -98,7 +98,7 @@ const { inputs, textarea, disclaimer, button = 'Contact us', description = '' } 
             id="disclaimer"
             name="disclaimer"
             type="checkbox"
-            class="cursor-pointer mt-1 py-3 px-4 block w-full text-md rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-900"
+            class="cursor-pointer mt-1 py-3 px-4 block w-full text-md rounded-lg border border-gray-200 dark:border-[#4a4a4a] bg-white dark:bg-[#1f1f1f]"
           />
         </div>
         <div class="ml-3">

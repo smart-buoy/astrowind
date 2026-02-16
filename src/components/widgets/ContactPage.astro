@@ -55,6 +55,12 @@ const t = useTranslations(language);
 
 <Features2
   title={t('contact.features.title')}
+  classes={{
+    items: {
+      panel:
+        'rounded-lg shadow-[0_4px_30px_rgba(0,0,0,0.1)] dark:shadow-[0_4px_30px_rgba(0,0,0,0.1)] backdrop-blur border border-gray-200 dark:border-[#4a4a4a] bg-white dark:bg-[#2f2f2f] p-6',
+    },
+  }}
   items={[
     {
       title: t('contact.features.general-support.title'),
