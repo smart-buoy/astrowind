@@ -17,6 +17,7 @@ import VideoPlayer from '~/components/common/VideoPlayer.astro';
 import { formatFrontmatterRichText } from '~/i18n/richText';
 import { urlForImage } from '~/utils/sanity';
 import skipperHeroImage from '~/assets/images/app2.jpg';
+import skipperVideoPosterImage from '~/assets/images/boat.jpg';
 
 const appStoreImg = '~/assets/images/app-store.png';
 const appStoreDownloadLink = '#';
@@ -116,7 +117,7 @@ image
 <VideoPlayer
   id="skipper-video"
   videoSrc="https://cdn.smartbuoy.eu/SMARTBUOY_TEST_VERS_1.mp4"
-  poster={skipperHeroImage.src}
+  poster={skipperVideoPosterImage.src}
   hint={t('skipper.video.hint')}
   playAriaLabel="Play skipper video"
 />

@@ -51,6 +51,7 @@ const { id, videoSrc, poster, hint, playAriaLabel = 'Play video' } = Astro.props
 
       const syncPlayOverlay = () => {
         const shouldShowOverlay = video.paused || video.ended;
+        playOverlayButton.classList.toggle('hidden', !shouldShowOverlay);
         playOverlayButton.hidden = !shouldShowOverlay;
         playOverlayButton.setAttribute('aria-hidden', String(!shouldShowOverlay));
       };
@@ -75,6 +76,7 @@ const { id, videoSrc, poster, hint, playAriaLabel = 'Play video' } = Astro.props
       });
 
       video.addEventListener('play', syncPlayOverlay);
+      video.addEventListener('playing', syncPlayOverlay);
       video.addEventListener('pause', syncPlayOverlay);
       video.addEventListener('ended', syncPlayOverlay);
       video.addEventListener('webkitbeginfullscreen', syncPlayOverlay);
