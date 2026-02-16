@@ -115,15 +115,56 @@ image
 <WidgetWrapper id="skipper-video" containerClass="max-w-5xl pt-12 md:pt-16">
   <div class="overflow-hidden rounded-2xl shadow-lg ring-1 ring-black/5 dark:ring-white/10">
     <div class="relative w-full pb-[56.25%]">
-      <video class="absolute inset-0 h-full w-full" controls preload="metadata" playsinline>
+      <video
+        class="absolute inset-0 h-full w-full object-cover"
+        controls
+        preload="metadata"
+        playsinline
+        poster={skipperHeroImage.src}
+      >
         <source src="https://cdn.smartbuoy.eu/SMARTBUOY_TEST_VERS_1.mp4" type="video/mp4" />
       </video>
+      <button
+        type="button"
+        aria-label="Play skipper video"
+        class="absolute inset-0 z-10 m-auto flex h-20 w-20 items-center justify-center rounded-full bg-black/55 text-white shadow-lg transition hover:bg-black/65 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+        data-video-overlay-play
+      >
+        <Icon name="tabler:player-play-filled" class="ml-1 h-10 w-10" />
+      </button>
     </div>
   </div>
   <p class="mt-4 text-gray-700 dark:text-slate-200">
     {t('skipper.video.hint')}
   </p>
 </WidgetWrapper>
+
+<script is:inline>
+  const skipperVideoSection = document.getElementById('skipper-video');
+  const skipperVideo = skipperVideoSection?.querySelector('video');
+  const skipperPlayOverlayButton = skipperVideoSection?.querySelector('[data-video-overlay-play]');
+
+  if (skipperVideo instanceof HTMLVideoElement && skipperPlayOverlayButton instanceof HTMLButtonElement) {
+    const syncPlayOverlay = () => {
+      skipperPlayOverlayButton.classList.toggle('hidden', !skipperVideo.paused && !skipperVideo.ended);
+    };
+
+    skipperPlayOverlayButton.addEventListener('click', async () => {
+      try {
+        await skipperVideo.play();
+      } catch {
+        // Ignore autoplay-related errors; user can still use native controls.
+      }
+      syncPlayOverlay();
+    });
+
+    skipperVideo.addEventListener('play', syncPlayOverlay);
+    skipperVideo.addEventListener('pause', syncPlayOverlay);
+    skipperVideo.addEventListener('ended', syncPlayOverlay);
+
+    syncPlayOverlay();
+  }
+</script>
 
 {
   carouselItems.length > 0 && (
