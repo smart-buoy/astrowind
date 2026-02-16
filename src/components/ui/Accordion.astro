@@ -6,7 +6,7 @@ interface Item {
   description: string;
 }
 
-const { items = [], classes = {}, keepOneOpen = false } = Astro.props;
+const { items = [], classes = {}, keepOneOpen = false, singleOpen = false, openFirstItemByDefault = false } = Astro.props;
 
 const baseContainerClass = 'rounded-lg border border-gray-200 dark:border-gray-700 overflow-hidden';
 const {
@@ -21,9 +21,19 @@ const accordionGroupName = `accordion-${Math.random().toString(36).slice(2, 10)}
 
 {items.length > 0 && (
   <>
-    <div class={mergedContainerClass} data-accordion data-keep-one-open={keepOneOpen ? 'true' : 'false'}>
+    <div
+      class={mergedContainerClass}
+      data-accordion
+      data-keep-one-open={keepOneOpen ? 'true' : 'false'}
+      data-single-open={singleOpen ? 'true' : 'false'}
+    >
       {items.map((item, index) => (
-        <details class={itemClass} data-accordion-item open={index === 0} name={accordionGroupName}>
+        <details
+          class={itemClass}
+          data-accordion-item
+          open={openFirstItemByDefault && index === 0}
+          name={singleOpen ? accordionGroupName : undefined}
+        >
           <summary class={titleClass}>
             <span>{item.title}</span>
             <span class="accordion-chevron flex-shrink-0 text-primary transition-transform duration-200 ease-out group-open:rotate-90" aria-hidden="true">▶</span>
@@ -54,6 +64,7 @@ const accordionGroupName = `accordion-${Math.random().toString(36).slice(2, 10)}
         accordion.dataset.initialized = 'true';
 
         var keepOneOpen = accordion.getAttribute('data-keep-one-open') === 'true';
+        var singleOpen = accordion.getAttribute('data-single-open') === 'true';
         var accordionItems = accordion.querySelectorAll('[data-accordion-item]');
 
         if (keepOneOpen) {
@@ -68,7 +79,7 @@ const accordionGroupName = `accordion-${Math.random().toString(36).slice(2, 10)}
           if (!(details instanceof HTMLDetailsElement)) return;
           if (!details.matches('[data-accordion-item]')) return;
 
-          if (details.open) {
+          if (details.open && singleOpen) {
             accordionItems.forEach(function (other) {
               if (other !== details) other.open = false;
             });

@@ -22,7 +22,9 @@ const {
   <Headline title={title} subtitle={subtitle} tagline={tagline} />
   <Accordion
     items={items}
-    keepOneOpen={true}
+    singleOpen={true}
+    keepOneOpen={false}
+    openFirstItemByDefault={false}
     classes={{
       container: 'w-full gap-y-2',
     }}
