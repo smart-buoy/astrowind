@@ -188,6 +188,19 @@ const skipperAdvantagesCollection = defineCollection({
   }),
 });
 
+const operatorAdvantagesCollection = defineCollection({
+  loader: glob({
+    pattern: '*.mdx',
+    base: 'src/data/operator-advantages',
+  }),
+  schema: z.object({
+    order: z.number().optional(),
+    icon: z.string().optional(),
+    title: localizedString(),
+    description: localizedString(),
+  }),
+});
+
 export const collections = {
   post: postCollection,
   team: teamCollection,
@@ -196,4 +209,5 @@ export const collections = {
   aboutTimeline: aboutTimelineCollection,
   aboutValues: aboutValuesCollection,
   skipperAdvantages: skipperAdvantagesCollection,
+  operatorAdvantages: operatorAdvantagesCollection,
 };

@@ -1,6 +1,5 @@
 ---
 import { getCollection } from 'astro:content';
-import Features from '~/components/widgets/Features.astro';
 import FAQs from '~/components/widgets/FAQs.astro';
 import { sanityClient } from 'sanity:client';
 import { getLangFromUrl, useTranslations } from '~/i18n/utils';
@@ -9,7 +8,12 @@ import Button from '~/components/ui/Button.astro';
 import Hero2 from '~/components/widgets/Hero2.astro';
 import FeatureContent from '~/components/widgets/FeatureContent.astro';
 import PageCarousel from '~/components/widgets/PageCarousel.astro';
+import WidgetWrapper from '~/components/ui/WidgetWrapper.astro';
+import Headline from '~/components/ui/Headline.astro';
+import { Icon } from 'astro-icon/components';
+import { formatFrontmatterRichText } from '~/i18n/richText';
 import { urlForImage } from '~/utils/sanity';
+import operatorHeroImage from '~/assets/images/dashboard.jpg';
 
 const appLink = '#'; //https://operator-web.dev.smartbuoy.eu
 const learnMoreLink = '#use-cases';
@@ -61,14 +65,18 @@ image
   { language, area: 'operator' }
 );
 
-const highlights = await sanityClient.fetch(
-  `*[_type == "highlight" && area==$area]{
-  name,
-"title": title[_key == $language][0].value,
-"description": description[_key == $language][0].value
-}`,
-  { language, area: 'operator' }
-);
+const operatorAdvantagesEntries = await getCollection('operatorAdvantages');
+const operatorAdvantages = operatorAdvantagesEntries
+  .sort((a, b) => (a.data.order ?? 999) - (b.data.order ?? 999))
+  .map((entry) => {
+    const d = entry.data;
+    const lang = language as 'en' | 'de';
+    return {
+      title: (d.title && (d.title[lang] ?? d.title.en)) ?? '',
+      descriptionHtml: formatFrontmatterRichText((d.description && (d.description[lang] ?? d.description.en)) ?? ''),
+      icon: d.icon ?? 'tabler:circle-check',
+    };
+  });
 ---
 
 <!-- Hero Widget ******************* -->
@@ -76,21 +84,16 @@ const highlights = await sanityClient.fetch(
   tagline={t('operator.hero.tagline')}
   imageObjectPositionDesktop="68% 50%"
   image={{
-    src: 'https://images.unsplash.com/photo-1580481072645-022f9a6dbf27?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
-    alt: 'SmartBuoy App Image',
+    src: operatorHeroImage,
+    alt: 'SmartBuoy Dashboard Image',
   }}
 >
   <Fragment slot="title">
-    <span class="text-primary dark:text-white highlight">{t('operator.hero.title')}</span>: <br />
-    {t('operator.hero.title-1')}
-    <span class="hidden xl:inline"> {t('operator.hero.title-2')}</span>
+    <span class="text-primary dark:text-white highlight">{t('operator.hero.title')}</span>
   </Fragment>
 
   <Fragment slot="subtitle">
-    <span class="hidden sm:inline">
-      {t('operator.hero.sub-title-1')}
-    </span>
-    {t('operator.hero.sub-title-2')}
+    {t('operator.hero.sub-title')}
   </Fragment>
 
   
@@ -104,6 +107,87 @@ const highlights = await sanityClient.fetch(
   </div>
 </Hero2>
 
+<WidgetWrapper id="operator-video" containerClass="max-w-5xl pt-12 md:pt-16">
+  <div class="overflow-hidden rounded-2xl shadow-lg ring-1 ring-black/5 dark:ring-white/10">
+    <div class="relative w-full pb-[56.25%]">
+      <video
+        class="absolute inset-0 h-full w-full object-cover"
+        controls
+        preload="metadata"
+        playsinline
+        poster={operatorHeroImage.src}
+      >
+        <source src="https://cdn.smartbuoy.eu/SMARTBUOY_TEST_VERS_2.mp4" type="video/mp4" />
+      </video>
+      <button
+        type="button"
+        aria-label="Play operator video"
+        class="absolute inset-0 z-10 m-auto flex h-20 w-20 items-center justify-center rounded-full bg-black/55 text-white shadow-lg transition hover:bg-black/65 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+        data-video-overlay-play
+      >
+        <Icon name="tabler:player-play-filled" class="ml-1 h-10 w-10" />
+      </button>
+    </div>
+  </div>
+  <p class="mt-4 text-gray-700 dark:text-slate-200">
+    {t('operator.video.hint')}
+  </p>
+</WidgetWrapper>
+
+<script is:inline>
+  const operatorVideoSection = document.getElementById('operator-video');
+  const operatorVideo = operatorVideoSection?.querySelector('video');
+  const operatorPlayOverlayButton = operatorVideoSection?.querySelector('[data-video-overlay-play]');
+
+  if (operatorVideo instanceof HTMLVideoElement && operatorPlayOverlayButton instanceof HTMLButtonElement) {
+    const syncPlayOverlay = () => {
+      operatorPlayOverlayButton.classList.toggle('hidden', !operatorVideo.paused && !operatorVideo.ended);
+    };
+
+    operatorPlayOverlayButton.addEventListener('click', async () => {
+      try {
+        await operatorVideo.play();
+      } catch {
+        // Ignore autoplay-related errors; user can still use native controls.
+      }
+      syncPlayOverlay();
+    });
+
+    operatorVideo.addEventListener('play', syncPlayOverlay);
+    operatorVideo.addEventListener('pause', syncPlayOverlay);
+    operatorVideo.addEventListener('ended', syncPlayOverlay);
+
+    syncPlayOverlay();
+  }
+</script>
+
+<!-- Features Widget *************** -->
+
+{
+  operatorAdvantages.length > 0 && (
+    <WidgetWrapper id="features" containerClass="max-w-6xl">
+      <Headline
+        title={t('operator.highlights.title')}
+        subtitle={t('operator.highlights.sub-title')}
+        tagline={t('operator.highlights.tagline')}
+      />
+      <div class="grid gap-x-10 gap-y-14 sm:grid-cols-2">
+        {operatorAdvantages.map((advantage) => (
+          <article class="max-w-xl">
+            <div class="flex items-center gap-4">
+              <div class="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-primary text-white">
+                <Icon name={advantage.icon} class="h-7 w-7" />
+              </div>
+              <h3 class="text-xl font-bold dark:text-white">{advantage.title}</h3>
+            </div>
+            <div class="operator-advantages-richtext mt-4 text-muted dark:text-slate-300" set:html={advantage.descriptionHtml} />
+          </article>
+        ))}
+      </div>
+    </WidgetWrapper>
+  )
+}
+
 {
   carouselItems.length > 0 && (
     <PageCarousel
@@ -112,24 +196,6 @@ const highlights = await sanityClient.fetch(
       subtitle={t('operator.carousel.sub-title')}
       tagline={t('operator.carousel.tagline')}
       items={carouselItems}
-    />
-  )
-}
-
-<!-- Features Widget *************** -->
-
-{
-  highlights.length > 0 && (
-    <Features
-      id="features"
-      tagline={t('operator.highlights.tagline')}
-      title={t('operator.highlights.title')}
-      subtitle={t('operator.highlights.sub-title')}
-      items={highlights.map((highlight) => ({
-        title: highlight.title,
-        description: highlight.description,
-        icon: 'tabler:brand-tailwind',
-      }))}
     />
   )
 }
@@ -190,3 +256,27 @@ const highlights = await sanityClient.fetch(
     />
   )
 }
+
+<style>
+  .operator-advantages-richtext :global(p) {
+    margin: 0 0 0.8rem;
+  }
+
+  .operator-advantages-richtext :global(p:last-child) {
+    margin-bottom: 0;
+  }
+
+  .operator-advantages-richtext :global(ul) {
+    margin: 0 0 0.8rem;
+    padding-left: 1.25rem;
+    list-style: disc;
+  }
+
+  .operator-advantages-richtext :global(ul:last-child) {
+    margin-bottom: 0;
+  }
+
+  .operator-advantages-richtext :global(li) {
+    margin: 0.2rem 0;
+  }
+</style>

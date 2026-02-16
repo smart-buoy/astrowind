@@ -131,17 +131,16 @@ buoy:
 operator:
   hero:
     tagline: "Operator Dashboard"
-    title: "SmartBuoy Dashboard"
-    title-1: "Managing Buoys"
-    title-2: "made easy"
-    sub-title-1: "Manage your buoys in real-time."
-    sub-title-2: "Get started now and increase your revenue"
+    title: "Manage your buoys in one dashboard"
+    sub-title: "Monitor occupancy in real time and optimize revenue with less effort."
     get-started: "Get Started"
     learn-more: "Learn More"
+  video:
+    hint: "We use location data only for reservations; payment data is processed securely. Details can be found in the privacy policy."
   highlights:
-    title: "Our Advantages"
+    title: "Our benefits"
     sub-title: "SmartBuoy offers operators a holistic, user-friendly and sustainable option that allows them to manage their buoys more efficiently and effectively."
-    tagline: "Advantages"
+    tagline: "Benefits"
   carousel:
     title: "Built for Operators"
     sub-title: "Core capabilities for efficient buoy field operations."

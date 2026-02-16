@@ -22,7 +22,7 @@ const { metadata, showEnvironmentImpact = false } = Astro.props;
     <Announcement />
   </slot>
   <slot name="header">
-    <Header {...headerData} isSticky showToggleTheme />
+    <Header {...headerData} isSticky showToggleTheme isFullWidth />
   </slot>
   <main>
     <slot />

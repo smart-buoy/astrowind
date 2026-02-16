@@ -131,13 +131,12 @@ buoy:
 operator:
   hero:
     tagline: "Betreiber Dashboard"
-    title: "SmartBuoy Dashboard"
-    title-1: "Bojen verwalten"
-    title-2: "leicht gemacht"
-    sub-title-1: "Verwalten Sie Ihre Bojen in Echtzeit."
-    sub-title-2: "Setzen Sie auf innovative Lösungen und profitieren Sie von neuen Möglichkeiten!"
+    title: "Verwalte deine Bojen in einem Dashboard"
+    sub-title: "Überwache die Auslastung in Echtzeit und steigere den Umsatz mit weniger Aufwand."
     get-started: "Los Geht's"
     learn-more: "Mehr Erfahren"
+  video:
+    hint: "Wir verwenden Standortdaten nur zur Reservierung; Zahlungsdaten werden sicher verarbeitet. Details in der Datenschutz-Erklärung."
   highlights:
     title: "Unsere Vorteile"
     sub-title: "SmartBuoy bietet Betreibern eine ganzheitliche, benutzerfreundliche und nachhaltige Option, die es ihnen ermöglicht, ihre Bojen effizienter und effektiver zu verwalten."
