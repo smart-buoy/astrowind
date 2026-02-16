@@ -1,0 +1,94 @@
+---
+import WidgetWrapper from '~/components/ui/WidgetWrapper.astro';
+import { Icon } from 'astro-icon/components';
+
+interface Props {
+  id: string;
+  videoSrc: string;
+  poster?: string;
+  hint?: string;
+  playAriaLabel?: string;
+}
+
+const { id, videoSrc, poster, hint, playAriaLabel = 'Play video' } = Astro.props;
+---
+
+<WidgetWrapper id={id} containerClass="max-w-5xl pt-12 md:pt-16">
+  <div class="overflow-hidden rounded-2xl shadow-lg ring-1 ring-black/5 dark:ring-white/10" data-smartbuoy-video-player>
+    <div class="relative w-full pb-[56.25%]">
+      <video class="absolute inset-0 h-full w-full object-cover" controls preload="metadata" playsinline webkit-playsinline poster={poster}>
+        <source src={videoSrc} type="video/mp4" />
+      </video>
+      <button
+        type="button"
+        aria-label={playAriaLabel}
+        class="absolute inset-0 z-10 m-auto flex h-20 w-20 items-center justify-center rounded-full bg-black/55 text-white shadow-lg transition hover:bg-black/65 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+        data-video-overlay-play
+      >
+        <Icon name="tabler:player-play-filled" class="ml-1 h-10 w-10" />
+      </button>
+    </div>
+  </div>
+  {hint && <p class="mt-4 text-gray-700 dark:text-slate-200">{hint}</p>}
+</WidgetWrapper>
+
+<script is:inline>
+  const initSmartBuoyVideoPlayers = () => {
+    const containers = document.querySelectorAll('[data-smartbuoy-video-player]');
+
+    containers.forEach((container) => {
+      if (!(container instanceof HTMLElement) || container.dataset.videoPlayerInitialized === 'true') {
+        return;
+      }
+
+      const video = container.querySelector('video');
+      const playOverlayButton = container.querySelector('[data-video-overlay-play]');
+      if (!(video instanceof HTMLVideoElement) || !(playOverlayButton instanceof HTMLButtonElement)) {
+        return;
+      }
+
+      container.dataset.videoPlayerInitialized = 'true';
+
+      const syncPlayOverlay = () => {
+        const shouldShowOverlay = video.paused || video.ended;
+        playOverlayButton.hidden = !shouldShowOverlay;
+        playOverlayButton.setAttribute('aria-hidden', String(!shouldShowOverlay));
+      };
+
+      const playVideo = async () => {
+        try {
+          await video.play();
+        } catch {
+          // Ignore blocked play attempts; native controls remain available.
+        }
+        syncPlayOverlay();
+      };
+
+      playOverlayButton.addEventListener('click', () => {
+        void playVideo();
+      });
+
+      video.addEventListener('click', () => {
+        if (video.paused) {
+          void playVideo();
+        }
+      });
+
+      video.addEventListener('play', syncPlayOverlay);
+      video.addEventListener('pause', syncPlayOverlay);
+      video.addEventListener('ended', syncPlayOverlay);
+      video.addEventListener('webkitbeginfullscreen', syncPlayOverlay);
+      video.addEventListener('webkitendfullscreen', syncPlayOverlay);
+
+      syncPlayOverlay();
+    });
+  };
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initSmartBuoyVideoPlayers, { once: true });
+  } else {
+    initSmartBuoyVideoPlayers();
+  }
+
+  document.addEventListener('astro:page-load', initSmartBuoyVideoPlayers);
+</script>

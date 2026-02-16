@@ -1,0 +1,17 @@
+---
+import SkipperPage from '~/components/widgets/SkipperPage.astro';
+import Layout from '~/layouts/PageLayout.astro';
+import { getLangFromUrl, useTranslations } from '~/i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const metadata = {
+  title: t('skipper.hero.headline'),
+  description: t('skipper.hero.subtitle'),
+};
+---
+
+<Layout metadata={metadata}>
+  <SkipperPage />
+</Layout>

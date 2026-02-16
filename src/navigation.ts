@@ -8,7 +8,7 @@ export const headerData = {
     },
     {
       text: 'skipper',
-      href: getPermalink('/')
+      href: getPermalink('/skipper')
     },
     {
       text: 'operator',
@@ -39,7 +39,7 @@ export const footerData = {
       title: 'product',
       links: [
         { text: 'the-buoy', href: getPermalink('/the-buoy') },
-        { text: 'skipper', href: getPermalink('/') },
+        { text: 'skipper', href: getPermalink('/skipper') },
         { text: 'operator', href: getPermalink('/operator') }
       ],
     },

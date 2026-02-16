@@ -11,6 +11,7 @@ import PageCarousel from '~/components/widgets/PageCarousel.astro';
 import WidgetWrapper from '~/components/ui/WidgetWrapper.astro';
 import Headline from '~/components/ui/Headline.astro';
 import { Icon } from 'astro-icon/components';
+import VideoPlayer from '~/components/common/VideoPlayer.astro';
 import { formatFrontmatterRichText } from '~/i18n/richText';
 import { urlForImage } from '~/utils/sanity';
 import operatorHeroImage from '~/assets/images/dashboard.jpg';
@@ -107,59 +108,13 @@ const operatorAdvantages = operatorAdvantagesEntries
   </div>
 </Hero2>
 
-<WidgetWrapper id="operator-video" containerClass="max-w-5xl pt-12 md:pt-16">
-  <div class="overflow-hidden rounded-2xl shadow-lg ring-1 ring-black/5 dark:ring-white/10">
-    <div class="relative w-full pb-[56.25%]">
-      <video
-        class="absolute inset-0 h-full w-full object-cover"
-        controls
-        preload="metadata"
-        playsinline
-        poster={operatorHeroImage.src}
-      >
-        <source src="https://cdn.smartbuoy.eu/SMARTBUOY_TEST_VERS_2.mp4" type="video/mp4" />
-      </video>
-      <button
-        type="button"
-        aria-label="Play operator video"
-        class="absolute inset-0 z-10 m-auto flex h-20 w-20 items-center justify-center rounded-full bg-black/55 text-white shadow-lg transition hover:bg-black/65 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
-        data-video-overlay-play
-      >
-        <Icon name="tabler:player-play-filled" class="ml-1 h-10 w-10" />
-      </button>
-    </div>
-  </div>
-  <p class="mt-4 text-gray-700 dark:text-slate-200">
-    {t('operator.video.hint')}
-  </p>
-</WidgetWrapper>
-
-<script is:inline>
-  const operatorVideoSection = document.getElementById('operator-video');
-  const operatorVideo = operatorVideoSection?.querySelector('video');
-  const operatorPlayOverlayButton = operatorVideoSection?.querySelector('[data-video-overlay-play]');
-
-  if (operatorVideo instanceof HTMLVideoElement && operatorPlayOverlayButton instanceof HTMLButtonElement) {
-    const syncPlayOverlay = () => {
-      operatorPlayOverlayButton.classList.toggle('hidden', !operatorVideo.paused && !operatorVideo.ended);
-    };
-
-    operatorPlayOverlayButton.addEventListener('click', async () => {
-      try {
-        await operatorVideo.play();
-      } catch {
-        // Ignore autoplay-related errors; user can still use native controls.
-      }
-      syncPlayOverlay();
-    });
-
-    operatorVideo.addEventListener('play', syncPlayOverlay);
-    operatorVideo.addEventListener('pause', syncPlayOverlay);
-    operatorVideo.addEventListener('ended', syncPlayOverlay);
-
-    syncPlayOverlay();
-  }
-</script>
+<VideoPlayer
+  id="operator-video"
+  videoSrc="https://cdn.smartbuoy.eu/SMARTBUOY_TEST_VERS_2.mp4"
+  poster={operatorHeroImage.src}
+  hint={t('operator.video.hint')}
+  playAriaLabel="Play operator video"
+/>
 
 <!-- Features Widget *************** -->
 
