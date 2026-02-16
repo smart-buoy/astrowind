@@ -6,7 +6,7 @@ interface Item {
   description: string;
 }
 
-const { items = [], classes = {} } = Astro.props;
+const { items = [], classes = {}, keepOneOpen = false } = Astro.props;
 
 const baseContainerClass = 'rounded-lg border border-gray-200 dark:border-gray-700 overflow-hidden';
 const {
@@ -16,13 +16,14 @@ const {
   description: descriptionClass = 'px-4 pt-2 pb-5 text-muted',
 } = classes;
 const mergedContainerClass = twMerge(baseContainerClass, containerClass);
+const accordionGroupName = `accordion-${Math.random().toString(36).slice(2, 10)}`;
 ---
 
 {items.length > 0 && (
   <>
-    <div class={mergedContainerClass} data-accordion>
+    <div class={mergedContainerClass} data-accordion data-keep-one-open={keepOneOpen ? 'true' : 'false'}>
       {items.map((item, index) => (
-        <details class={itemClass} data-accordion-item open={index === 0}>
+        <details class={itemClass} data-accordion-item open={index === 0} name={accordionGroupName}>
           <summary class={titleClass}>
             <span>{item.title}</span>
             <span class="accordion-chevron flex-shrink-0 text-primary transition-transform duration-200 ease-out group-open:rotate-90" aria-hidden="true">▶</span>
@@ -49,17 +50,38 @@ const mergedContainerClass = twMerge(baseContainerClass, containerClass);
     </style>
     <script is:inline>
       document.querySelectorAll('[data-accordion]').forEach(function (accordion) {
+        if (accordion.dataset.initialized === 'true') return;
+        accordion.dataset.initialized = 'true';
+
+        var keepOneOpen = accordion.getAttribute('data-keep-one-open') === 'true';
         var accordionItems = accordion.querySelectorAll('[data-accordion-item]');
-        accordionItems.forEach(function (item) {
-          var details = item;
-          details.addEventListener('toggle', function () {
-            if (details.open) {
-              accordionItems.forEach(function (other) {
-                if (other !== details) other.open = false;
-              });
-            }
+
+        if (keepOneOpen) {
+          var initiallyOpen = Array.from(accordionItems).some(function (item) {
+            return item.open;
           });
-        });
+          if (!initiallyOpen && accordionItems[0]) accordionItems[0].open = true;
+        }
+
+        accordion.addEventListener('toggle', function (event) {
+          var details = event.target;
+          if (!(details instanceof HTMLDetailsElement)) return;
+          if (!details.matches('[data-accordion-item]')) return;
+
+          if (details.open) {
+            accordionItems.forEach(function (other) {
+              if (other !== details) other.open = false;
+            });
+            return;
+          }
+
+          if (keepOneOpen) {
+            var hasOpenItem = Array.from(accordionItems).some(function (other) {
+              return other.open;
+            });
+            if (!hasOpenItem) details.open = true;
+          }
+        }, true);
       });
     </script>
   </>
