@@ -161,6 +161,7 @@ import { UI } from 'astrowind:config';
     initTheme();
     onLoad();
     onPageShow();
+    if (window.initSmartBuoyCarousels) window.initSmartBuoyCarousels();
   });
 </script>
 
@@ -272,4 +273,293 @@ import { UI } from 'astrowind:config';
   document.addEventListener('astro:after-swap', () => {
     Observer.start();
   });
+</script>
+
+<script is:inline>
+  (function () {
+    function initCarouselRoot(root) {
+      if (!(root instanceof HTMLElement) || root.dataset.carouselInitialized === 'true') return;
+      root.dataset.carouselInitialized = 'true';
+
+      const track = root.querySelector('[data-carousel-track]');
+      const prevButton = root.querySelector('[data-carousel-prev]');
+      const nextButton = root.querySelector('[data-carousel-next]');
+      const dotsContainer = root.querySelector('[data-carousel-dots]');
+
+      if (
+        !(track instanceof HTMLElement) ||
+        !(prevButton instanceof HTMLButtonElement) ||
+        !(nextButton instanceof HTMLButtonElement) ||
+        !(dotsContainer instanceof HTMLElement)
+      ) {
+        return;
+      }
+
+      const slides = Array.from(track.children).filter((child) => child instanceof HTMLElement);
+      const dots = [];
+      let isDragging = false;
+      let hasDragged = false;
+      let dragStartX = 0;
+      let dragStartScrollLeft = 0;
+      let dragStartIndex = 0;
+      let lastPointerX = null;
+      let activePointerId = null;
+      let autoScrollTimer = null;
+      let scrollSnapTimer = null;
+      let touchStartX = null;
+      let touchStartY = null;
+
+      const getVisibleCount = () => {
+        if (window.matchMedia('(min-width: 1024px)').matches) return 3;
+        if (window.matchMedia('(min-width: 768px)').matches) return 2;
+        return 1;
+      };
+
+      const isCarouselVisible = () => {
+        const rect = root.getBoundingClientRect();
+        return rect.bottom > 0 && rect.top < window.innerHeight;
+      };
+
+      const getMaxStartIndex = () => Math.max(0, slides.length - getVisibleCount());
+
+      const normalizeIndex = (index) => {
+        const maxStart = getMaxStartIndex();
+        if (index < 0) return 0;
+        if (index > maxStart) return maxStart;
+        return index;
+      };
+
+      const goToSlide = (index, behavior) => {
+        if (slides.length === 0) return;
+        const normalized = normalizeIndex(index);
+        const target = slides[normalized];
+        if (!target) return;
+        track.scrollTo({ left: target.offsetLeft, behavior });
+      };
+
+      const activeIndex = () => {
+        if (slides.length === 0) return 0;
+        const currentLeft = track.scrollLeft;
+        const maxStart = getMaxStartIndex();
+        let bestIndex = 0;
+        let bestDistance = Number.POSITIVE_INFINITY;
+
+        for (let index = 0; index <= maxStart; index += 1) {
+          const slide = slides[index];
+          if (!slide) continue;
+          const distance = Math.abs(slide.offsetLeft - currentLeft);
+          if (distance < bestDistance) {
+            bestDistance = distance;
+            bestIndex = index;
+          }
+        }
+
+        return normalizeIndex(bestIndex);
+      };
+
+      const goToNext = (behavior) => {
+        const current = activeIndex();
+        const nextIndex = Math.min(getMaxStartIndex(), current + 1);
+        goToSlide(nextIndex, behavior);
+      };
+
+      const goToPrev = (behavior) => {
+        const current = activeIndex();
+        const prevIndex = Math.max(0, current - 1);
+        goToSlide(prevIndex, behavior);
+      };
+
+      const goToNextLoop = (behavior) => {
+        const maxStart = getMaxStartIndex();
+        const current = activeIndex();
+        const nextIndex = current >= maxStart ? 0 : current + 1;
+        goToSlide(nextIndex, behavior);
+      };
+
+      const snapToNearest = (behavior) => {
+        goToSlide(activeIndex(), behavior);
+      };
+
+      const updateUi = () => {
+        const maxStart = getMaxStartIndex();
+        const current = activeIndex();
+        const canGoPrev = current > 0;
+        const canGoNext = current < maxStart;
+
+        prevButton.disabled = !canGoPrev;
+        nextButton.disabled = !canGoNext;
+        prevButton.classList.toggle('is-hidden', !canGoPrev);
+        nextButton.classList.toggle('is-hidden', !canGoNext);
+
+        dots.forEach((dot, index) => {
+          dot.setAttribute('aria-current', index === current ? 'true' : 'false');
+          dot.className =
+            index === current
+              ? 'h-2 w-6 rounded-full bg-primary transition'
+              : 'h-2 w-2 rounded-full bg-slate-300 transition dark:bg-slate-600';
+        });
+      };
+
+      const endDragging = () => {
+        const pointerDelta = dragStartX - (lastPointerX ?? dragStartX);
+        const threshold = 36;
+        const moveBy = Math.abs(pointerDelta) >= threshold ? Math.sign(pointerDelta) : 0;
+        const maxStart = getMaxStartIndex();
+        let targetIndex = dragStartIndex + moveBy;
+        if (targetIndex > maxStart) targetIndex = 0;
+        if (targetIndex < 0) targetIndex = maxStart;
+
+        isDragging = false;
+        activePointerId = null;
+        lastPointerX = null;
+        track.classList.remove('cursor-grabbing');
+        track.classList.add('cursor-grab');
+        track.style.scrollSnapType = '';
+        goToSlide(targetIndex, 'smooth');
+      };
+
+      const scheduleSnapToNearest = () => {
+        if (scrollSnapTimer !== null) {
+          window.clearTimeout(scrollSnapTimer);
+        }
+        scrollSnapTimer = window.setTimeout(() => {
+          if (!isDragging && isCarouselVisible()) {
+            snapToNearest('smooth');
+          }
+        }, 120);
+      };
+
+      const renderDots = () => {
+        dots.splice(0, dots.length);
+        dotsContainer.replaceChildren();
+        const count = getMaxStartIndex() + 1;
+        for (let index = 0; index < count; index += 1) {
+          const dot = document.createElement('button');
+          dot.type = 'button';
+          dot.className = 'h-2 w-2 rounded-full bg-slate-300 transition dark:bg-slate-600';
+          dot.setAttribute('aria-label', 'Go to slide ' + (index + 1));
+          dot.addEventListener('click', () => {
+            goToSlide(index, 'smooth');
+            startAutoScroll();
+          });
+          dots.push(dot);
+          dotsContainer.append(dot);
+        }
+      };
+
+      const startAutoScroll = () => {
+        if (autoScrollTimer !== null) {
+          window.clearInterval(autoScrollTimer);
+        }
+        autoScrollTimer = window.setInterval(() => {
+          if (!document.hidden && !isDragging && isCarouselVisible()) {
+            goToNextLoop('smooth');
+          }
+        }, 10000);
+      };
+
+      prevButton.addEventListener('click', () => { goToPrev('smooth'); startAutoScroll(); }, { passive: true });
+      nextButton.addEventListener('click', () => { goToNext('smooth'); startAutoScroll(); }, { passive: true });
+
+      track.addEventListener('pointerdown', (event) => {
+        startAutoScroll();
+        if (event.pointerType !== 'mouse' || event.button !== 0) return;
+        isDragging = true;
+        hasDragged = false;
+        dragStartX = event.clientX;
+        dragStartScrollLeft = track.scrollLeft;
+        dragStartIndex = activeIndex();
+        lastPointerX = event.clientX;
+        activePointerId = event.pointerId;
+        track.style.scrollSnapType = 'none';
+        track.classList.remove('cursor-grab');
+        track.classList.add('cursor-grabbing');
+        track.setPointerCapture(event.pointerId);
+      });
+
+      track.addEventListener('pointermove', (event) => {
+        if (!isDragging || activePointerId !== event.pointerId) return;
+        const deltaX = event.clientX - dragStartX;
+        lastPointerX = event.clientX;
+        if (Math.abs(deltaX) > 4) hasDragged = true;
+        track.scrollLeft = dragStartScrollLeft - deltaX * 0.9;
+        if (event.pointerType === 'mouse') event.preventDefault();
+      });
+
+      track.addEventListener('pointerup', (event) => { if (activePointerId === event.pointerId) endDragging(); });
+      track.addEventListener('pointercancel', (event) => { if (activePointerId === event.pointerId) endDragging(); });
+      track.addEventListener('pointerleave', (event) => {
+        if (event.pointerType === 'mouse' && isDragging && activePointerId === event.pointerId) endDragging();
+      });
+
+      track.addEventListener('click', (event) => {
+        if (!hasDragged) return;
+        event.preventDefault();
+        event.stopPropagation();
+        hasDragged = false;
+      }, true);
+
+      track.addEventListener('dragstart', (e) => e.preventDefault());
+      track.addEventListener('wheel', () => startAutoScroll(), { passive: true });
+      track.addEventListener('touchstart', (event) => {
+        startAutoScroll();
+        touchStartX = event.touches[0]?.clientX ?? null;
+        touchStartY = event.touches[0]?.clientY ?? null;
+      }, { passive: true });
+
+      track.addEventListener('touchend', (event) => {
+        const startX = touchStartX;
+        const startY = touchStartY;
+        const endX = event.changedTouches[0]?.clientX ?? null;
+        const endY = event.changedTouches[0]?.clientY ?? null;
+        touchStartX = null;
+        touchStartY = null;
+        if (startX === null || startY === null || endX === null || endY === null) return;
+        const deltaX = startX - endX;
+        const deltaY = startY - endY;
+        if (Math.abs(deltaX) < 34 || Math.abs(deltaX) <= Math.abs(deltaY)) return;
+        const current = activeIndex();
+        const maxStart = getMaxStartIndex();
+        const isSwipeLeft = deltaX > 0;
+        if (isSwipeLeft && current >= maxStart) goToSlide(0, 'smooth');
+        else if (!isSwipeLeft && current <= 0) goToSlide(maxStart, 'smooth');
+        else if (isSwipeLeft) goToSlide(current + 1, 'smooth');
+        else goToSlide(current - 1, 'smooth');
+      }, { passive: true });
+
+      track.addEventListener('keydown', () => startAutoScroll(), { passive: true });
+      track.addEventListener('scroll', () => { updateUi(); scheduleSnapToNearest(); }, { passive: true });
+      window.addEventListener('resize', () => {
+        renderDots();
+        updateUi();
+        snapToNearest('auto');
+      }, { passive: true });
+
+      renderDots();
+      startAutoScroll();
+      updateUi();
+      if (isCarouselVisible()) snapToNearest('auto');
+    }
+
+    function initAllCarousels() {
+      document.querySelectorAll('[data-carousel]').forEach((el) => {
+        if (el instanceof HTMLElement && el.dataset.carouselInitialized !== 'true') {
+          if ('requestIdleCallback' in window) {
+            window.requestIdleCallback(() => initCarouselRoot(el), { timeout: 700 });
+          } else {
+            setTimeout(() => initCarouselRoot(el), 0);
+          }
+        }
+      });
+    }
+
+    window.initSmartBuoyCarousels = initAllCarousels;
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initAllCarousels, { once: true });
+    } else {
+      initAllCarousels();
+    }
+    document.addEventListener('astro:page-load', initAllCarousels);
+  })();
 </script>
