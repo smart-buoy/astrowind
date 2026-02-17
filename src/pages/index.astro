@@ -10,6 +10,9 @@ const t = useTranslations(lang);
 const metadata = {
   title: t('buoy.hero.title'),
   description: t('buoy.hero.subtitle'),
+  openGraph: {
+    images: [{ url: '~/assets/images/boje.jpg', width: 1200, height: 630 }],
+  },
 };
 
 const downloadItems = [
