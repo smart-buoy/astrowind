@@ -1,6 +1,19 @@
 [build]
   publish = "dist"
   command = "npm run build"
+
+# Canonical home: / and /de/ serve the buoy page; legacy slugs redirect (SEO-friendly, works on all devices)
+[[redirects]]
+  from = "/the-buoy"
+  to = "/"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/de/die-boje"
+  to = "/de/"
+  status = 301
+  force = true
+
 [build.processing.html]
   pretty_urls = false
 [[headers]]

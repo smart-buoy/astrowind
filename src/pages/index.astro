@@ -1,3 +1,39 @@
 ---
-return Astro.redirect('/the-buoy', 302);
+import Layout from '~/layouts/PageLayout.astro';
+import BuoyPage from '~/components/widgets/BuoyPage.astro';
+import { getAsset } from '~/utils/permalinks';
+import { getLangFromUrl, useTranslations } from '~/i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const metadata = {
+  title: t('buoy.hero.title'),
+  description: t('buoy.hero.subtitle'),
+};
+
+const downloadItems = [
+  {
+    title: 'User Guide',
+    description: 'SmartBuoy system overview and usage instructions.',
+    href: getAsset('/downloads/smartbuoy-user-guide.pdf'),
+    ctaText: 'Download PDF',
+  },
+  {
+    title: 'Installation & Maintenance',
+    description: 'Installation steps and maintenance guidelines.',
+    href: getAsset('/downloads/smartbuoy-installation-maintenance.pdf'),
+    ctaText: 'Download PDF',
+  },
+  {
+    title: 'Certificate of Conformity',
+    description: 'Official conformity certificate for SmartBuoy hardware.',
+    href: getAsset('/downloads/smartbuoy-certificate-of-conformity.pdf'),
+    ctaText: 'Download PDF',
+  },
+];
 ---
+
+<Layout metadata={metadata}>
+  <BuoyPage downloadItems={downloadItems} />
+</Layout>

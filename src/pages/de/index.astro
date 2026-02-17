@@ -1,3 +1,39 @@
 ---
-return Astro.redirect('/de/die-boje', 302);
+import Layout from '~/layouts/PageLayout.astro';
+import BuoyPage from '~/components/widgets/BuoyPage.astro';
+import { getAsset } from '~/utils/permalinks';
+import { getLangFromUrl, useTranslations } from '~/i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const metadata = {
+  title: t('buoy.hero.title'),
+  description: t('buoy.hero.subtitle'),
+};
+
+const downloadItems = [
+  {
+    title: 'Benutzerhandbuch',
+    description: 'SmartBuoy-Systemübersicht und Nutzungshinweise.',
+    href: getAsset('/downloads/smartbuoy-user-guide.pdf'),
+    ctaText: 'PDF herunterladen',
+  },
+  {
+    title: 'Installation & Wartung',
+    description: 'Installationsschritte und Wartungsrichtlinien.',
+    href: getAsset('/downloads/smartbuoy-installation-maintenance.pdf'),
+    ctaText: 'PDF herunterladen',
+  },
+  {
+    title: 'Konformitätserklärung',
+    description: 'Offizielle Konformitätserklärung für SmartBuoy-Hardware.',
+    href: getAsset('/downloads/smartbuoy-certificate-of-conformity.pdf'),
+    ctaText: 'PDF herunterladen',
+  },
+];
 ---
+
+<Layout metadata={metadata}>
+  <BuoyPage downloadItems={downloadItems} />
+</Layout>
