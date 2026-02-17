@@ -22,7 +22,7 @@ const { id, videoSrc, poster, hint, playAriaLabel = 'Play video' } = Astro.props
       <button
         type="button"
         aria-label={playAriaLabel}
-        class="absolute inset-0 z-10 m-auto flex h-20 w-20 items-center justify-center rounded-full bg-black/55 text-white shadow-lg transition hover:bg-black/65 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+        class="absolute inset-0 z-10 m-auto flex h-20 w-20 items-center justify-center rounded-full bg-black/55 text-white shadow-lg transition hover:bg-black/65 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white max-md:hidden"
         data-video-overlay-play
       >
         <Icon name="tabler:player-play-filled" class="ml-1 h-10 w-10" />
