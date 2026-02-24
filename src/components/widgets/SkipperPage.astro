@@ -4,7 +4,8 @@ import FAQs from '~/components/widgets/FAQs.astro';
 import Stats from '~/components/widgets/Stats.astro';
 import CallToAction from '~/components/widgets/CallToAction.astro';
 import { sanityClient } from 'sanity:client';
-import { getLangFromUrl, useTranslations } from '~/i18n/utils';
+import { getPermalink } from '~/utils/permalinks';
+import { getLangFromUrl, useTranslations, useTranslatedPath } from '~/i18n/utils';
 import Testimonials from '~/components/widgets/Testimonials.astro';
 import Button from '~/components/ui/Button.astro';
 import Image from '~/components/common/Image.astro';
@@ -12,6 +13,7 @@ import Hero2 from '~/components/widgets/Hero2.astro';
 import PageCarousel from '~/components/widgets/PageCarousel.astro';
 import WidgetWrapper from '~/components/ui/WidgetWrapper.astro';
 import Headline from '~/components/ui/Headline.astro';
+import CallToActionBanner from '~/components/blog/CallToActionBanner.astro';
 import { Icon } from 'astro-icon/components';
 import VideoPlayer from '~/components/common/VideoPlayer.astro';
 import { formatFrontmatterRichText } from '~/i18n/richText';
@@ -27,6 +29,8 @@ const googlePlayDownloadLink = '#';
 
 const language = getLangFromUrl(Astro.url);
 const t = useTranslations(language);
+const translatePath = useTranslatedPath(language);
+const contactUrl = translatePath(getPermalink('/contact'));
 
 const faqEntries = await getCollection('faq');
 const faqs = faqEntries
@@ -99,18 +103,7 @@ image
   </Fragment>
 
   <div slot="actions" class="flex max-w-sm gap-4">
-    { false && (
-          <Button variant="link" href={appStoreDownloadLink}>
-      <Image src={appStoreImg} alt="App Store Image" width={200} />
-    </Button>
-
-    <Button variant="link" href={googlePlayDownloadLink}>
-      <Image src={googlePlayImg} alt="Google Play Image" width={200} />
-    </Button>
-    )
-      
-    }
-
+    <Button variant="primary" href={contactUrl}>{t('skipper.cta.button')}</Button>
   </div>
 </Hero2>
 
@@ -120,18 +113,6 @@ image
   poster={skipperVideoPosterImage.src}
   playAriaLabel="Play skipper video"
 />
-
-{
-  carouselItems.length > 0 && (
-    <PageCarousel
-      id="skipper-carousel"
-      title={t('skipper.carousel.title')}
-      subtitle={t('skipper.carousel.sub-title')}
-      tagline={t('skipper.carousel.tagline')}
-      items={carouselItems}
-    />
-  )
-}
 
 <!-- Features Widget *************** -->
 
@@ -159,6 +140,22 @@ image
     </WidgetWrapper>
   )
 }
+
+{
+  carouselItems.length > 0 && (
+    <PageCarousel
+      id="skipper-carousel"
+      title={t('skipper.carousel.title')}
+      subtitle={t('skipper.carousel.sub-title')}
+      tagline={t('skipper.carousel.tagline')}
+      items={carouselItems}
+    />
+  )
+}
+
+<div class="mx-auto max-w-6xl px-4 md:px-6">
+  <CallToActionBanner heading={t('shared-cta.heading')} ctaText={t('skipper.cta.banner-button')} ctaUrl={contactUrl} />
+</div>
 
 <!-- Stats Widget ****************** -->
 {

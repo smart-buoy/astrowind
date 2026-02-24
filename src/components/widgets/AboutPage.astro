@@ -1,21 +1,25 @@
 ---
 import { getCollection } from 'astro:content';
-import { getLangFromUrl, useTranslations } from '~/i18n/utils';
+import { getPermalink } from '~/utils/permalinks';
+import { getLangFromUrl, useTranslations, useTranslatedPath } from '~/i18n/utils';
 import Hero2 from '~/components/widgets/Hero2.astro';
 import WidgetWrapper from '~/components/ui/WidgetWrapper.astro';
 import AboutTimeline from '~/components/widgets/AboutTimeline.astro';
 import Features from '~/components/widgets/Features.astro';
+import CallToActionBanner from '~/components/blog/CallToActionBanner.astro';
 import { formatFrontmatterRichText, formatTranslationRichText } from '~/i18n/richText';
 import Headline from '~/components/ui/Headline.astro';
 
 const language = getLangFromUrl(Astro.url);
 const t = useTranslations(language);
+const translatePath = useTranslatedPath(language);
 
 import aboutImage from '~/assets/images/ueberuns.jpg';
 
 const trInline = (key: string) => formatTranslationRichText(t(key) as string);
 const trBlock = (key: string) => formatFrontmatterRichText(t(key) as string);
 const bullets = (t('about.story.bullets') as string).split('|').map((item) => item.trim());
+const contactUrl = translatePath(getPermalink('/contact'));
 const paragraphClass = 'text-lg leading-relaxed text-muted dark:text-slate-300';
 const aboutHeadlineTitleClass = 'text-2xl sm:text-3xl tracking-tight dark:text-white';
 const aboutValues = (await getCollection('aboutValues'))
@@ -76,6 +80,9 @@ const aboutValues = (await getCollection('aboutValues'))
 </WidgetWrapper>
 
 <AboutTimeline />
+<div class="mx-auto max-w-5xl px-4 md:px-6">
+  <CallToActionBanner heading={t('shared-cta.heading')} ctaText={t('about.cta.banner-button')} ctaUrl={contactUrl} />
+</div>
 
 {
   aboutValues.length > 0 && (

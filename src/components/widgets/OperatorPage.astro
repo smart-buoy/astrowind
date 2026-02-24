@@ -2,7 +2,8 @@
 import { getCollection } from 'astro:content';
 import FAQs from '~/components/widgets/FAQs.astro';
 import { sanityClient } from 'sanity:client';
-import { getLangFromUrl, useTranslations } from '~/i18n/utils';
+import { getPermalink } from '~/utils/permalinks';
+import { getLangFromUrl, useTranslations, useTranslatedPath } from '~/i18n/utils';
 import Testimonials from '~/components/widgets/Testimonials.astro';
 import Button from '~/components/ui/Button.astro';
 import Hero2 from '~/components/widgets/Hero2.astro';
@@ -10,17 +11,17 @@ import FeatureContent from '~/components/widgets/FeatureContent.astro';
 import PageCarousel from '~/components/widgets/PageCarousel.astro';
 import WidgetWrapper from '~/components/ui/WidgetWrapper.astro';
 import Headline from '~/components/ui/Headline.astro';
+import CallToActionBanner from '~/components/blog/CallToActionBanner.astro';
 import { Icon } from 'astro-icon/components';
 import VideoPlayer from '~/components/common/VideoPlayer.astro';
 import { formatFrontmatterRichText } from '~/i18n/richText';
 import { urlForImage } from '~/utils/sanity';
 import operatorHeroImage from '~/assets/images/dashboard.jpg';
 
-const appLink = '#'; //https://operator-web.dev.smartbuoy.eu
-const learnMoreLink = '#use-cases';
-
 const language = getLangFromUrl(Astro.url);
 const t = useTranslations(language);
+const translatePath = useTranslatedPath(language);
+const contactUrl = translatePath(getPermalink('/contact'));
 
 const features = await sanityClient.fetch(`*[_type == "feature" && language == $language && area == $area]`, {
   language,
@@ -96,14 +97,8 @@ const operatorAdvantages = operatorAdvantagesEntries
     {t('operator.hero.sub-title')}
   </Fragment>
 
-  
   <div slot="actions" class="flex max-w-sm gap-4">
-    { false && (
-        <Button variant="primary" href={appLink}>{t('operator.hero.get-started')}</Button>
-
-    <Button href={learnMoreLink}>{t('operator.hero.learn-more')}</Button>
-  )}
-
+    <Button variant="primary" href={contactUrl}>{t('operator.cta.button')}</Button>
   </div>
 </Hero2>
 
@@ -141,18 +136,6 @@ const operatorAdvantages = operatorAdvantagesEntries
   )
 }
 
-{
-  carouselItems.length > 0 && (
-    <PageCarousel
-      id="operator-carousel"
-      title={t('operator.carousel.title')}
-      subtitle={t('operator.carousel.sub-title')}
-      tagline={t('operator.carousel.tagline')}
-      items={carouselItems}
-    />
-  )
-}
-
 <!-- Content Widget **************** -->
 {
   features.length > 0 &&
@@ -177,6 +160,22 @@ const operatorAdvantages = operatorAdvantagesEntries
       </FeatureContent>
     ))
 }
+
+{
+  carouselItems.length > 0 && (
+    <PageCarousel
+      id="operator-carousel"
+      title={t('operator.carousel.title')}
+      subtitle={t('operator.carousel.sub-title')}
+      tagline={t('operator.carousel.tagline')}
+      items={carouselItems}
+    />
+  )
+}
+
+<div class="mx-auto max-w-6xl px-4 md:px-6">
+  <CallToActionBanner heading={t('shared-cta.heading')} ctaText={t('operator.cta.banner-button')} ctaUrl={contactUrl} />
+</div>
 
 <!-- Testimonials Widget *********** -->
 

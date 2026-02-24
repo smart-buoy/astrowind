@@ -1,13 +1,12 @@
 ---
 /**
- * In-article CTA banner (primary background, contrast text).
- * Use in blog MDX: import and place where the banner should appear.
- * Optional: add banner { heading, ctaText, ctaUrl } to frontmatter and pass as props.
+ * Reusable CTA banner (primary background, contrast text).
+ * Use in blog MDX or page widgets.
  */
 export interface Props {
-  /** Large heading on the left (e.g. "I read enough") */
+  /** Large heading on the left (e.g. "Stay up to date") */
   heading: string;
-  /** CTA button label (e.g. "Let's start") */
+  /** CTA button label (e.g. "Contact") */
   ctaText: string;
   /** Link URL – internal path or external URL */
   ctaUrl: string;
@@ -21,7 +20,7 @@ const linkAttrs = isExternal
   : { href: ctaUrl };
 ---
 
-<div class="post-banner not-prose my-8 rounded-lg bg-primary px-6 py-6 sm:px-8 sm:py-8">
+<div class="call-to-action-banner not-prose my-8 rounded-lg bg-primary px-6 py-6 sm:px-8 sm:py-8">
   <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
     <p class="font-heading text-2xl font-bold tracking-tight sm:text-3xl">{heading}</p>
     <a
@@ -34,15 +33,15 @@ const linkAttrs = isExternal
 </div>
 
 <style>
-  .post-banner {
+  .call-to-action-banner {
     color: var(--aw-color-primary-contrast, rgb(255 255 255));
   }
-  .post-banner .btn-primary {
+  .call-to-action-banner .btn-primary {
     background-color: var(--aw-color-primary-contrast, rgb(255 255 255));
     color: var(--aw-color-primary);
     border-color: var(--aw-color-primary-contrast, rgb(255 255 255));
   }
-  .post-banner .btn-primary:hover {
+  .call-to-action-banner .btn-primary:hover {
     opacity: 0.9;
   }
 </style>

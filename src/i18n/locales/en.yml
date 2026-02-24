@@ -14,12 +14,19 @@ nav:
   privacy: "Privacy Policy"
   sdg: "SDG"
 
+# Shared call-to-action banner
+shared-cta:
+  heading: "Stay up to date"
+
 # Skipper section
 skipper:
   hero:
     tagline: "Skipper App"
     headline: "No calls. No chaos. Just relax."
     subtitle: "More relaxed on the water with the SmartBuoy app."
+  cta:
+    button: "Stay up to date"
+    banner-button: "Contact us"
   video:
     title: "SmartBuoy in action"
   highlights:
@@ -66,6 +73,9 @@ buoy:
   hero:
     title: "The Buoy"
     subtitle: "Digital reservations. Reliable technology. Protection for nature."
+  cta:
+    button: "Stay up to date"
+    banner-button: "Contact us"
   tech:
     title: "Technical specifications"
     subtitle: "The key technical specifications of the SmartBuoy buoy at a glance."
@@ -134,6 +144,9 @@ operator:
     sub-title: "Monitor occupancy in real time and optimize revenue with less effort."
     get-started: "Get Started"
     learn-more: "Learn More"
+  cta:
+    button: "Stay up to date"
+    banner-button: "Contact us"
   video:
   highlights:
     title: "Our benefits"
@@ -160,6 +173,9 @@ about:
     tagline: "About Us"
     title: "SmartBuoy"
     subtitle: "Who we are"
+  cta:
+    button: "Stay up to date"
+    banner-button: "Contact us"
   intro:
     paragraph1: "**SmartBuoy develops smart buoys to make mooring safer, more convenient, and environmentally responsible.** We are skippers, engineers, and entrepreneurs united by one shared belief:\nTechnology should make life on the water easier — not more complicated. And it should protect nature, not put additional strain on it."
     subheadline: "Smart buoys for skippers, by skippers."

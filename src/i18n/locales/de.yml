@@ -14,12 +14,19 @@ nav:
   privacy: "Datenschutzerklärung"
   sdg: "SDG"
 
+# Shared call-to-action banner
+shared-cta:
+  heading: "Bleib auf dem Laufenden"
+
 # Skipper section
 skipper:
   hero:
     tagline: "Skipper App"
     headline: "Keine Anrufe. Kein Chaos. Einfach anlegen."
     subtitle: "Mit der SmartBuoy-App entspannter aufs Wasser."
+  cta:
+    button: "Bleib auf dem Laufenden"
+    banner-button: "Kontakt aufnehmen"
   video:
     title: "SmartBuoy im Einsatz"
   highlights:
@@ -66,6 +73,9 @@ buoy:
   hero:
     title: "Die Boje"
     subtitle: "Digitale Reservierung. Verlässliche Technik. Schutz für die Natur."
+  cta:
+    button: "Bleib auf dem Laufenden"
+    banner-button: "Kontakt aufnehmen"
   tech:
     title: "Technische Details"
     subtitle: "Die wichtigsten technischen Daten der SmartBuoy Boje im Überblick."
@@ -134,6 +144,9 @@ operator:
     sub-title: "Überwache die Auslastung in Echtzeit und steigere den Umsatz mit weniger Aufwand."
     get-started: "Los Geht's"
     learn-more: "Mehr Erfahren"
+  cta:
+    button: "Bleib auf dem Laufenden"
+    banner-button: "Kontakt aufnehmen"
   video:
   highlights:
     title: "Unsere Vorteile"
@@ -160,6 +173,9 @@ about:
     tagline: "Über uns"
     title: "SmartBuoy"
     subtitle: "Wer wir sind"
+  cta:
+    button: "Bleib auf dem Laufenden"
+    banner-button: "Kontakt aufnehmen"
   intro:
     paragraph1: "**SmartBuoy entwickelt smarte Bojen, um Anlegen sicherer, komfortabler und ökologisch verantwortlicher zu machen.** Wir sind Skipper, Techniker und Unternehmer mit einer gemeinsamen Überzeugung:\nTechnologie soll das Leben auf dem Wasser einfacher machen, nicht komplizierter. Und sie soll die Natur schützen, nicht belasten."
     subheadline: "Smarte Bojen für Skipper von Skippern"

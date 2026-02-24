@@ -52,8 +52,8 @@ export interface Post {
   /** Headings from rendered content (H1–H6) for table of contents. */
   headings?: Array<{ depth: number; slug: string; text: string }>;
 
-  /** Optional in-article banner; use with PostBanner component in MDX. */
-  banner?: PostBanner;
+  /** Optional in-article banner; use with CallToActionBanner component in MDX. */
+  banner?: CallToActionBanner;
 
   /** Optional blog-specific FAQ; rendered below post content. */
   faq?: PostFaqItem[];
@@ -64,7 +64,7 @@ export interface PostFaqItem {
   answer: string;
 }
 
-export interface PostBanner {
+export interface CallToActionBanner {
   heading: string;
   ctaText: string;
   ctaUrl: string;

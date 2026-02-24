@@ -1,17 +1,21 @@
 ---
 import { getCollection } from 'astro:content';
 import Hero2 from '~/components/widgets/Hero2.astro';
+import Button from '~/components/ui/Button.astro';
 import WidgetWrapper from '~/components/ui/WidgetWrapper.astro';
 import Headline from '~/components/ui/Headline.astro';
 import ItemGrid from '~/components/ui/ItemGrid.astro';
 import FAQs from '~/components/widgets/FAQs.astro';
 import PageCarousel from '~/components/widgets/PageCarousel.astro';
 import EnvironmentalImpactBanner from '~/components/widgets/EnvironmentalImpactBanner.astro';
-import { getLangFromUrl, useTranslations } from '~/i18n/utils';
+import CallToActionBanner from '~/components/blog/CallToActionBanner.astro';
+import { getPermalink } from '~/utils/permalinks';
+import { getLangFromUrl, useTranslations, useTranslatedPath } from '~/i18n/utils';
 import { formatFrontmatterRichText } from '~/i18n/richText';
 
 const language = getLangFromUrl(Astro.url);
 const t = useTranslations(language);
+const translatePath = useTranslatedPath(language);
 
 import buoyImage from '~/assets/images/boje.jpg';
 
@@ -66,6 +70,7 @@ const downloadGridItems = downloadItems.map((d) => ({
 
 const technicalDetailsHtml = formatFrontmatterRichText(t('buoy.tech.content') as string);
 const ecologyHtml = formatFrontmatterRichText(t('buoy.ecology.content') as string);
+const contactUrl = translatePath(getPermalink('/contact'));
 ---
 
 <Hero2
@@ -80,6 +85,10 @@ const ecologyHtml = formatFrontmatterRichText(t('buoy.ecology.content') as strin
   </Fragment>
 
   <Fragment slot="subtitle">{t('buoy.hero.subtitle')}</Fragment>
+
+  <div slot="actions" class="flex max-w-sm gap-4">
+    <Button variant="primary" href={contactUrl}>{t('buoy.cta.button')}</Button>
+  </div>
 </Hero2>
 
 {carouselItems.length > 0 && (
@@ -91,6 +100,10 @@ const ecologyHtml = formatFrontmatterRichText(t('buoy.ecology.content') as strin
     items={carouselItems}
   />
 )}
+
+<div class="mx-auto max-w-5xl px-4 md:px-6">
+  <CallToActionBanner heading={t('shared-cta.heading')} ctaText={t('buoy.cta.banner-button')} ctaUrl={contactUrl} />
+</div>
 
 <WidgetWrapper id="technical-details" containerClass="max-w-5xl">
   <Headline

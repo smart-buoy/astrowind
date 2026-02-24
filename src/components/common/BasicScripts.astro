@@ -447,6 +447,8 @@ import { UI } from 'astrowind:config';
         }
       };
 
+      const AUTO_SCROLL_INTERVAL_MS = 30000;
+
       const startAutoScroll = () => {
         if (autoScrollTimer !== null) {
           window.clearInterval(autoScrollTimer);
@@ -455,7 +457,7 @@ import { UI } from 'astrowind:config';
           if (!document.hidden && !isDragging && isCarouselVisible()) {
             goToNextLoop('smooth');
           }
-        }, 10000);
+        }, AUTO_SCROLL_INTERVAL_MS);
       };
 
       prevButton.addEventListener('click', () => { goToPrev('smooth'); startAutoScroll(); }, { passive: true });

@@ -76,7 +76,7 @@ const postCollection = defineCollection({
     /** Shared ID across translated posts; used by the language switcher to find the same post in another language. */
     translationId: z.string().optional(),
 
-    /** Optional in-article banner (heading, CTA text, CTA URL). Insert <PostBanner /> in MDX and pass frontmatter.banner. */
+    /** Optional in-article banner (heading, CTA text, CTA URL). Insert <CallToActionBanner /> in MDX and pass frontmatter.banner. */
     banner: z
       .object({
         heading: z.string(),
