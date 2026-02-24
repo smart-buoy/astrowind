@@ -19,17 +19,16 @@ skipper:
   hero:
     tagline: "Skipper App"
     headline: "Keine Anrufe. Kein Chaos. Einfach anlegen."
-    subtitle: "More relaxed on the water with the SmartBuoy app."
+    subtitle: "Mit der SmartBuoy-App entspannter aufs Wasser."
   video:
     title: "SmartBuoy im Einsatz"
-    hint: "Wir verwenden Standortdaten nur zur Reservierung; Zahlungsdaten werden sicher verarbeitet. Details in der Datenschutz-Erklärung."
   highlights:
     title: "Unsere Vorteile"
     sub-title: "SmartBuoy bietet Skippern eine innovative, nachhaltige und benutzerfreundliche Möglichkeit, ihre Boote effizienter zu betreiben – und dabei aktiv zum Umweltschutz beizutragen."
     tagline: "Vorteile"
   carousel:
     title: "SmartBuoy im Einsatz"
-    sub-title: "Ein kompakter Ueberblick, was Skipper mit SmartBuoy erhalten."
+    sub-title: "Ein kompakter Überblick, was Skipper mit SmartBuoy erhalten."
     tagline: "Features"
   features:
     title: "Unsere Lösung für Skipper"
@@ -65,7 +64,7 @@ environment-impact:
 # Buoy section (Die Boje product page)
 buoy:
   hero:
-    title: "Die SmartBuoy Boje"
+    title: "Die Boje"
     subtitle: "Digitale Reservierung. Verlässliche Technik. Schutz für die Natur."
   tech:
     title: "Technische Details"
@@ -136,14 +135,13 @@ operator:
     get-started: "Los Geht's"
     learn-more: "Mehr Erfahren"
   video:
-    hint: "Wir verwenden Standortdaten nur zur Reservierung; Zahlungsdaten werden sicher verarbeitet. Details in der Datenschutz-Erklärung."
   highlights:
     title: "Unsere Vorteile"
     sub-title: "SmartBuoy bietet Betreibern eine ganzheitliche, benutzerfreundliche und nachhaltige Option, die es ihnen ermöglicht, ihre Bojen effizienter und effektiver zu verwalten."
     tagline: "Vorteile"
   carousel:
-    title: "Fuer Betreiber entwickelt"
-    sub-title: "Zentrale Funktionen fuer effiziente Bojenfeld-Operationen."
+    title: "Für Betreiber entwickelt"
+    sub-title: "Zentrale Funktionen für effiziente Bojenfeld-Operationen."
     tagline: "Features"
   use-cases:
     title: "Unsere Anwendungsfälle"

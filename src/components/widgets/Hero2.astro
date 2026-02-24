@@ -1,6 +1,5 @@
 ---
 import Image from '~/components/common/Image.astro';
-import { Icon } from 'astro-icon/components';
 import Button from '~/components/ui/Button.astro';
 
 import type { Hero as Props } from '~/types';
@@ -16,7 +15,6 @@ const {
 
   id,
   bg = await Astro.slots.render('bg'),
-  imageObjectPositionDesktop = '50% 50%',
 } = Astro.props;
 
 const imageMetadata =
@@ -26,8 +24,10 @@ const imageAspectRatio = imageMetadata
   : 16 / 9;
 const heroImageWidth = imageMetadata ? Math.min(Number(imageMetadata.width), 1200) : 1200;
 const heroImageHeight = Math.round(heroImageWidth / imageAspectRatio);
+const hasStringImage = typeof image === 'string';
 const hasObjectImage = typeof image === 'object' && image !== null;
-const hasImage = Boolean(image);
+const imageObjectProps: Record<string, unknown> | undefined = hasObjectImage ? (image as Record<string, unknown>) : undefined;
+const hasImage = hasStringImage || Boolean(imageObjectProps);
 ---
 
 <section class="relative overflow-hidden md:-mt-[76px] not-prose" {...id ? { id } : {}}>
@@ -36,34 +36,16 @@ const hasImage = Boolean(image);
       {bg ? <Fragment set:html={bg} /> : null}
     </slot>
   </div>
-  {
-    hasObjectImage && (
-      <div class="absolute inset-0" style={`--hero2-desktop-object-position: ${imageObjectPositionDesktop};`} aria-hidden="true">
-        <Image
-          class="hero2-bg-image h-full w-full object-cover"
-          widths={[1024, 1366, 1920, 2560]}
-          sizes="100vw"
-          loading="eager"
-          layout="cover"
-          width={1920}
-          height={1080}
-          {...image}
-        />
-        <div class="absolute inset-0 bg-gradient-to-b from-gray-900/80 via-gray-900/60 to-gray-900/70 lg:from-gray-900/88 lg:via-gray-900/48 lg:to-gray-900/28 dark:from-black/88 dark:via-black/62 dark:to-black/35" />
-      </div>
-    )
-  }
   <div class="relative max-w-7xl mx-auto px-4 sm:px-6">
     <div class="pt-0 md:pt-[76px] pointer-events-none"></div>
-    <div class="flex min-h-[calc(100svh-70px)] items-start pt-8 pb-10 sm:pt-20 sm:pb-12 md:min-h-[calc(100svh-76px)] md:pt-28 md:pb-16 lg:min-h-[calc(100svh-76px)] lg:justify-center lg:pt-14 lg:pb-14">
-      <div class:list={['mx-auto w-full text-center lg:max-w-3xl', { 'rounded-2xl bg-black/55 p-4 shadow-2xl ring-1 ring-white/20 backdrop-blur-[2px] sm:p-6 lg:p-10': hasObjectImage }]}>
+    <div class="py-10 sm:py-14 md:py-20 lg:flex lg:items-center lg:gap-12 lg:py-20">
+      <div class="relative basis-1/2 text-center lg:text-left">
+        <div class="pointer-events-none absolute inset-y-2 -left-5 hidden w-56 rounded-full bg-gradient-to-br from-primary/20 via-primary/5 to-transparent blur-3xl lg:block" aria-hidden="true"></div>
+        <div class="relative mx-auto max-w-2xl lg:mx-0">
         {
           tagline && (
             <p
-              class:list={[
-                'text-base font-bold tracking-wide text-secondary uppercase intersect-once intersect-quarter motion-safe:md:intersect:animate-fade motion-safe:md:opacity-0',
-                { '!text-white drop-shadow-[0_1px_8px_rgba(0,0,0,0.8)]': hasObjectImage },
-              ]}
+              class="text-sm font-bold tracking-[0.2em] text-secondary uppercase intersect-once intersect-quarter motion-safe:md:intersect:animate-fade motion-safe:md:opacity-0"
               set:html={tagline}
             />
           )
@@ -71,22 +53,16 @@ const hasImage = Boolean(image);
         {
           title && (
             <h1
-              class:list={[
-                'mb-4 font-heading text-4xl font-bold leading-tighter tracking-tighter intersect-once intersect-quarter motion-safe:md:intersect:animate-fade motion-safe:md:opacity-0 sm:text-5xl md:text-6xl',
-                { 'text-white drop-shadow-[0_2px_10px_rgba(0,0,0,0.8)] [&_*]:!text-white': hasObjectImage },
-              ]}
+              class="mt-3 mb-5 font-heading text-4xl font-bold leading-tight tracking-tight dark:text-gray-200 intersect-once intersect-quarter motion-safe:md:intersect:animate-fade motion-safe:md:opacity-0 sm:text-5xl lg:text-6xl"
               set:html={title}
             />
           )
         }
-        <div class="max-w-3xl mx-auto lg:max-w-none">
+        <div class="mx-auto max-w-xl lg:mx-0 lg:max-w-none">
           {
             subtitle && (
               <p
-                class:list={[
-                  'mb-0 text-lg text-muted intersect-once intersect-quarter motion-safe:md:intersect:animate-fade motion-safe:md:opacity-0 dark:text-slate-300 sm:text-xl',
-                  { '!text-white drop-shadow-[0_1px_6px_rgba(0,0,0,0.8)] [&_*]:!text-white': hasObjectImage },
-                ]}
+                class="mb-7 text-lg text-muted dark:text-slate-300 intersect-once intersect-quarter motion-safe:md:intersect:animate-fade motion-safe:md:opacity-0 sm:text-xl"
                 set:html={subtitle}
               />
             )
@@ -94,7 +70,7 @@ const hasImage = Boolean(image);
 
           {
             actions && (
-              <div class="m-auto flex max-w-xs flex-nowrap flex-col gap-4 intersect-once intersect-quarter motion-safe:md:intersect:animate-fade motion-safe:md:opacity-0 sm:max-w-md sm:flex-row sm:justify-center lg:max-w-7xl lg:justify-center">
+              <div class="mx-auto flex max-w-xs flex-nowrap flex-col gap-4 intersect-once intersect-quarter motion-safe:md:intersect:animate-fade motion-safe:md:opacity-0 sm:max-w-md sm:flex-row sm:justify-center lg:mx-0 lg:max-w-7xl lg:justify-start">
                 {Array.isArray(actions) ? (
                   actions.map((action) => (
                     <div class="flex w-full sm:w-auto">
@@ -110,59 +86,29 @@ const hasImage = Boolean(image);
         </div>
         {content && <Fragment set:html={content} />}
       </div>
-      <div class:list={['mt-8', { hidden: hasObjectImage }]}>
+      </div>
+      <div class="mt-10 basis-1/2 lg:mt-0">
         {
           hasImage && (
-            <div class="relative m-auto max-w-5xl intersect-once intersect-no-queue intersect-quarter motion-safe:md:intersect:animate-fade motion-safe:md:opacity-0">
-              {typeof image === 'string' ? (
+            <div class="relative m-auto max-w-2xl overflow-hidden rounded-3xl border border-gray-200/70 bg-white/35 shadow-[0_28px_80px_-42px_rgba(15,23,42,0.62)] ring-1 ring-white/75 backdrop-blur-sm dark:border-slate-700/70 dark:bg-slate-900/30 dark:ring-slate-700/60 lg:max-w-none intersect-once intersect-no-queue intersect-quarter motion-safe:md:intersect:animate-fade motion-safe:md:opacity-0">
+              {hasStringImage ? (
                 <Fragment set:html={image} />
-              ) : (
+              ) : imageObjectProps ? (
                 <Image
-                  class="mx-auto h-auto w-full rounded-md object-cover lg:h-full"
+                  class="mx-auto h-auto w-full object-cover"
                   widths={[400, 768, 1024, 2040]}
                   sizes="(max-width: 767px) 400px, (max-width: 1023px) 768px, (max-width: 2039px) 1024px, 2040px"
                   loading="eager"
                   layout="cover"
                   width={heroImageWidth}
                   height={heroImageHeight}
-                  {...image}
+                  {...imageObjectProps}
                 />
-              )}
+              ) : null}
             </div>
           )
         }
       </div>
     </div>
   </div>
-  {
-    hasImage && (
-      <div class="pointer-events-none absolute inset-x-0 bottom-4 z-10 flex justify-center">
-        <button
-          type="button"
-          class="group pointer-events-auto inline-flex flex-col items-center gap-1 rounded-xl px-3 py-2 text-white"
-          aria-label="Scroll to next section"
-          onclick="const section = this.closest('section'); const next = section?.nextElementSibling; if (next) { next.scrollIntoView({ behavior: 'smooth', block: 'start' }); } else { window.scrollTo({ top: window.innerHeight, behavior: 'smooth' }); }"
-        >
-          <span class="text-[0.65rem] font-semibold uppercase tracking-[0.22em] text-white/90 drop-shadow-[0_1px_6px_rgba(0,0,0,0.8)]">
-            Scroll down
-          </span>
-          <span class="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/70 bg-black/35 transition duration-200 group-hover:translate-y-0.5 group-hover:bg-black/50">
-            <Icon name="tabler:chevron-down" class="h-5 w-5" />
-          </span>
-        </button>
-      </div>
-    )
-  }
 </section>
-
-<style>
-  .hero2-bg-image {
-    object-position: center;
-  }
-
-  @media (min-width: 1024px) {
-    .hero2-bg-image {
-      object-position: var(--hero2-desktop-object-position, center);
-    }
-  }
-</style>

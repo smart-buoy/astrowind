@@ -3,7 +3,7 @@ export const statisticsPayload = {
   "statistics": {
     "numberOfDevices": 30,
     "numberOfBuoys": 3,
-    "numberOfBookings": 13
+    "numberOfBookings": 14
   },
-  "fetchedAt": "2026-02-15T21:55:22.410Z"
+  "fetchedAt": "2026-02-24T20:33:40.781Z"
 } as const;

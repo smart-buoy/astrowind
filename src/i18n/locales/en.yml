@@ -19,10 +19,9 @@ skipper:
   hero:
     tagline: "Skipper App"
     headline: "No calls. No chaos. Just relax."
-    subtitle: "Mit der SmartBuoy-App entspannter aufs Wasser."
+    subtitle: "More relaxed on the water with the SmartBuoy app."
   video:
     title: "SmartBuoy in action"
-    hint: "We use location data only for reservations; payment data is processed securely. Details can be found in the privacy policy."
   highlights:
     title: "Our Advantages"
     sub-title: "SmartBuoy offers skippers an innovative, sustainable and user-friendly way to operate their boats more efficiently - while actively contributing to environmental protection."
@@ -65,7 +64,7 @@ environment-impact:
 # Buoy section (The Buoy product page)
 buoy:
   hero:
-    title: "The SmartBuoy Buoy"
+    title: "The Buoy"
     subtitle: "Digital reservations. Reliable technology. Protection for nature."
   tech:
     title: "Technical specifications"
@@ -136,7 +135,6 @@ operator:
     get-started: "Get Started"
     learn-more: "Learn More"
   video:
-    hint: "We use location data only for reservations; payment data is processed securely. Details can be found in the privacy policy."
   highlights:
     title: "Our benefits"
     sub-title: "SmartBuoy offers operators a holistic, user-friendly and sustainable option that allows them to manage their buoys more efficiently and effectively."
