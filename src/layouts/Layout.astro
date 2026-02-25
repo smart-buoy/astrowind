@@ -15,9 +15,6 @@ import BasicScripts from '~/components/common/BasicScripts.astro';
 import PostHog from '../components/common/Posthog.astro';
 import Leadfeeder from '~/components/common/Leadfeeder.astro';
 
-// Comment the line below to disable View Transitions
-import { ClientRouter } from 'astro:transitions';
-
 import type { MetaData as MetaDataType } from '~/types';
 
 export interface Props {
@@ -42,8 +39,7 @@ const { textDirection } = I18N;
     <PostHog />
     <Leadfeeder />
 
-    <!-- Comment the line below to disable View Transitions -->
-    <ClientRouter fallback="swap" />
+    <!-- View Transitions disabled to avoid globally injected route CSS/JS on initial load -->
   </head>
 
   <body class="antialiased text-default bg-page tracking-tight">

@@ -1,13 +1,10 @@
 ---
 import { getCollection } from 'astro:content';
 import FAQs from '~/components/widgets/FAQs.astro';
-import { sanityClient } from 'sanity:client';
 import { getPermalink } from '~/utils/permalinks';
 import { getLangFromUrl, useTranslations, useTranslatedPath } from '~/i18n/utils';
-import Testimonials from '~/components/widgets/Testimonials.astro';
 import Button from '~/components/ui/Button.astro';
 import Hero2 from '~/components/widgets/Hero2.astro';
-import FeatureContent from '~/components/widgets/FeatureContent.astro';
 import PageCarousel from '~/components/widgets/PageCarousel.astro';
 import WidgetWrapper from '~/components/ui/WidgetWrapper.astro';
 import Headline from '~/components/ui/Headline.astro';
@@ -15,18 +12,12 @@ import CallToActionBanner from '~/components/blog/CallToActionBanner.astro';
 import { Icon } from 'astro-icon/components';
 import VideoPlayer from '~/components/common/VideoPlayer.astro';
 import { formatFrontmatterRichText } from '~/i18n/richText';
-import { urlForImage } from '~/utils/sanity';
 import operatorHeroImage from '~/assets/images/dashboard.jpg';
 
 const language = getLangFromUrl(Astro.url);
 const t = useTranslations(language);
 const translatePath = useTranslatedPath(language);
 const contactUrl = translatePath(getPermalink('/contact'));
-
-const features = await sanityClient.fetch(`*[_type == "feature" && language == $language && area == $area]`, {
-  language,
-  area: 'operator',
-});
 
 const faqEntries = await getCollection('faq');
 const faqs = faqEntries
@@ -56,16 +47,6 @@ const carouselItems = pageCarouselEntries
       description: (d.description && (d.description[lang] ?? d.description.en)) ?? '',
     };
   });
-
-const testimonials = await sanityClient.fetch(
-  `*[_type == "testimonial" && area==$area]{
-  name,
-"text": text[_key == $language][0].value,
-"position": position[_key == $language][0].value,
-image
-}`,
-  { language, area: 'operator' }
-);
 
 const operatorAdvantagesEntries = await getCollection('operatorAdvantages');
 const operatorAdvantages = operatorAdvantagesEntries
@@ -136,31 +117,6 @@ const operatorAdvantages = operatorAdvantagesEntries
   )
 }
 
-<!-- Content Widget **************** -->
-{
-  features.length > 0 &&
-    features.map((feature, index) => (
-      <FeatureContent
-        id="use-cases"
-        title={t('operator.use-cases.title')}
-        subtitle={t('operator.use-cases.sub-title')}
-        tagline={t('operator.use-cases.tagline')}
-        isAfterContent={index > 0}
-        isReversed={index % 2 == 0}
-        feature={feature}
-      >
-        <Fragment slot="content">
-          <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">{feature.title}</h3>
-          {feature.subtitle}
-        </Fragment>
-
-        <Fragment slot="bg">
-          <div class="absolute inset-0 bg-blue-50 dark:bg-transparent" />
-        </Fragment>
-      </FeatureContent>
-    ))
-}
-
 {
   carouselItems.length > 0 && (
     <PageCarousel
@@ -176,25 +132,6 @@ const operatorAdvantages = operatorAdvantagesEntries
 <div class="mx-auto max-w-6xl px-4 md:px-6">
   <CallToActionBanner heading={t('shared-cta.heading')} ctaText={t('operator.cta.banner-button')} ctaUrl={contactUrl} />
 </div>
-
-<!-- Testimonials Widget *********** -->
-
-{
-  testimonials.length > 0 && (
-    <Testimonials
-      title={t('operator.testimonials.title')}
-      testimonials={testimonials.map((testimonial) => ({
-        testimonial: testimonial.text,
-        name: testimonial.name,
-        job: testimonial.position,
-        image: {
-          src: urlForImage(testimonial.image).width(50).url(),
-          alt: `Image of ${testimonial.name}`,
-        },
-      }))}
-    />
-  )
-}
 
 <!-- FAQs Widget ******************* -->
 {

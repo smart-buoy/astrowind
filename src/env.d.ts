@@ -3,7 +3,6 @@
 /// <reference types="astro/client" />
 /// <reference types="vite/client" />
 /// <reference types="../vendor/integration/types.d.ts" />
-/// <reference types="@sanity/astro/module" />
 
 interface ImportMetaEnv {
   readonly STATISTICS_API_URL?: string;

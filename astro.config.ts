@@ -16,7 +16,6 @@ import astrowind from './vendor/integration';
 import rehypeSlug from 'rehype-slug';
 import { readingTimeRemarkPlugin, responsiveTablesRehypePlugin, lazyImagesRehypePlugin } from './src/utils/frontmatter';
 
-import sanity from '@sanity/astro';
 import react from '@astrojs/react';
 
 import netlify from '@astrojs/netlify';
@@ -71,11 +70,6 @@ export default defineConfig({
     Logger: 1,
   }), astrowind({
     config: './src/config.yaml',
-  }), sanity({
-    projectId: 'lovseikl',
-    dataset: 'production',
-    studioBasePath: '/admin',
-    useCdn: false
   }), react(), jopSoftwarecookieconsent({
     guiOptions: {
       consentModal: {

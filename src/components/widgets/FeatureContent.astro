@@ -4,7 +4,6 @@ import Headline from '../ui/Headline.astro';
 import WidgetWrapper from '../ui/WidgetWrapper.astro';
 import Image from '~/components/common/Image.astro';
 import Button from '~/components/ui/Button.astro';
-import { urlForImage } from '~/utils/sanity';
 import PortableText from '../common/PortableText.astro';
 
 const {
@@ -22,6 +21,8 @@ const {
   classes = {},
   bg = await Astro.slots.render('bg'),
 } = Astro.props;
+
+const featureImageSrc = typeof feature?.image === 'string' ? feature.image : undefined;
 ---
 
 <WidgetWrapper
@@ -61,10 +62,10 @@ const {
       </div>
       <div aria-hidden="true" class="mt-10 md:mt-0 md:basis-1/2">
         {
-          feature.image && (
+          featureImageSrc && (
             <div class="relative m-auto max-w-4xl">
               <Image
-                src={urlForImage(feature.image).width(500).url()}
+                src={featureImageSrc}
                 class="mx-auto w-full rounded-lg bg-gray-500 shadow-lg"
                 width={500}
                 height={500}

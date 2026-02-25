@@ -3,10 +3,8 @@ import { getCollection } from 'astro:content';
 import FAQs from '~/components/widgets/FAQs.astro';
 import Stats from '~/components/widgets/Stats.astro';
 import CallToAction from '~/components/widgets/CallToAction.astro';
-import { sanityClient } from 'sanity:client';
 import { getPermalink } from '~/utils/permalinks';
 import { getLangFromUrl, useTranslations, useTranslatedPath } from '~/i18n/utils';
-import Testimonials from '~/components/widgets/Testimonials.astro';
 import Button from '~/components/ui/Button.astro';
 import Image from '~/components/common/Image.astro';
 import Hero2 from '~/components/widgets/Hero2.astro';
@@ -17,7 +15,6 @@ import CallToActionBanner from '~/components/blog/CallToActionBanner.astro';
 import { Icon } from 'astro-icon/components';
 import VideoPlayer from '~/components/common/VideoPlayer.astro';
 import { formatFrontmatterRichText } from '~/i18n/richText';
-import { urlForImage } from '~/utils/sanity';
 import skipperHeroImage from '~/assets/images/app2.jpg';
 import skipperVideoPosterImage from '~/assets/images/boat.jpg';
 
@@ -73,16 +70,6 @@ const skipperAdvantages = skipperAdvantagesEntries
       icon: d.icon ?? 'tabler:circle-check',
     };
   });
-
-const testimonials = await sanityClient.fetch(
-  `*[_type == "testimonial" && area==$area]{
-  name,
-"text": text[_key == $language][0].value,
-"position": position[_key == $language][0].value,
-image
-}`,
-  { language, area: 'skipper' }
-);
 
 ---
 
@@ -167,25 +154,6 @@ image
         { amount: '18.5K', icon: 'tabler:users' },
         { amount: '4.7', icon: 'tabler:user-star' },
       ]}
-    />
-  )
-}
-
-<!-- Testimonials Widget *********** -->
-
-{
-  testimonials.length > 0 && (
-    <Testimonials
-      title={t('skipper.testimonials.title')}
-      testimonials={testimonials.map((testimonial) => ({
-        testimonial: testimonial.text,
-        name: testimonial.name,
-        job: testimonial.position,
-        image: {
-          src: urlForImage(testimonial.image).width(50).url(),
-          alt: `Image of ${testimonial.name}`,
-        },
-      }))}
     />
   )
 }
