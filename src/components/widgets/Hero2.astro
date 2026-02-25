@@ -96,8 +96,8 @@ const hasImage = hasStringImage || Boolean(imageObjectProps);
               ) : imageObjectProps ? (
                 <Image
                   class="mx-auto h-auto w-full object-cover"
-                  widths={[400, 768, 1024, 2040]}
-                  sizes="(max-width: 767px) 400px, (max-width: 1023px) 768px, (max-width: 2039px) 1024px, 2040px"
+                  widths={[360, 540, 768, 1024, 1280]}
+                  sizes="(max-width: 767px) 100vw, (max-width: 1023px) 85vw, 50vw"
                   loading="eager"
                   fetchpriority="high"
                   layout="cover"
