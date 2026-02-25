@@ -9,7 +9,27 @@ import { ANALYTICS } from 'astrowind:config';
         type="text/partytown"
         data-category="analytics"
     >
-      (function(ss,ex){ window.ldfdr=window.ldfdr||function(){(ldfdr._q=ldfdr._q||[]).push([].slice.call(arguments));}; (function(d,s){ fs=d.getElementsByTagName(s)[0]; function ce(src){ var cs=d.createElement(s); cs.src=src; cs.async=1; fs.parentNode.insertBefore(cs,fs); }; ce('https://sc.lfeeder.com/lftracker_v1_'+ss+(ex?'_'+ex:'')+'.js'); })(document,'script'); })(id);
+      function loadLeadfeeder() {
+        (function(ss,ex){ window.ldfdr=window.ldfdr||function(){(ldfdr._q=ldfdr._q||[]).push([].slice.call(arguments));}; (function(d,s){ fs=d.getElementsByTagName(s)[0]; function ce(src){ var cs=d.createElement(s); cs.src=src; cs.async=1; fs.parentNode.insertBefore(cs,fs); }; ce('https://sc.lfeeder.com/lftracker_v1_'+ss+(ex?'_'+ex:'')+'.js'); })(document,'script'); })(id);
+      }
+
+      // Delay non-essential lead enrichment script to reduce initial third-party network cost.
+      function scheduleLeadfeederLoad() {
+        if ('requestIdleCallback' in window) {
+          window.requestIdleCallback(function () {
+            window.setTimeout(loadLeadfeeder, 4000);
+          }, { timeout: 3000 });
+          return;
+        }
+
+        window.setTimeout(loadLeadfeeder, 4000);
+      }
+
+      if (document.readyState === 'complete') {
+        scheduleLeadfeederLoad();
+      } else {
+        window.addEventListener('load', scheduleLeadfeederLoad, { once: true });
+      }
     </script>
   )
 }
