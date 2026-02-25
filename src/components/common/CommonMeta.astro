@@ -11,6 +11,8 @@ const routeWithoutLang = getRouteWithoutLang(Astro.url, lang);
 
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="preload" href={getAsset('/fonts/WorkSans-VariableFont_wght.woff2')} as="font" type="font/woff2" crossorigin />
+<link rel="preload" href={getAsset('/fonts/Exo2-VariableFont_wght.woff2')} as="font" type="font/woff2" crossorigin />
 
 {
   Object.entries(languages).map(([lang]) => (
