@@ -19,7 +19,6 @@ import { readingTimeRemarkPlugin, responsiveTablesRehypePlugin, lazyImagesRehype
 import react from '@astrojs/react';
 
 import netlify from '@astrojs/netlify';
-
 import jopSoftwarecookieconsent from '@jop-software/astro-cookieconsent';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -102,7 +101,7 @@ export default defineConfig({
                   acceptAllBtn: "Alle akzeptieren",
                   acceptNecessaryBtn: "Alle ablehnen",
                   showPreferencesBtn: "Einstellungen verwalten",
-                  footer: "<a href=\"#link\">Datenschutz</a>\n<a href=\"#link\">Bedingungen und Konditionen</a>"
+                  footer: "<a href=\"/de/datenschutz\">Datenschutz</a>\n<a href=\"/terms\">Bedingungen und Konditionen</a>"
               },
               preferencesModal: {
                   title: "Präferenzen für die Zustimmung",
@@ -140,7 +139,7 @@ export default defineConfig({
                   acceptAllBtn: "Accept all",
                   acceptNecessaryBtn: "Reject all",
                   showPreferencesBtn: "Manage preferences",
-                  footer: "<a href=\"#link\">Privacy Policy</a>\n<a href=\"#link\">Terms and conditions</a>"
+                  footer: "<a href=\"/privacy\">Privacy Policy</a>\n<a href=\"/terms\">Terms and conditions</a>"
               },
               preferencesModal: {
                   title: "Consent Preferences Center",
