@@ -1,7 +1,7 @@
 ---
 import type { InferGetStaticPropsType, GetStaticPaths } from 'astro';
 import { blogCategoryRobots, getStaticPathsBlogCategory } from '~/utils/blog';
-import { languages } from '~/i18n/ui';
+import { languages, ui } from '~/i18n/ui';
 
 import Layout from '~/layouts/PageLayout.astro';
 import BlogList from '~/components/blog/List.astro';
@@ -26,9 +26,14 @@ type Props = InferGetStaticPropsType<typeof getStaticPaths> & {
 const { page, category, lang = 'en' } = Astro.props as Props;
 
 const currentPage = page.currentPage ?? 1;
+const locale = (lang in ui ? ui[lang as keyof typeof ui] : ui.en) ?? ui.en;
+const categoryLabel = locale['blog.category'] ?? 'Category';
+const pageLabel = locale['blog.page'] ?? 'Page';
+const blogSubtitle = locale['blog.subtitle'] ?? 'News, tutorials, and updates.';
 
 const metadata = {
-  title: `Category '${category.title}' ${currentPage > 1 ? ` — Page ${currentPage}` : ''}`,
+  title: `${categoryLabel} '${category.title}'${currentPage > 1 ? ` — ${pageLabel} ${currentPage}` : ''}`,
+  description: `${categoryLabel}: ${category.title}. ${blogSubtitle}`,
   robots: {
     index: blogCategoryRobots?.index,
     follow: blogCategoryRobots?.follow,

@@ -1,5 +1,6 @@
 ---
 title: 'Terms and Conditions'
+description: 'Terms and conditions for using the SmartBuoy website and services, including legal responsibilities and limitations.'
 layout: '~/layouts/MarkdownLayout.astro'
 ---
 

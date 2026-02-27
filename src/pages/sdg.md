@@ -1,5 +1,6 @@
 ---
 title: 'Sustainable Development Goals (SDG)'
+description: 'How SmartBuoy supports SDG 5, SDG 13, and SDG 14 through sustainable mooring and marine protection.'
 layout: '~/layouts/MarkdownLayout.astro'
 ---
 

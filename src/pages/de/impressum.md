@@ -1,5 +1,6 @@
 ---
 title: 'Impressum'
+description: 'Impressum und Unternehmensangaben der SmartBuoy GmbH inklusive Kontaktdaten und rechtlicher Offenlegung.'
 layout: '~/layouts/MarkdownLayout.astro'
 ---
 

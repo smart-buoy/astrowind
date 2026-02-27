@@ -1,5 +1,6 @@
 ---
-title: 'Privacy Policy'
+title: 'Datenschutzerklärung'
+description: 'Wie SmartBuoy personenbezogene Daten, Cookies und Datenschutzrechte bei der Nutzung der Website und Dienste behandelt.'
 layout: '~/layouts/MarkdownLayout.astro'
 ---
 

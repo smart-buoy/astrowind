@@ -34,6 +34,7 @@ const pageLabel = locale['blog.page'] ?? 'Page';
 
 const metadata = {
   title: `${blogTitle}${currentPage > 1 ? ` — ${pageLabel} ${currentPage}` : ''}`,
+  description: blogSubtitle,
   robots: {
     index: blogListRobots?.index && currentPage === 1,
     follow: blogListRobots?.follow,

@@ -11,7 +11,7 @@ metadata:
   title:
     default: SmartBuoy
     template: '%s — SmartBuoy'
-  description: "\U0001F680 Suitable for Startups, Small Business, Sass Websites, Professional Portfolios, Marketing Websites, Landing Pages & Blogs."
+  description: "SmartBuoy provides digital buoy reservations for skippers and operators with real-time occupancy and sustainable mooring."
   robots:
     index: true
     follow: true

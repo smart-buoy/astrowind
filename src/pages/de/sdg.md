@@ -1,5 +1,6 @@
 ---
 title: 'Nachhaltigkeitsziele (SDG)'
+description: 'Wie SmartBuoy die SDGs 5, 13 und 14 durch nachhaltiges Anlegen und den Schutz mariner Ökosysteme unterstützt.'
 layout: '~/layouts/MarkdownLayout.astro'
 ---
 

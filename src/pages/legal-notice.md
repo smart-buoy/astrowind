@@ -1,5 +1,6 @@
 ---
 title: 'Legal Notice'
+description: 'Legal notice and company information for SmartBuoy GmbH, including contact details and regulatory disclosures.'
 layout: '~/layouts/MarkdownLayout.astro'
 ---
 
