@@ -1,0 +1,95 @@
+---
+import Button from '~/components/ui/Button.astro';
+import { getLangFromUrl, useTranslations } from '~/i18n/utils';
+
+const language = getLangFromUrl(Astro.url);
+const t = useTranslations(language);
+---
+
+<dialog
+  id="newsletter-dialog"
+  class="w-[min(40rem,calc(100vw-2rem))] rounded-lg border border-gray-200 bg-white p-0 text-left shadow-xl backdrop:bg-black/50 dark:border-[#4a4a4a] dark:bg-[#2f2f2f]"
+>
+  <div class="p-4 sm:p-6">
+    <div class="mb-3 flex items-start justify-between gap-3 sm:gap-4">
+      <h2 class="text-xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-2xl">{t('newsletter-modal.title')}</h2>
+      <button
+        type="button"
+        data-newsletter-close
+        class="rounded-md p-2 text-muted transition hover:bg-gray-100 hover:text-gray-900 dark:hover:bg-[#3a3a3a] dark:hover:text-white"
+        aria-label={t('newsletter-modal.close-label')}
+      >
+        ✕
+      </button>
+    </div>
+
+    <p class="mb-4 text-sm text-muted dark:text-slate-300 sm:text-base">{t('newsletter-modal.intro')}</p>
+
+    <form data-newsletter-form method="dialog" class="space-y-4">
+      <div>
+        <label for="newsletter-email" class="mb-1 block text-sm font-medium text-gray-900 dark:text-white">
+          {t('newsletter-modal.email-label')}
+        </label>
+        <input
+          id="newsletter-email"
+          name="email"
+          type="email"
+          required
+          class="w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-gray-900 outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/25 dark:border-[#4a4a4a] dark:bg-[#222] dark:text-white"
+        />
+      </div>
+
+      <label class="flex items-start gap-3 text-sm text-muted dark:text-slate-300">
+        <input
+          name="privacyConsent"
+          type="checkbox"
+          required
+          class="mt-1 h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary dark:border-[#4a4a4a] dark:bg-[#222]"
+        />
+        <span>{t('contact.form.disclaimer')}</span>
+      </label>
+
+      <p
+        class="text-xs leading-relaxed text-gray-600 dark:text-gray-400 [&_a]:underline [&_a]:text-primary hover:[&_a]:text-primary/80"
+        set:html={t('contact.form.disclaimer-hint')}
+      />
+
+      <div class="flex justify-center sm:justify-end">
+        <Button
+          class="w-full text-center sm:w-auto"
+          variant="primary"
+          type="submit"
+        >
+          {t('newsletter-modal.submit-button')}
+        </Button>
+      </div>
+    </form>
+  </div>
+</dialog>
+
+<script>
+  const dialog = document.querySelector('#newsletter-dialog');
+  const openButtons = document.querySelectorAll('[data-newsletter-open]');
+  const closeButton = dialog?.querySelector('[data-newsletter-close]');
+  const form = dialog?.querySelector('[data-newsletter-form]');
+
+  openButtons.forEach((button) => {
+    button.addEventListener('click', () => {
+      dialog?.showModal();
+    });
+  });
+
+  closeButton?.addEventListener('click', () => {
+    dialog?.close();
+  });
+
+  form?.addEventListener('submit', (event) => {
+    if (!form.checkValidity()) {
+      return;
+    }
+
+    event.preventDefault();
+    dialog?.close();
+    form.reset();
+  });
+</script>

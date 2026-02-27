@@ -18,6 +18,13 @@ nav:
 shared-cta:
   heading: "Stay up to date"
 
+newsletter-modal:
+  title: "You don’t want to miss the first wave?"
+  intro: "Sign up for our newsletter! Be the first to know when sales and bookings start, and get updates on features, events, and sustainable buoy solutions."
+  close-label: "Close newsletter dialog"
+  email-label: "Email"
+  submit-button: "Subscribe to newsletter"
+
 # Skipper section
 skipper:
   hero:
@@ -76,12 +83,18 @@ buoy:
   cta:
     button: "Stay up to date"
     banner-button: "Contact us"
+  newsletter-modal:
+    intro: "Sign up for our newsletter! Be the first to know when sales and bookings start, and get updates on features, events, and sustainable buoy solutions."
+    close-label: "Close newsletter dialog"
+    email-label: "Email"
+    disclaimer: "By submitting this form, you confirm that you agree to the collection of your personal data."
+    hint: "You can revoke your consent at any time - the easiest way is to send the revocation to <a href='mailto:office@smartbuoy.eu'>office@smartbuoy.eu</a>. Revoking consent does not affect the lawfulness of processing carried out before the revocation. You can find more details in our <a href='{privacyUrl}'>Privacy Policy</a>."
+    submit-button: "Subscribe to newsletter"
   tech:
     title: "Technical specifications"
     subtitle: "The key technical specifications of the SmartBuoy buoy at a glance."
     content: |-
       **Housing material:** CFRP & GRP
-      (Planned future development: natural fibers with epoxy resin)
       **Corrosion protection:** Seawater-resistant components from yacht engineering
       **Protection class:** IP67
       **Dimensions:**
@@ -93,7 +106,6 @@ buoy:
       **Communication:** NB-IoT, LTE-M
       **GPS accuracy:** approx. 5-10 m (depending on real-world conditions)
       **Solar:** 4 × polycrystalline solar modules, 12 V / 1.5 W
-      (Further development and enhanced certification planned)
       **Battery:** LFP (Lithium Iron Phosphate)
       **Service life:** approx. 7 years
       **Warranty:** Statutory warranty (currently 2 years)
@@ -215,7 +227,7 @@ contact:
     newsletter-label: "Yes, I want to subscribe to the SmartBuoy newsletter."
     message-label: "Message"
     disclaimer: "By submitting this contact form, you confirm that you agree to the collection of your personal data."
-    disclaimer-hint: "I can revoke my consent at any time - the easiest way is to send the revocation to <a href='mailto:office@smartbuoy.eu'>office@smartbuoy.eu</a>. Revoking consent does not affect the lawfulness of processing carried out before the revocation. You can find more details in our <a href='/privacy'>Privacy Policy</a>."
+    disclaimer-hint: "You can revoke your consent at any time - the easiest way is to send the revocation to <a href='mailto:office@smartbuoy.eu'>office@smartbuoy.eu</a>. Revoking consent does not affect the lawfulness of processing carried out before the revocation. You can find more details in our <a href='/privacy'>Privacy Policy</a>."
     description: "Our support team usually replies within 24 business hours."
     button: "Send message"
   features:

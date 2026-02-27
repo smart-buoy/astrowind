@@ -10,9 +10,11 @@ export interface Props {
   ctaText: string;
   /** Link URL – internal path or external URL */
   ctaUrl: string;
+  /** If true, CTA opens the newsletter dialog instead of navigating */
+  opensNewsletterModal?: boolean;
 }
 
-const { heading, ctaText, ctaUrl } = Astro.props;
+const { heading, ctaText, ctaUrl, opensNewsletterModal = false } = Astro.props;
 
 const isExternal = ctaUrl.startsWith('http://') || ctaUrl.startsWith('https://');
 const linkAttrs = isExternal
@@ -23,12 +25,20 @@ const linkAttrs = isExternal
 <div class="call-to-action-banner my-8 rounded-lg bg-primary px-6 py-6 sm:px-8 sm:py-8">
   <div class="flex flex-col items-center gap-4 sm:flex-row sm:items-center sm:justify-between">
     <p class="text-center font-heading text-2xl font-bold tracking-tight sm:text-left sm:text-3xl">{heading}</p>
-    <a
-      class="btn-primary shrink-0"
-      {...linkAttrs}
-    >
-      {ctaText}
-    </a>
+    {
+      opensNewsletterModal ? (
+        <button type="button" class="btn-primary shrink-0" data-newsletter-open>
+          {ctaText}
+        </button>
+      ) : (
+        <a
+          class="btn-primary shrink-0"
+          {...linkAttrs}
+        >
+          {ctaText}
+        </a>
+      )
+    }
   </div>
 </div>
 

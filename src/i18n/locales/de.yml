@@ -18,6 +18,13 @@ nav:
 shared-cta:
   heading: "Bleib auf dem Laufenden"
 
+newsletter-modal:
+  title: "Du willst die erste Welle nicht verpassen?"
+  intro: "Melde dich für unseren Newsletter an! So erfährst du als Erste/r, wann Verkauf und Buchung starten und bekommst Updates zu Features, Termine und nachhaltigen Bojenlösungen."
+  close-label: "Newsletter-Dialog schließen"
+  email-label: "E-Mail"
+  submit-button: "Newsletter abonnieren"
+
 # Skipper section
 skipper:
   hero:
@@ -76,12 +83,18 @@ buoy:
   cta:
     button: "Bleib auf dem Laufenden"
     banner-button: "Kontakt aufnehmen"
+  newsletter-modal:
+    intro: "Melde dich für unseren Newsletter an! So erfährst du als Erste/r, wann Verkauf und Buchung starten und bekommst Updates zu Features, Termine und nachhaltigen Bojenlösungen."
+    close-label: "Newsletter-Dialog schließen"
+    email-label: "E-Mail"
+    disclaimer: "Mit dem Absenden des Formulars bestätigst du, dass du mit der Erhebung deiner personenbezogenen Daten einverstanden bist."
+    hint: "Du kannst deine Einwilligung jederzeit widerrufen - am einfachsten, indem du den Widerruf an folgende E-Mail-Adresse schickst: <a href='mailto:office@smartbuoy.eu'>office@smartbuoy.eu</a>. Durch den Widerruf wird die Rechtmäßigkeit der aufgrund der Einwilligung bis zum Widerruf erfolgten Verarbeitung nicht berührt. Weitere Informationen findest du in unserer <a href='{privacyUrl}'>Datenschutzerklärung</a>."
+    submit-button: "Newsletter abonnieren"
   tech:
     title: "Technische Details"
     subtitle: "Die wichtigsten technischen Daten der SmartBuoy Boje im Überblick."
     content: |-
       **Gehäusematerial:** CFK & GFK
-      (Zukünftig: Naturfasern mit Epoxidharz geplant)
       **Korrosionsschutz:** Meerwasserbeständige Komponenten aus dem Yachtbau
       **Schutzklasse:** IP67
       **Maße:**
@@ -93,7 +106,6 @@ buoy:
       **Kommunikation:** NB-IoT, LTE-M
       **GPS-Genauigkeit:** ca. 5-10 m (praxisabhängig)
       **Solar:** 4 × polykristalline Solarmodule, 12 V / 1,5 W
-      (Weiterentwicklung und verbesserte Zertifizierung geplant)
       **Batterie:** LFP (Lithium-Eisenphosphat)
       **Lebensdauer:** ca. 7 Jahre
       **Garantie / Gewährleistung:** Gesetzliche Gewährleistung (derzeit 2 Jahre)
@@ -217,7 +229,7 @@ contact:
     newsletter-label: "Ja, ich möchte den SmartBuoy Newsletter abonnieren."
     message-label: "Nachricht"
     disclaimer: "Mit dem Absenden des Kontaktformulars bestätigst du, dass du mit der Erhebung deiner personenbezogenen Daten einverstanden bist."
-    disclaimer-hint: "Ich kann meine Einwilligung jederzeit widerrufen - am einfachsten, indem ich den Widerruf an folgende E-Mail-Adresse schicke: <a href='mailto:office@smartbuoy.eu'>office@smartbuoy.eu</a>. Durch den Widerruf wird die Rechtmäßigkeit der aufgrund der Einwilligung bis zum Widerruf erfolgten Verarbeitung nicht berührt. Weitere Informationen findest du in unserer <a href='/de/datenschutz'>Datenschutzerklärung</a>."
+    disclaimer-hint: "Du kannst deine Einwilligung jederzeit widerrufen - am einfachsten, indem du den Widerruf an folgende E-Mail-Adresse schickst: <a href='mailto:office@smartbuoy.eu'>office@smartbuoy.eu</a>. Durch den Widerruf wird die Rechtmäßigkeit der aufgrund der Einwilligung bis zum Widerruf erfolgten Verarbeitung nicht berührt. Weitere Informationen findest du in unserer <a href='/de/datenschutz'>Datenschutzerklärung</a>."
     description: "Unser Support-Team antwortet dir in der Regel innerhalb von 24 Geschäftsstunden."
     button: "Nachricht senden"
   features:

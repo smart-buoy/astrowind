@@ -9,6 +9,7 @@ import PageCarousel from '~/components/widgets/PageCarousel.astro';
 import WidgetWrapper from '~/components/ui/WidgetWrapper.astro';
 import Headline from '~/components/ui/Headline.astro';
 import CallToActionBanner from '~/components/blog/CallToActionBanner.astro';
+import NewsletterModal from '~/components/common/NewsletterModal.astro';
 import { Icon } from 'astro-icon/components';
 import VideoPlayer from '~/components/common/VideoPlayer.astro';
 import { formatFrontmatterRichText } from '~/i18n/richText';
@@ -79,9 +80,11 @@ const operatorAdvantages = operatorAdvantagesEntries
   </Fragment>
 
   <div slot="actions" class="flex max-w-sm gap-4">
-    <Button variant="primary" href={contactUrl}>{t('operator.cta.button')}</Button>
+    <Button variant="primary" type="button" data-newsletter-open>{t('operator.cta.button')}</Button>
   </div>
 </Hero2>
+
+<NewsletterModal />
 
 <VideoPlayer
   id="operator-video"
@@ -130,7 +133,12 @@ const operatorAdvantages = operatorAdvantagesEntries
 }
 
 <div class="mx-auto max-w-6xl px-4 md:px-6">
-  <CallToActionBanner heading={t('shared-cta.heading')} ctaText={t('operator.cta.banner-button')} ctaUrl={contactUrl} />
+  <CallToActionBanner
+    heading={t('shared-cta.heading')}
+    ctaText={t('operator.cta.banner-button')}
+    ctaUrl={contactUrl}
+    opensNewsletterModal
+  />
 </div>
 
 <!-- FAQs Widget ******************* -->

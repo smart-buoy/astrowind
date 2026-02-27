@@ -9,6 +9,7 @@ import FAQs from '~/components/widgets/FAQs.astro';
 import PageCarousel from '~/components/widgets/PageCarousel.astro';
 import EnvironmentalImpactBanner from '~/components/widgets/EnvironmentalImpactBanner.astro';
 import CallToActionBanner from '~/components/blog/CallToActionBanner.astro';
+import NewsletterModal from '~/components/common/NewsletterModal.astro';
 import { getPermalink } from '~/utils/permalinks';
 import { getLangFromUrl, useTranslations, useTranslatedPath } from '~/i18n/utils';
 import { formatFrontmatterRichText } from '~/i18n/richText';
@@ -87,9 +88,11 @@ const contactUrl = translatePath(getPermalink('/contact'));
   <Fragment slot="subtitle">{t('buoy.hero.subtitle')}</Fragment>
 
   <div slot="actions" class="flex max-w-sm gap-4">
-    <Button variant="primary" href={contactUrl}>{t('buoy.cta.button')}</Button>
+    <Button variant="primary" type="button" data-newsletter-open>{t('buoy.cta.button')}</Button>
   </div>
 </Hero2>
+
+<NewsletterModal />
 
 {carouselItems.length > 0 && (
   <PageCarousel
@@ -102,7 +105,12 @@ const contactUrl = translatePath(getPermalink('/contact'));
 )}
 
 <div class="mx-auto max-w-5xl px-4 md:px-6">
-  <CallToActionBanner heading={t('shared-cta.heading')} ctaText={t('buoy.cta.banner-button')} ctaUrl={contactUrl} />
+  <CallToActionBanner
+    heading={t('shared-cta.heading')}
+    ctaText={t('buoy.cta.banner-button')}
+    ctaUrl={contactUrl}
+    opensNewsletterModal
+  />
 </div>
 
 <WidgetWrapper id="technical-details" containerClass="max-w-5xl">

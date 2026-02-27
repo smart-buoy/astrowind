@@ -7,6 +7,7 @@ import WidgetWrapper from '~/components/ui/WidgetWrapper.astro';
 import AboutTimeline from '~/components/widgets/AboutTimeline.astro';
 import Features from '~/components/widgets/Features.astro';
 import CallToActionBanner from '~/components/blog/CallToActionBanner.astro';
+import NewsletterModal from '~/components/common/NewsletterModal.astro';
 import { formatFrontmatterRichText, formatTranslationRichText } from '~/i18n/richText';
 import Headline from '~/components/ui/Headline.astro';
 
@@ -80,8 +81,14 @@ const aboutValues = (await getCollection('aboutValues'))
 </WidgetWrapper>
 
 <AboutTimeline />
+<NewsletterModal />
 <div class="mx-auto max-w-5xl px-4 md:px-6">
-  <CallToActionBanner heading={t('shared-cta.heading')} ctaText={t('about.cta.banner-button')} ctaUrl={contactUrl} />
+  <CallToActionBanner
+    heading={t('shared-cta.heading')}
+    ctaText={t('about.cta.banner-button')}
+    ctaUrl={contactUrl}
+    opensNewsletterModal
+  />
 </div>
 
 {
