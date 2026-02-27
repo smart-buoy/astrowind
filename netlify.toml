@@ -2,6 +2,14 @@
   publish = "dist"
   command = "npm run build"
 
+# Force canonical domain for SEO
+[[redirects]]
+  from = "/*"
+  to = "https://smartbuoy.eu/:splat"
+  status = 301
+  force = true
+  conditions = {Host = ["smartbuoy-astroy.netlify.app", "smartbuoy-astro.netlify.app"]}
+
 # Canonical home: / and /de/ serve the buoy page; legacy slugs redirect (SEO-friendly, works on all devices)
 [[redirects]]
   from = "/the-buoy"

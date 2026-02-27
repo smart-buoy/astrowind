@@ -1,6 +1,6 @@
 site:
   name: SmartBuoy
-  site: 'https://smartbuoy-astro.netlify.app'
+  site: 'https://smartbuoy.eu'
   base: '/'
   trailingSlash: false
 
