@@ -4,10 +4,8 @@ import Hero2 from '~/components/widgets/Hero2.astro';
 import Button from '~/components/ui/Button.astro';
 import WidgetWrapper from '~/components/ui/WidgetWrapper.astro';
 import Headline from '~/components/ui/Headline.astro';
-import ItemGrid from '~/components/ui/ItemGrid.astro';
 import FAQs from '~/components/widgets/FAQs.astro';
 import PageCarousel from '~/components/widgets/PageCarousel.astro';
-import EnvironmentalImpactBanner from '~/components/widgets/EnvironmentalImpactBanner.astro';
 import CallToActionBanner from '~/components/blog/CallToActionBanner.astro';
 import NewsletterModal from '~/components/common/NewsletterModal.astro';
 import { getPermalink } from '~/utils/permalinks';
@@ -49,25 +47,6 @@ const carouselItems = pageCarouselEntries
       description: (d.description && (d.description[lang] ?? d.description.en)) ?? '',
     };
   });
-
-export interface Props {
-  downloadItems: Array<{ title: string; description?: string; href: string; ctaText: string }>;
-}
-
-const {
-  downloadItems,
-} = Astro.props;
-const downloadGridItems = downloadItems.map((d) => ({
-  title: d.title,
-  description: d.description,
-  icon: 'tabler:file-type-pdf',
-  callToAction: {
-    href: d.href,
-    text: d.ctaText,
-    target: '_blank',
-    rel: 'noopener noreferrer',
-  },
-}));
 
 const technicalDetailsHtml = formatFrontmatterRichText(t('buoy.tech.content') as string);
 const ecologyHtml = formatFrontmatterRichText(t('buoy.ecology.content') as string);
@@ -135,33 +114,6 @@ const contactUrl = translatePath(getPermalink('/contact'));
     }}
   />
   <div class="buoy-richtext mx-auto max-w-4xl text-lg text-muted dark:text-slate-300" set:html={ecologyHtml} />
-</WidgetWrapper>
-
-<EnvironmentalImpactBanner />
-
-<WidgetWrapper id="downloads" containerClass="max-w-5xl">
-  <Headline
-    title={t('buoy.download.title')}
-    subtitle={t('buoy.download.subtitle')}
-    classes={{
-      container: 'max-w-3xl mx-auto',
-      title: 'text-3xl md:text-4xl font-bold tracking-tighter mb-4 font-heading',
-      subtitle: 'text-xl text-muted',
-    }}
-  />
-  <ItemGrid
-    items={downloadGridItems}
-    columns={2}
-    defaultIcon="tabler:file-type-pdf"
-    classes={{
-      container: 'gap-y-8 md:gap-y-10',
-      panel: 'max-w-none',
-      title: 'text-lg font-bold dark:text-white',
-      description: 'text-muted dark:text-slate-400',
-      icon: 'text-primary flex-shrink-0',
-      action: 'mt-2',
-    }}
-  />
 </WidgetWrapper>
 
 {faqs.length > 0 && (
