@@ -202,30 +202,33 @@ team:
 contact:
   hero:
     tagline: "Contact"
-    title: "Let's Connect!"
+    title: "You don’t want to miss the first wave?"
+    image-alt: "SmartBuoy buoy in the water"
   form:
-    title: "Drop us a message today!"
-    subtitle: "For quicker answers, explore our FAQs section. You may find the solution you're looking for right there! If not, our support team is delighted to help you."
+    title: "Send us a message!"
+    subtitle: "Take a quick look at our FAQs first - you might already find your answer there. If not, our support team is personally here for you."
     name-label: "Name"
     role-label: "Skipper or operator"
     role-skipper: "Skipper"
     role-operator: "Operator"
     email-label: "Email"
+    newsletter-label: "Yes, I want to subscribe to the SmartBuoy newsletter."
     message-label: "Message"
-    disclaimer: "By submitting this contact form, you acknowledge and agree to the collection of your personal information."
-    description: "Our support team typically responds within 24 business hours."
-    button: "Contact us"
+    disclaimer: "By submitting this contact form, you confirm that you agree to the collection of your personal data."
+    disclaimer-hint: "I can revoke my consent at any time - the easiest way is to send the revocation to <a href='mailto:office@smartbuoy.eu'>office@smartbuoy.eu</a>. Revoking consent does not affect the lawfulness of processing carried out before the revocation. You can find more details in our <a href='/privacy'>Privacy Policy</a>."
+    description: "Our support team usually replies within 24 business hours."
+    button: "Send message"
   features:
-    title: "We are here to help!"
+    title: "We’re happy to help you!"
     general-support:
       title: "General support"
-      description: "Chat with us for inquiries related to account management, website navigation, payment issues, accessing purchased templates or general questions about the website's functionality."
+      description: "Message us if you have questions about your account, website navigation, payments, purchased templates, or using the website."
     contact-sales:
       title: "Contact sales"
-      description: "Chat with us for questions about purchases, customization options, licensing for commercial use, inquiries about specific template, etc."
+      description: "Message us if you have questions about purchases, customization options, licenses, or specific templates."
     technical-support:
       title: "Technical support"
-      description: "Chat with us when facing issues like template installation, problems editing difficulties, compatibility issues with software or download errors, or other technical challenges related to using the templates."
+      description: "Message us if you run into technical issues like installation, editing, compatibility, or download errors."
     email: "Email"
     location: "Location"
 

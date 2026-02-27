@@ -213,6 +213,7 @@ export interface Textarea {
 
 export interface Disclaimer {
   label?: string;
+  hint?: string;
 }
 
 // COMPONENTS

@@ -204,30 +204,33 @@ team:
 contact:
   hero:
     tagline: "Kontakt"
-    title: "Schreiben Sie uns!"
+    title: "Du willst die erste Welle nicht verpassen?"
+    image-alt: "SmartBuoy Boje im Wasser"
   form:
-    title: "Senden Sie uns eine Nachricht!"
-    subtitle: "Für schnellere Antworten schauen Sie in unseren FAQ-Bereich. Vielleicht finden Sie dort bereits die passende Lösung. Ansonsten hilft Ihnen unser Support-Team gerne weiter."
+    title: "Schreib uns eine Nachricht!"
+    subtitle: "Schau zuerst kurz in unsere FAQs - vielleicht findest du dort schon deine Antwort. Wenn nicht, ist unser Support-Team persönlich für dich da."
     name-label: "Name"
     role-label: "Skipper oder Betreiber"
     role-skipper: "Skipper"
     role-operator: "Betreiber"
     email-label: "E-Mail"
+    newsletter-label: "Ja, ich möchte den SmartBuoy Newsletter abonnieren."
     message-label: "Nachricht"
-    disclaimer: "Mit dem Absenden des Kontaktformulars bestätigen Sie, dass Sie mit der Erhebung Ihrer personenbezogenen Daten einverstanden sind."
-    description: "Unser Support-Team antwortet in der Regel innerhalb von 24 Geschäftsstunden."
+    disclaimer: "Mit dem Absenden des Kontaktformulars bestätigst du, dass du mit der Erhebung deiner personenbezogenen Daten einverstanden bist."
+    disclaimer-hint: "Ich kann meine Einwilligung jederzeit widerrufen - am einfachsten, indem ich den Widerruf an folgende E-Mail-Adresse schicke: <a href='mailto:office@smartbuoy.eu'>office@smartbuoy.eu</a>. Durch den Widerruf wird die Rechtmäßigkeit der aufgrund der Einwilligung bis zum Widerruf erfolgten Verarbeitung nicht berührt. Weitere Informationen findest du in unserer <a href='/de/datenschutz'>Datenschutzerklärung</a>."
+    description: "Unser Support-Team antwortet dir in der Regel innerhalb von 24 Geschäftsstunden."
     button: "Nachricht senden"
   features:
-    title: "Wir helfen Ihnen gerne!"
+    title: "Wir helfen dir gerne!"
     general-support:
       title: "Allgemeiner Support"
-      description: "Kontaktieren Sie uns bei Fragen zu Konto, Website-Navigation, Zahlungen, gekauften Vorlagen oder zur Nutzung der Website."
+      description: "Schreib uns bei Fragen zu deinem Konto, zur Navigation auf der Website, zu Zahlungen, zu gekauften Vorlagen oder zur Nutzung der Website."
     contact-sales:
       title: "Vertrieb"
-      description: "Kontaktieren Sie uns bei Fragen zu Käufen, Anpassungen, Lizenzen oder zu bestimmten Vorlagen."
+      description: "Schreib uns bei Fragen zu Käufen, Anpassungen, Lizenzen oder zu bestimmten Vorlagen."
     technical-support:
       title: "Technischer Support"
-      description: "Kontaktieren Sie uns bei technischen Problemen wie Installation, Bearbeitung, Kompatibilität oder Download-Fehlern."
+      description: "Schreib uns bei technischen Problemen wie Installation, Bearbeitung, Kompatibilität oder Download-Fehlern."
     email: "E-Mail"
     location: "Standort"
 

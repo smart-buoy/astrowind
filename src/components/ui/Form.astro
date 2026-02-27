@@ -51,6 +51,23 @@ const { inputs, textarea, disclaimer, button = 'Contact us', description = '' } 
                 ))}
               </div>
             </div>
+          ) : type === 'checkbox' ? (
+            <div class="mb-6 flex items-start">
+              <div class="mt-0.5 flex">
+                <input
+                  type="checkbox"
+                  name={name}
+                  id={name}
+                  required={required}
+                  class="cursor-pointer mt-1 h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary"
+                />
+              </div>
+              <div class="ml-3">
+                <label for={name} class="cursor-pointer select-none text-sm text-gray-700 dark:text-gray-300">
+                  {label}
+                </label>
+              </div>
+            </div>
           ) : (
             <div class="mb-6">
               {label && (
@@ -105,6 +122,14 @@ const { inputs, textarea, disclaimer, button = 'Contact us', description = '' } 
           <label for="disclaimer" class="cursor-pointer select-none text-sm text-gray-600 dark:text-gray-400">
             {disclaimer.label}
           </label>
+          {
+            disclaimer.hint && (
+              <p
+                class="mt-2 text-xs leading-relaxed text-gray-600 dark:text-gray-400 [&_a]:underline [&_a]:text-primary hover:[&_a]:text-primary/80"
+                set:html={disclaimer.hint}
+              />
+            )
+          }
         </div>
       </div>
     )

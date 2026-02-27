@@ -1,15 +1,24 @@
 ---
 import { getLangFromUrl, useTranslations } from '~/i18n/utils';
-import HeroText from '~/components/widgets/HeroText.astro';
+import Hero2 from '~/components/widgets/Hero2.astro';
 import ContactUs from '~/components/widgets/Contact.astro';
 import Features2 from '~/components/widgets/Features2.astro';
+import contactHeroImage from '~/assets/images/buoy2.jpg';
 
 const language = getLangFromUrl(Astro.url);
 const t = useTranslations(language);
 ---
 
-<!-- HeroText Widget ******************* -->
-<HeroText tagline={t('contact.hero.tagline')} title={t('contact.hero.title')} />
+<!-- Hero Widget ******************* -->
+<Hero2
+  tagline={t('contact.hero.tagline')}
+  image={{
+    src: contactHeroImage,
+    alt: t('contact.hero.image-alt'),
+  }}
+>
+  <Fragment slot="title">{t('contact.hero.title')}</Fragment>
+</Hero2>
 
 <ContactUs
   id="form"
@@ -39,6 +48,11 @@ const t = useTranslations(language);
       label: t('contact.form.email-label'),
       required: true,
     },
+    {
+      type: 'checkbox',
+      name: 'newsletter',
+      label: t('contact.form.newsletter-label'),
+    },
   ]}
   textarea={{
     label: t('contact.form.message-label'),
@@ -46,6 +60,7 @@ const t = useTranslations(language);
   }}
   disclaimer={{
     label: t('contact.form.disclaimer'),
+    hint: t('contact.form.disclaimer-hint'),
   }}
   button={t('contact.form.button')}
   description={t('contact.form.description')}
