@@ -25,7 +25,20 @@ const t = useTranslations(language);
 
     <p class="mb-4 text-sm text-muted dark:text-slate-300 sm:text-base">{t('newsletter-modal.intro')}</p>
 
-    <form data-newsletter-form method="dialog" class="space-y-4">
+    <form
+      data-newsletter-form
+      name="newsletter"
+      method="POST"
+      data-netlify="true"
+      netlify-honeypot="bot-field"
+      class="space-y-4"
+    >
+      <input type="hidden" name="form-name" value="newsletter" />
+      <p class="hidden">
+        <label>
+          Don’t fill this out if you’re human: <input name="bot-field" />
+        </label>
+      </p>
       <div>
         <label for="newsletter-email" class="mb-1 block text-sm font-medium text-gray-900 dark:text-white">
           {t('newsletter-modal.email-label')}
@@ -83,13 +96,4 @@ const t = useTranslations(language);
     dialog?.close();
   });
 
-  form?.addEventListener('submit', (event) => {
-    if (!form.checkValidity()) {
-      return;
-    }
-
-    event.preventDefault();
-    dialog?.close();
-    form.reset();
-  });
 </script>
