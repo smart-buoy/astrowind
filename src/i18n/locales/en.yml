@@ -78,7 +78,8 @@ environment-impact:
 # Buoy section (The Buoy product page)
 buoy:
   hero:
-    title: "The Buoy"
+    tagline: "The Buoy"
+    title: "The Smart Buoy"
     subtitle: "Digital reservations. Reliable technology. Protection for nature."
   cta:
     button: "Stay up to date"
@@ -125,15 +126,6 @@ buoy:
       - second-life cycle for electronic components
 
       This extends service life, reduces waste, and makes sustainable maritime infrastructure economically viable.
-
-      **For skippers, this means:**
-      - the assurance that the buoy fits the boat
-      - predictable, stress-free mooring
-
-      **For operators and regions:**
-      - transparent, regulated revenue
-      - less administrative effort
-      - better utilization of existing infrastructure
 
       SmartBuoy delivers technology that not only works - but takes responsibility.
   carousel:
@@ -193,9 +185,9 @@ about:
     subheadline: "Smart buoys for skippers, by skippers."
   story:
     title: "How it all began"
-    paragraph1: "SmartBuoy was founded in 2023.\nThe idea didn’t come from out of an office, it was born during a private boating trip."
+    paragraph1: "SmartBuoy was founded in 2023 by Michael, Georg and Jakob.\nThe idea didn’t come from out of an office, it was born during a private boating trip."
     paragraph2: "Our founders, Michi and Georg, the managing director of a yacht-building company, faced an everyday problem:\nNot being able to moor where you actually want to, but only where a buoy happens to still be available.\n\nInstead of a relaxed evening at a favorite restaurant, it meant:"
-    bullets: "unnecessary searching for a free buoy|extra trips on the water|wasted fuel|stress at the end of what should have been a beautiful day"
+    bullets: "unnecessary searching for a free buoy|extra trips on the water|wasted fuel|stress at the end of what should have been a beautiful day|intransparent costs"
     conclusion: "Out of that frustration came a simple question:\nWhy isn’t there a predictable, fair, and sustainable solution for buoy moorings?\n\nThe answer is SmartBuoy."
   timeline:
     title: "From Concept to Buoy"

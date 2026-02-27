@@ -78,7 +78,8 @@ environment-impact:
 # Buoy section (Die Boje product page)
 buoy:
   hero:
-    title: "Die Boje"
+    tagline: "Die Boje"
+    title: "Die Smarte Boje"
     subtitle: "Digitale Reservierung. Verlässliche Technik. Schutz für die Natur."
   cta:
     button: "Bleib auf dem Laufenden"
@@ -125,15 +126,6 @@ buoy:
       - zweiter Lebenszyklus für elektronische Komponenten
 
       So verlängern wir die Nutzungsdauer, reduzieren Abfall und machen nachhaltige maritime Infrastruktur wirtschaftlich sinnvoll.
-
-      **Für Skipper:innen bedeutet das:**
-      - die Garantie, dass die Boje zum Boot passt
-      - planbares Anlegen ohne Stress
-
-      **Für Betreiber und Regionen:**
-      - transparente, geregelte Einnahmen
-      - weniger Verwaltungsaufwand
-      - bessere Auslastung bestehender Infrastruktur
 
       SmartBuoy liefert Technik, die nicht nur funktioniert, sondern Verantwortung übernimmt.
   carousel:
@@ -193,9 +185,9 @@ about:
     subheadline: "Smarte Bojen für Skipper von Skippern"
   story:
     title: "Wie alles begann"
-    paragraph1: "SmartBuoy wurde 2023 gegründet. Die Idee entstand nicht im Büro, sondern auf einer privaten Bootsfahrt."
+    paragraph1: "SmartBuoy wurde 2023 von Michael, Georg und Jakob gegründet. Die Idee entstand nicht im Büro, sondern auf einer privaten Bootsfahrt."
     paragraph2: "Unsere Gründer Michi und Georg, Geschäftsführer eines Yachtbauunternehmens, standen vor einem alltäglichen Problem: Nicht dort anlegen zu können, wo man eigentlich hinmöchte, sondern dort, wo zufällig noch eine Boje frei ist. \n\nStatt einem entspannten Abend im Lieblingsrestaurant bedeutete das:"
-    bullets: "unnötiges Bojensuchen|zusätzliche Fahrten|Treibstoffverschwendung|Stress am Ende eines eigentlich schönen Tages"
+    bullets: "unnötiges Bojensuchen|zusätzliche Fahrten|Treibstoffverschwendung|Stress am Ende eines eigentlich schönen Tages|Intrasparente Kosten"
     conclusion: "Aus diesem Frust wurde eine einfache Frage:\nWarum gibt es keine planbare, faire und nachhaltige Lösung für Bojenplätze?\n\nDie Antwort darauf ist SmartBuoy."
   timeline:
     title: "Vom Konzept zur Boje"
