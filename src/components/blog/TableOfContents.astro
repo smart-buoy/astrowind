@@ -45,7 +45,7 @@ const showToc = tocHeadings.length >= 2;
 )}
 
 {showToc && (
-  <script define:vars={{ tocSlugs: tocHeadings.map((h) => h.slug) }}>
+  <script is:inline define:vars={{ tocSlugs: tocHeadings.map((h) => h.slug) }}>
     (function (slugs) {
       if (!slugs || slugs.length === 0) return;
       const nav = document.querySelector('nav.toc');
@@ -56,19 +56,19 @@ const showToc = tocHeadings.length >= 2;
         return document.getElementById(id);
       });
 
-      var activeOffset = 100;
+      const activeOffset = 100;
 
       function setActiveFromScroll() {
-        var lastPassed = null;
-        for (var i = 0; i < headingIds.length; i++) {
-          var el = document.getElementById(headingIds[i]);
+        let lastPassed = null;
+        for (let i = 0; i < headingIds.length; i++) {
+          const el = document.getElementById(headingIds[i]);
           if (!el) continue;
-          var top = el.getBoundingClientRect().top;
+          const top = el.getBoundingClientRect().top;
           if (top <= activeOffset) lastPassed = el;
         }
-        var activeId = lastPassed ? lastPassed.id : headingIds[0] || null;
+        const activeId = lastPassed ? lastPassed.id : headingIds[0] || null;
         links.forEach(function (link) {
-          var slug = link.getAttribute('data-toc-slug');
+          const slug = link.getAttribute('data-toc-slug');
           link.classList.toggle('toc__link--active', slug === activeId);
         });
       }
@@ -101,6 +101,7 @@ const showToc = tocHeadings.length >= 2;
 
   :global(.dark) .toc {
     border-color: var(--aw-color-toc-border-dark, #334155);
+    --aw-color-toc-accent: var(--aw-color-primary-text, rgb(96 165 250));
   }
 
   .toc__header {
@@ -176,11 +177,11 @@ const showToc = tocHeadings.length >= 2;
   }
 
   .toc__link:hover {
-    color: var(--aw-color-primary, rgb(0 67 140));
+    color: var(--aw-color-toc-accent, var(--aw-color-primary, rgb(0 67 140)));
   }
 
   .toc__link:hover .toc__icon {
-    color: var(--aw-color-primary, rgb(0 67 140));
+    color: var(--aw-color-toc-accent, var(--aw-color-primary, rgb(0 67 140)));
   }
 
   .toc__icon {
@@ -196,7 +197,7 @@ const showToc = tocHeadings.length >= 2;
   }
 
   :global(.dark) .toc__link:hover {
-    color: var(--aw-color-primary, rgb(96 165 250));
+    color: var(--aw-color-toc-accent, rgb(96 165 250));
   }
 
   :global(.dark) .toc__icon {
@@ -204,7 +205,7 @@ const showToc = tocHeadings.length >= 2;
   }
 
   :global(.dark) .toc__link:hover .toc__icon {
-    color: var(--aw-color-primary, rgb(96 165 250));
+    color: var(--aw-color-toc-accent, rgb(96 165 250));
   }
 
   .toc__link-content {
@@ -231,22 +232,22 @@ const showToc = tocHeadings.length >= 2;
 
   .toc__link--active,
   .toc__link.toc__link--active {
-    color: var(--aw-color-primary, rgb(0 67 140));
-    border-left: 2px solid var(--aw-color-primary, rgb(0 67 140));
+    color: var(--aw-color-toc-accent, var(--aw-color-primary, rgb(0 67 140)));
+    border-left: 2px solid var(--aw-color-toc-accent, var(--aw-color-primary, rgb(0 67 140)));
     margin-left: -4px;
     padding-left: 2px;
   }
 
   .toc__link--active .toc__icon {
-    color: var(--aw-color-primary, rgb(0 67 140));
+    color: var(--aw-color-toc-accent, var(--aw-color-primary, rgb(0 67 140)));
   }
 
   :global(.dark) .toc__link--active {
-    color: var(--aw-color-primary, rgb(96 165 250));
-    border-left-color: var(--aw-color-primary, rgb(96 165 250));
+    color: var(--aw-color-toc-accent, rgb(96 165 250));
+    border-left-color: var(--aw-color-toc-accent, rgb(96 165 250));
   }
 
   :global(.dark) .toc__link--active .toc__icon {
-    color: var(--aw-color-primary, rgb(96 165 250));
+    color: var(--aw-color-toc-accent, rgb(96 165 250));
   }
 </style>

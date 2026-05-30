@@ -18,6 +18,19 @@
   .text-muted {
     color: var(--aw-color-text-muted);
   }
+
+  .dark .text-primary {
+    color: var(--aw-color-primary-text);
+  }
+
+  .dark .hover\:text-primary:hover {
+    color: var(--aw-color-primary-text);
+  }
+
+  .dark [class~='[&_a]:text-primary'] a,
+  .dark [class~='hover:[&_a]:text-primary/80']:hover a {
+    color: var(--aw-color-primary-text);
+  }
 }
 
 @layer components {
