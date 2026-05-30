@@ -12,6 +12,7 @@ import { getStaticPathsBlogPost, blogPostRobots } from '~/utils/blog';
 import { findImage } from '~/utils/images';
 import type { MetaData } from '~/types';
 import RelatedPosts from '~/components/blog/RelatedPosts.astro';
+import { SITE } from 'astrowind:config';
 
 export const prerender = true;
 
@@ -25,6 +26,9 @@ const { post } = Astro.props as Props;
 
 const url = getCanonical(getPermalink(post.permalink, 'post'));
 const image = (await findImage(post.image)) as ImageMetadata | string | undefined;
+const canonicalUrl = String(url);
+const structuredImage =
+  image && Astro.site ? String(new URL(typeof image === 'string' ? image : image.src, Astro.site)) : undefined;
 
 const metadata = merge(
   {
@@ -43,9 +47,53 @@ const metadata = merge(
   },
   { ...(post?.metadata ? { ...post.metadata, canonical: post.metadata?.canonical || url } : {}) }
 ) as MetaData;
+
+const blogPostingSchema = {
+  '@type': 'BlogPosting',
+  '@id': `${canonicalUrl}#article`,
+  mainEntityOfPage: canonicalUrl,
+  headline: post.title,
+  description: metadata.description || post.excerpt,
+  datePublished: post.publishDate.toISOString(),
+  ...(post.updateDate ? { dateModified: post.updateDate.toISOString() } : {}),
+  inLanguage: post.lang,
+  ...(structuredImage ? { image: [structuredImage] } : {}),
+  author: {
+    '@type': 'Organization',
+    name: post.author || SITE?.name || 'SmartBuoy',
+  },
+  publisher: {
+    '@type': 'Organization',
+    name: SITE?.name || 'SmartBuoy',
+  },
+};
+
+const faqSchema =
+  post.faq && post.faq.length > 0
+    ? {
+        '@type': 'FAQPage',
+        '@id': `${canonicalUrl}#faq`,
+        mainEntity: post.faq.map(({ question, answer }) => ({
+          '@type': 'Question',
+          name: question,
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: answer,
+          },
+        })),
+      }
+    : undefined;
+
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@graph': faqSchema ? [blogPostingSchema, faqSchema] : [blogPostingSchema],
+};
+
+const structuredDataJson = JSON.stringify(structuredData).replace(/</g, '\\u003c');
 ---
 
 <Layout metadata={metadata}>
+  <script type="application/ld+json" set:html={structuredDataJson} />
   <SinglePost post={{ ...post, image: image }} url={url}>
     {post.Content ? <post.Content /> : <Fragment set:html={post.content || ''} />}
   </SinglePost>

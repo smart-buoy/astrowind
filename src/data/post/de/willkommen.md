@@ -1,5 +1,6 @@
 ---
 publishDate: 2024-01-15T00:00:00Z
+draft: true
 title: Willkommen beim SmartBuoy Blog
 excerpt: Erster Beitrag auf Deutsch. Hier finden Sie Neuigkeiten und Anleitungen rund um SmartBuoy.
 image: https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=2070&auto=format&fit=crop
@@ -13,6 +14,12 @@ faq:
     answer: SmartBuoy bietet intelligente Liegeplatz-Buchung und Marina-Verwaltung für Skipper und Betreiber – für einen reibungsloseren Anlegeablauf.
   - question: Wo finde ich weitere Beiträge?
     answer: Neue Artikel erscheinen in diesem Blog. Nutzen Sie Tags und Kategorien zum Stöbern oder schauen Sie regelmäßig vorbei.
+metadata:
+  title: Willkommen beim SmartBuoy Blog
+  description: Erster Beitrag auf Deutsch mit Neuigkeiten und Anleitungen rund um SmartBuoy.
+  openGraph:
+    locale: de_DE
+    type: article
 ---
 
 Dies ist der erste Blogbeitrag auf Deutsch. Weitere Artikel folgen.
