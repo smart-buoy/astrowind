@@ -60,7 +60,7 @@ According to a widely cited international study by Waycott et al. (2009, PNAS), 
 
 **Study:** Waycott, M. et al. (2009). _Accelerating loss of seagrasses across the globe threatens coastal ecosystems_. Proceedings of the National Academy of Sciences (PNAS).
 
-- [Free PDF](https://seagrass.fiu.edu/resources/publications/Reprints/Waycott%20et%20al%202009%20PNAS.pdf)
+- [Download the study as a PDF](https://seagrass.fiu.edu/resources/publications/Reprints/Waycott%20et%20al%202009%20PNAS.pdf)
 - [Abstract and bibliographic data](https://europepmc.org/article/MED/19587236)
 
 ### Why this matters for skippers

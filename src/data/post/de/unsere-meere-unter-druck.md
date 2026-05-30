@@ -60,7 +60,7 @@ Doch laut einer viel zitierten internationalen Studie von Waycott et al. (2009, 
 
 **Studie:** Waycott, M. et al. (2009). _Accelerating loss of seagrasses across the globe threatens coastal ecosystems_. Proceedings of the National Academy of Sciences (PNAS).
 
-- [Kostenloses PDF](https://seagrass.fiu.edu/resources/publications/Reprints/Waycott%20et%20al%202009%20PNAS.pdf)
+- [Studie als PDF herunterladen](https://seagrass.fiu.edu/resources/publications/Reprints/Waycott%20et%20al%202009%20PNAS.pdf)
 - [Abstract und bibliografische Daten](https://europepmc.org/article/MED/19587236)
 
 ### Warum das für Skipper relevant ist
